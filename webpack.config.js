@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
+const cssnext = require('postcss-cssnext');
 const path = require('path');
 
 const appDir = __dirname + '/src';
@@ -79,6 +80,11 @@ const config = {
         ],
         noParse: [/.+zone\.js\/dist\/.+/, /.+angular2\/bundles\/.+/, /angular2-polyfills\.js/]
     },
+
+    postcss()  {
+        return [cssnext];
+    },
+
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
