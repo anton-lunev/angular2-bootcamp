@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "start": "webpack-dev-server --hot --progress --watch --content-base src/"
+    "start": "webpack-dev-server --progress --watch --content-base src/"
   },
   "dependencies": {
     "@angular/common": "^2.0.0-rc.5",

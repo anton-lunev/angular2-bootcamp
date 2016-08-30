@@ -2,8 +2,7 @@ import {Component} from '@angular/core'
 
 @Component({
     selector: 'my-app',
-    template: require('./app.html'),
-    styles: [require('./app.pcss')]
+    template: require('./app.html')
 })
 export class AppComponent {
 

@@ -16,12 +16,17 @@ const config = {
 
     output: {
         path: './dist',
-        publicPath: 'http://localhost:8080/',
+        publicPath: 'http://localhost:9090/',
         filename: 'js/[name].js',
         chunkFilename: '[id].chunk.js'
     },
 
     devtool: 'cheap-source-map',
+
+    devServer: {
+        port: '9090',
+        historyApiFallback: true
+    },
 
     resolve: {
         cache: true,
