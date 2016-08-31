@@ -50,6 +50,11 @@ const config = {
                 loader: ExtractTextPlugin.extract({fallbackLoader: 'style', loader: 'css!postcss?sourceMap'})
             },
             {
+                test: /\.scss$/,
+                exclude: root('src', 'app'),
+                loader: ExtractTextPlugin.extract({fallbackLoader: 'style', loader: 'css!sass?sourceMap'})
+            },
+            {
                 test: /\.(css|pcss)$/,
                 include: root('src', 'app'),
                 loader: 'raw!postcss'
