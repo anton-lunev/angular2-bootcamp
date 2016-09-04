@@ -12,18 +12,18 @@ import {Router} from "@angular/router";
 export class LoginComponent {
     login: string = '';
     password: string = '';
+    message: string = '';
 
     constructor(private authService: AuthService, private router: Router) {
     }
 
     logIn() {
-        console.log(this.login, this.password);
-        this.authService.logIn(this.login, md5(this.password))
-            .then((res) => {
-                console.log(res);
-                if (res.length) {
-                    console.log('user was found!');
-                    this.router.navigateByUrl('home');
+        this.authService.login(this.login, md5(this.password))
+            .subscribe((res) => {
+                if (this.authService.isLoggedIn()) {
+                    this.router.navigate(['home']);
+                } else {
+                    this.message = 'Incorrect credentials';
                 }
             });
     }

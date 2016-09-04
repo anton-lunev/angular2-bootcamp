@@ -1,32 +1,42 @@
 import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
-import 'rxjs/add/operator/toPromise';
+import {Http, URLSearchParams} from "@angular/http";
+import {Router} from "@angular/router";
+import {Observable} from "rxjs";
+import {MLab} from "./mlab";
 
 @Injectable()
-export class AuthService {
-    private baseUrl = 'https://api.mlab.com/api/1/databases';
-    private apiKey = 'hlrhBvtVSrE1yzYRCfG4A4Q4ZaA00mn9';
-    private dbName = 'angular2_db';
-    private usersCollection = 'users';
-    private apiUrl = `${this.baseUrl}/${this.dbName}/collections/${this.usersCollection}?apiKey=${this.apiKey}`;
+export class AuthService extends MLab {
+    protected collection = 'users';
 
-    constructor(private http: Http) {
-
+    constructor(private http: Http, private route: Router) {
+        super();
     }
 
-    logIn(login: string, password: string) {
-        console.log(password);
-        const q = JSON.stringify({name: login, pwd: password});
-        return this.http.get(`${this.apiUrl}&q=${q}`)
-            .toPromise()
-            .then((result) => {
-                console.log(result);
-                return result.json();
+    login(username: string, password: string): Observable<any[]> {
+        const params = new URLSearchParams();
+        params.set('q', JSON.stringify({name: username, pwd: password}));
+        params.set('fo', 'true');
+
+        return this.http.get(this.getQueryUrl(), {search: params})
+            .map(result => {
+                const data = result.json();
+                if (data) {
+                    localStorage.setItem('username', data.name);
+                }
+                return data;
             })
-            .catch((error) => console.log(error))
     }
 
-    logOff() {
+    logout(): any {
+        localStorage.removeItem('username');
+        this.route.navigate(['login']);
+    }
 
+    getUser(): any {
+        return localStorage.getItem('username');
+    }
+
+    isLoggedIn(): boolean {
+        return this.getUser() !== null;
     }
 }
