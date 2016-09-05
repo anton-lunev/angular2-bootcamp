@@ -24,7 +24,9 @@
                 <h4 class="card-title">{{item.title}}</h4>
                 <p class="card-text">{{item.description}}</p>
                 <div class="text-xs-right">
-                    <a href="#" class="btn btn-outline-primary">Go somewhere</a>
+                    <a href="#" class="btn btn-outline-primary" [routerLink]="['/courses', item._id.$oid]">
+                        Go somewhere
+                    </a>
                 </div>
             </div>
         </div>

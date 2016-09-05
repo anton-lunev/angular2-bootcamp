@@ -21,7 +21,7 @@ export class LoginComponent {
         this.authService.login(this.login, md5(this.password))
             .subscribe((res) => {
                 if (this.authService.isLoggedIn()) {
-                    this.router.navigate(['home']);
+                    this.router.navigate(['courses']);
                 } else {
                     this.message = 'Incorrect credentials';
                 }
