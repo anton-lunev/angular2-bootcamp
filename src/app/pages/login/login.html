@@ -1,22 +1,35 @@
-<form class="form-signin">
+<form class="form-signin" novalidate
+      [formGroup]="loginForm"
+      (ngSubmit)="logIn()">
     <h2 class="form-signin-heading">Please sign in</h2>
 
     <div class="form-group">
-        <label for="inputEmail" class="sr-only">Login</label>
-        <input type="text" id="inputEmail" class="form-control" placeholder="Login" required="" autofocus=""
-               name="login" [(ngModel)]="login">
-
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required=""
-               name="password" [(ngModel)]="password">
+        <label for="login" class="sr-only">Login</label>
+        <input type="text" id="login" class="form-control" placeholder="Login"
+               formControlName="login">
+        <div class="error-tooltip" *ngIf="showError('login', 'required')">
+            login is required
+        </div>
+        <div class="error-tooltip" *ngIf="showError('login', 'pattern')">
+            field could contain English letters only
+        </div>
     </div>
     <div class="form-group">
-        <button class="btn btn-lg btn-primary btn-block" type="button" (click)="logIn()">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password"
+               formControlName="password">
+        <div class="error-tooltip" *ngIf="showError('password', 'required')">
+            password is required
+        </div>
+        <div class="error-tooltip" *ngIf="showError('password', 'pattern')">
+            field could contain English letters and numbers
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="!loginForm.valid">
             Sign in
         </button>
     </div>
 
-    <div class="alert alert-danger" *ngIf="message">
-        {{message}}
-    </div>
+    <div class="alert alert-danger" *ngIf="message">{{message}}</div>
 </form>

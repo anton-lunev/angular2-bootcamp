@@ -5,7 +5,7 @@ import {routing} from "./app.routes";
 import {HttpModule} from '@angular/http';
 import {CoursesComponent} from "./pages/courses/courses.component";
 import {LoginComponent} from "./pages/login/login.component";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LoggedInGuard} from "./guards/loggedin.guard";
 import {AuthService} from "./services/auth.service";
 import {CoursesService} from "./services/courses.service";
@@ -16,6 +16,7 @@ import {EditCourseComponent} from "./pages/courses/edit/edit-course.component";
         BrowserModule,
         HttpModule,
         FormsModule,
+        ReactiveFormsModule,
         routing
     ],
     declarations: [

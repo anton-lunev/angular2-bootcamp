@@ -1,37 +1,60 @@
+@keyframes show-tooltip {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) translateX(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
 .form-signin {
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
 }
 
-.checkbox,
 .form-signin-heading {
   margin-bottom: 10px;
 }
 
-.checkbox {
-  font-weight: normal;
-}
-
 .form-control {
-  position: relative;
-  height: auto;
-  box-sizing: border-box;
   padding: 10px;
   font-size: 16px;
-  &:focus {
-    z-index: 2;
+}
+
+.form-group {
+  position: relative;
+}
+
+.error-tooltip {
+  opacity: 0;
+  position: absolute;
+  left: 103%;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 3px 7px;
+  border-radius: 2px;
+  background: #f2dede;
+  animation: show-tooltip .3s ease 1 forwards;
+  color: #a94442;
+  text-align: center;
+  width: 100%;
+  max-width: 180px;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    display: block;
+    top: 50%;
+    left: -5px;
+    margin-top: -5px;
+    border-width: 5px 5px 5px 0;
+    border-right-color: #f2dede;
   }
-}
-
-input[name="login"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-input[name="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
 }
