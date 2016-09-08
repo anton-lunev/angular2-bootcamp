@@ -3,8 +3,9 @@ import {AuthService} from "./services/auth.service";
 import {Router} from "@angular/router";
 
 @Component({
-    selector: 'my-app',
-    template: require('./app.html')
+    selector: 'app',
+    template: require('./app.html'),
+    styles: [require('./app.pcss')]
 })
 export class AppComponent {
     constructor(private authService: AuthService) {
