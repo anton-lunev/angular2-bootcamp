@@ -7,6 +7,6 @@ export class MLab {
     protected collection = '';
 
     getQueryUrl() {
-        return `${this.baseUrl}/${this.db}/collections/${this.collection}?apiKey=${this.apiKey}`
+        return `${this.baseUrl}/${this.db}/collections/${this.collection}?apiKey=${this.apiKey}`;
     }
 }

@@ -1,8 +1,8 @@
-import {Component, OnInit, OnDestroy} from '@angular/core'
-import {CoursesService} from "../../../services/courses.service";
-import {ActivatedRoute} from "@angular/router";
-import {Location} from "@angular/common";
-import {Subscription} from "rxjs";
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {CoursesService} from '../../../services/courses.service';
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'home',
@@ -32,7 +32,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
     getCourse() {
         this.coursesService
             .getCourse(this.id)
-            .subscribe(res => this.renderCourse(res))
+            .subscribe(res => this.renderCourse(res));
     }
 
     renderCourse(data) {
@@ -40,6 +40,6 @@ export class EditCourseComponent implements OnInit, OnDestroy {
     }
 
     goBack() {
-        this.location.back()
+        this.location.back();
     }
 }

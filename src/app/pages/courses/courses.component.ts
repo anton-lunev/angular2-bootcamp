@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core'
-import {CoursesService} from "../../services/courses.service";
+import {Component, OnInit} from '@angular/core';
+import {CoursesService} from '../../services/courses.service';
 
 @Component({
     selector: 'courses',
@@ -14,7 +14,7 @@ export class CoursesComponent implements OnInit {
     ngOnInit(): void {
         this.coursesService
             .getList()
-            .subscribe(res => this.renderCourses(res))
+            .subscribe(res => this.renderCourses(res));
     }
 
     renderCourses(data) {

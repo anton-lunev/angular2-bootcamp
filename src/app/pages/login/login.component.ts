@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core'
-import {AuthService} from "../../services/auth.service";
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../services/auth.service';
 import md5 =  require('md5');
-import {Router} from "@angular/router";
-import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import {Router} from '@angular/router';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 @Component({
     selector: 'login',
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
 
     showError(fieldName, validator) {
         const field = this.loginForm.controls[fieldName];
-        return field.touched && field.hasError(validator)
+        return field.touched && field.hasError(validator);
     }
 
     logIn() {

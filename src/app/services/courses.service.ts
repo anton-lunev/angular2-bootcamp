@@ -1,7 +1,7 @@
-import {Injectable} from "@angular/core";
-import {Http, URLSearchParams} from "@angular/http";
-import {Observable} from "rxjs";
-import {MLab} from "./mlab";
+import {Injectable} from '@angular/core';
+import {Http, URLSearchParams} from '@angular/http';
+import {Observable} from 'rxjs';
+import {MLab} from './mlab';
 
 @Injectable()
 export class CoursesService extends MLab {
@@ -13,7 +13,7 @@ export class CoursesService extends MLab {
 
     getList(): Observable<any[]> {
         return this.http.get(this.getQueryUrl())
-            .map(result => result.json())
+            .map(result => result.json());
     }
 
     getCourse(id: string): Observable<any[]> {
@@ -22,6 +22,6 @@ export class CoursesService extends MLab {
         params.set('fo', 'true');
 
         return this.http.get(this.getQueryUrl(), {search: params})
-            .map(result => result.json())
+            .map(result => result.json());
     }
 }

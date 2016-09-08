@@ -1,8 +1,8 @@
-import {Injectable} from "@angular/core";
-import {Http, URLSearchParams} from "@angular/http";
-import {Router} from "@angular/router";
-import {Observable} from "rxjs";
-import {MLab} from "./mlab";
+import {Injectable} from '@angular/core';
+import {Http, URLSearchParams} from '@angular/http';
+import {Router} from '@angular/router';
+import {Observable} from 'rxjs';
+import {MLab} from './mlab';
 
 @Injectable()
 export class AuthService extends MLab {
@@ -24,7 +24,7 @@ export class AuthService extends MLab {
                     localStorage.setItem('username', data.name);
                 }
                 return data;
-            })
+            });
     }
 
     logout(): any {
