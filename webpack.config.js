@@ -5,7 +5,8 @@ const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin
 const cssnext = require('postcss-cssnext');
 const path = require('path');
 
-const appDir = __dirname + '/src';
+const ENV = process.env.npm_lifecycle_event;
+const isDevDeploy = ENV === 'dev:deploy';
 
 const config = {
     entry: {
@@ -16,7 +17,6 @@ const config = {
 
     output: {
         path: './dist',
-        publicPath: 'http://localhost:9090/',
         filename: 'js/[name].js',
         chunkFilename: '[id].chunk.js'
     },
@@ -112,6 +112,10 @@ const config = {
         new ForkCheckerPlugin()
     ]
 };
+
+if (isDevDeploy) {
+    config.output.publicPath = '/angular2-bootcamp/';
+}
 
 module.exports = config;
 
