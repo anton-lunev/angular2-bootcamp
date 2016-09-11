@@ -10,6 +10,7 @@ import {LoggedInGuard} from './guards/loggedin.guard';
 import {AuthService} from './services/auth.service';
 import {CoursesService} from './services/courses.service';
 import {EditCourseComponent} from './pages/courses/edit/edit-course.component';
+import {StoreModule} from '@ngrx/store';
 
 @NgModule({
     imports: [
@@ -17,6 +18,7 @@ import {EditCourseComponent} from './pages/courses/edit/edit-course.component';
         HttpModule,
         FormsModule,
         ReactiveFormsModule,
+        StoreModule.provideStore({}),
         routing
     ],
     declarations: [
@@ -33,4 +35,6 @@ import {EditCourseComponent} from './pages/courses/edit/edit-course.component';
     bootstrap: [AppComponent]
 })
 export class AppModule {
+    constructor() {
+    }
 }

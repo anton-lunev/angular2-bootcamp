@@ -21,7 +21,9 @@ export class EditCourseComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.routeSub = this.route.params.subscribe(params => {
             this.id = params['id'];
-            this.getCourse();
+            if (this.id !== 'new') {
+                this.getCourse();
+            }
         });
     }
 
