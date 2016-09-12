@@ -3,7 +3,6 @@ import {AuthService} from '../../services/auth.service';
 import md5 =  require('md5');
 import {Router} from '@angular/router';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {Store, combineReducers} from '@ngrx/store';
 
 @Component({
     selector: 'login',
@@ -17,12 +16,10 @@ export class LoginComponent implements OnInit {
 
     constructor(private authService: AuthService,
                 private router: Router,
-                private fb: FormBuilder,
-                private store: Store<any>) {
+                private fb: FormBuilder) {
     }
 
     ngOnInit() {
-        this.initReducers();
         this.loginForm = this.fb.group({
             login: [
                 '',
@@ -53,28 +50,11 @@ export class LoginComponent implements OnInit {
 
         this.authService.login(this.loginForm.value.login, md5(this.loginForm.value.password))
             .subscribe((res) => {
-                if (this.authService.isLoggedIn()) {
-                    this.store.dispatch({type: 'USER_LOADED', payload: res});
+                if (res) {
                     this.router.navigate(['courses']);
                 } else {
-                    this.store.dispatch({type: 'USER_ERROR'});
                     this.message = 'Incorrect credentials';
                 }
             });
-    }
-
-    initReducers() {
-        this.store.replaceReducer(combineReducers({
-            items(state = [], action) {
-                switch (action.type) {
-                    case 'USER_LOADED':
-                        return action.payload;
-                    case 'USER_ERROR':
-                        return state;
-                    default:
-                        return state;
-                }
-            }
-        }));
     }
 }

@@ -1,13 +1,28 @@
-import {Component} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {AuthService} from './services/auth.service';
-import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {Store} from '@ngrx/store';
 
 @Component({
     selector: 'app',
     template: require('./app.html'),
     styles: [require('./app.pcss')]
 })
-export class AppComponent {
-    constructor(private authService: AuthService) {
+export class AppComponent implements OnInit, OnDestroy {
+    subscriptions: Subscription[] = [];
+    user: string;
+
+    constructor(private authService: AuthService,
+                private store: Store<any>) {
+    }
+
+    ngOnInit() {
+        this.subscriptions.push(
+            this.store.select('user').subscribe((user: string) => this.user = user)
+        );
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 }

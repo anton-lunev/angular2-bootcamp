@@ -11,6 +11,8 @@ import {AuthService} from './services/auth.service';
 import {CoursesService} from './services/courses.service';
 import {EditCourseComponent} from './pages/courses/edit/edit-course.component';
 import {StoreModule} from '@ngrx/store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {StoreLogMonitorModule, useLogMonitor} from '@ngrx/store-log-monitor';
 
 @NgModule({
     imports: [
@@ -18,8 +20,15 @@ import {StoreModule} from '@ngrx/store';
         HttpModule,
         FormsModule,
         ReactiveFormsModule,
-        StoreModule.provideStore({}),
-        routing
+        routing,
+        StoreDevtoolsModule.instrumentStore({
+            monitor: useLogMonitor({
+                visible: false,
+                position: 'right'
+            })
+        }),
+        StoreLogMonitorModule,
+        StoreModule.provideStore({}), // TODO make right sort of modules
     ],
     declarations: [
         AppComponent,
