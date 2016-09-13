@@ -57,15 +57,15 @@ exports.StoreDevtoolActions = {
 
 /***/ },
 
-/***/ 159:
+/***/ 160:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
 var http_1 = __webpack_require__(111);
-var router_1 = __webpack_require__(76);
-var mlab_1 = __webpack_require__(415);
+var router_1 = __webpack_require__(77);
+var mlab_1 = __webpack_require__(404);
 var store_1 = __webpack_require__(68);
 var AuthService = (function (_super) {
     __extends(AuthService, _super);
@@ -144,20 +144,20 @@ exports.AuthService = AuthService;
 
 /***/ },
 
-/***/ 215:
+/***/ 216:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var instrument_1 = __webpack_require__(535);
+var instrument_1 = __webpack_require__(536);
 exports.StoreDevtoolsModule = instrument_1.StoreDevtoolsModule;
-var devtools_1 = __webpack_require__(350);
+var devtools_1 = __webpack_require__(338);
 exports.StoreDevtools = devtools_1.StoreDevtools;
 
 
 /***/ },
 
-/***/ 216:
+/***/ 217:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -191,7 +191,7 @@ exports.liftAction = liftAction;
 
 /***/ },
 
-/***/ 217:
+/***/ 218:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -228,13 +228,13 @@ exports.DockActions = DockActions;
 
 /***/ },
 
-/***/ 239:
+/***/ 240:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var Observable_1 = __webpack_require__(2);
-var filter_1 = __webpack_require__(738);
+var Observable_1 = __webpack_require__(4);
+var filter_1 = __webpack_require__(730);
 Observable_1.Observable.prototype.filter = filter_1.filter;
 //# sourceMappingURL=filter.js.map
 
@@ -245,8 +245,8 @@ Observable_1.Observable.prototype.filter = filter_1.filter;
 
 "use strict";
 "use strict";
-var QueueAction_1 = __webpack_require__(752);
-var QueueScheduler_1 = __webpack_require__(753);
+var QueueAction_1 = __webpack_require__(743);
+var QueueScheduler_1 = __webpack_require__(744);
 exports.queue = new QueueScheduler_1.QueueScheduler(QueueAction_1.QueueAction);
 //# sourceMappingURL=queue.js.map
 
@@ -259,7 +259,7 @@ exports.queue = new QueueScheduler_1.QueueScheduler(QueueAction_1.QueueAction);
 "use strict";
 var core_1 = __webpack_require__(0);
 var http_1 = __webpack_require__(111);
-var mlab_1 = __webpack_require__(415);
+var mlab_1 = __webpack_require__(404);
 var CoursesService = (function (_super) {
     __extends(CoursesService, _super);
     function CoursesService(http) {
@@ -289,7 +289,7 @@ exports.CoursesService = CoursesService;
 
 /***/ },
 
-/***/ 349:
+/***/ 337:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -300,7 +300,7 @@ exports.STORE_DEVTOOLS_CONFIG = new core_1.OpaqueToken('@ngrx/devtools Options')
 
 /***/ },
 
-/***/ 350:
+/***/ 338:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -310,21 +310,21 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-__webpack_require__(722);
 __webpack_require__(716);
-__webpack_require__(77);
-__webpack_require__(728);
-__webpack_require__(720);
-__webpack_require__(724);
-__webpack_require__(719);
+__webpack_require__(713);
+__webpack_require__(89);
+__webpack_require__(722);
+__webpack_require__(715);
+__webpack_require__(718);
+__webpack_require__(714);
 var queue_1 = __webpack_require__(245);
 var store_1 = __webpack_require__(68);
 var core_1 = __webpack_require__(0);
-var reducer_1 = __webpack_require__(536);
+var reducer_1 = __webpack_require__(537);
 var actions_1 = __webpack_require__(147);
-var utils_1 = __webpack_require__(216);
-var config_1 = __webpack_require__(349);
-var extension_1 = __webpack_require__(351);
+var utils_1 = __webpack_require__(217);
+var config_1 = __webpack_require__(337);
+var extension_1 = __webpack_require__(339);
 var DevtoolsDispatcher = (function (_super) {
     __extends(DevtoolsDispatcher, _super);
     function DevtoolsDispatcher() {
@@ -419,20 +419,20 @@ exports.StoreDevtools = StoreDevtools;
 
 /***/ },
 
-/***/ 351:
+/***/ 339:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-__webpack_require__(709);
-__webpack_require__(239);
-__webpack_require__(725);
-__webpack_require__(726);
-__webpack_require__(723);
-var Observable_1 = __webpack_require__(2);
+__webpack_require__(710);
+__webpack_require__(240);
+__webpack_require__(719);
+__webpack_require__(720);
+__webpack_require__(717);
+var Observable_1 = __webpack_require__(4);
 var core_1 = __webpack_require__(0);
 var actions_1 = __webpack_require__(147);
-var utils_1 = __webpack_require__(216);
+var utils_1 = __webpack_require__(217);
 exports.ExtensionActionTypes = {
     START: 'START',
     DISPATCH: 'DISPATCH',
@@ -500,17 +500,17 @@ exports.DevtoolsExtension = DevtoolsExtension;
 
 /***/ },
 
-/***/ 352:
+/***/ 340:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
-var common_1 = __webpack_require__(36);
-var commander_1 = __webpack_require__(537);
-var dock_1 = __webpack_require__(539);
-var dock_monitor_1 = __webpack_require__(538);
-var actions_1 = __webpack_require__(217);
+var common_1 = __webpack_require__(37);
+var commander_1 = __webpack_require__(538);
+var dock_1 = __webpack_require__(540);
+var dock_monitor_1 = __webpack_require__(539);
+var actions_1 = __webpack_require__(218);
 var DockMonitorModule = (function () {
     function DockMonitorModule() {
     }
@@ -537,18 +537,18 @@ var DockMonitorModule = (function () {
     return DockMonitorModule;
 }());
 exports.DockMonitorModule = DockMonitorModule;
-var reducer_1 = __webpack_require__(541);
+var reducer_1 = __webpack_require__(542);
 exports.useDockMonitor = reducer_1.useDockMonitor;
 
 
 /***/ },
 
-/***/ 353:
+/***/ 341:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var compose_1 = __webpack_require__(533);
+var compose_1 = __webpack_require__(534);
 exports.KNOWN = {
     Array: 'array',
     Object: 'object',
@@ -624,7 +624,7 @@ var _a;
 
 /***/ },
 
-/***/ 354:
+/***/ 342:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -654,7 +654,7 @@ exports.Dispatcher = Dispatcher;
 
 /***/ },
 
-/***/ 355:
+/***/ 343:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -686,7 +686,7 @@ exports.Reducer = Reducer;
 
 /***/ },
 
-/***/ 356:
+/***/ 344:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -696,9 +696,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var withLatestFrom_1 = __webpack_require__(405);
-var scan_1 = __webpack_require__(403);
-var observeOn_1 = __webpack_require__(158);
+var withLatestFrom_1 = __webpack_require__(394);
+var scan_1 = __webpack_require__(392);
+var observeOn_1 = __webpack_require__(159);
 var queue_1 = __webpack_require__(245);
 var BehaviorSubject_1 = __webpack_require__(108);
 var State = (function (_super) {
@@ -721,7 +721,7 @@ exports.State = State;
 
 /***/ },
 
-/***/ 357:
+/***/ 345:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -731,8 +731,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var select_1 = __webpack_require__(534);
-var Observable_1 = __webpack_require__(2);
+var select_1 = __webpack_require__(535);
+var Observable_1 = __webpack_require__(4);
 var Store = (function (_super) {
     __extends(Store, _super);
     function Store(_dispatcher, _reducer, state$) {
@@ -769,7 +769,7 @@ exports.Store = Store;
 
 /***/ },
 
-/***/ 358:
+/***/ 346:
 /***/ function(module, exports) {
 
 "use strict";
@@ -804,7 +804,7 @@ exports.combineReducers = combineReducers;
 
 /***/ },
 
-/***/ 359:
+/***/ 347:
 /***/ function(module, exports) {
 
 var charenc = {
@@ -844,7 +844,7 @@ module.exports = charenc;
 
 /***/ },
 
-/***/ 396:
+/***/ 383:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -854,9 +854,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Subject_1 = __webpack_require__(35);
-var Observable_1 = __webpack_require__(2);
-var Subscriber_1 = __webpack_require__(23);
+var Subject_1 = __webpack_require__(36);
+var Observable_1 = __webpack_require__(4);
+var Subscriber_1 = __webpack_require__(22);
 var Subscription_1 = __webpack_require__(109);
 /**
  * @class ConnectableObservable<T>
@@ -1005,7 +1005,7 @@ var RefCountSubscriber = (function (_super) {
 
 /***/ },
 
-/***/ 400:
+/***/ 388:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1015,8 +1015,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Subscriber_1 = __webpack_require__(23);
-var tryCatch_1 = __webpack_require__(410);
+var Subscriber_1 = __webpack_require__(22);
+var tryCatch_1 = __webpack_require__(399);
 var errorObject_1 = __webpack_require__(250);
 /**
  * Returns an Observable that emits all items emitted by the source Observable that are distinct by comparison from the previous item.
@@ -1089,14 +1089,14 @@ var DistinctUntilChangedSubscriber = (function (_super) {
 
 /***/ },
 
-/***/ 401:
+/***/ 390:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var ArrayObservable_1 = __webpack_require__(240);
-var mergeAll_1 = __webpack_require__(244);
-var isScheduler_1 = __webpack_require__(409);
+var ArrayObservable_1 = __webpack_require__(241);
+var mergeAll_1 = __webpack_require__(158);
+var isScheduler_1 = __webpack_require__(398);
 /**
  * Creates an output Observable which concurrently emits all values from every
  * given input Observable.
@@ -1226,13 +1226,13 @@ exports.mergeStatic = mergeStatic;
 
 /***/ },
 
-/***/ 402:
+/***/ 391:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var MulticastObservable_1 = __webpack_require__(732);
-var ConnectableObservable_1 = __webpack_require__(396);
+var MulticastObservable_1 = __webpack_require__(726);
+var ConnectableObservable_1 = __webpack_require__(383);
 /**
  * Returns an Observable that emits the results of invoking a specified selector on items
  * emitted by a ConnectableObservable that shares a single subscription to the underlying stream.
@@ -1271,7 +1271,7 @@ exports.multicast = multicast;
 
 /***/ },
 
-/***/ 403:
+/***/ 392:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1281,7 +1281,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Subscriber_1 = __webpack_require__(23);
+var Subscriber_1 = __webpack_require__(22);
 /**
  * Applies an accumulator function over the source Observable, and returns each
  * intermediate result, with an optional seed value.
@@ -1386,7 +1386,7 @@ var ScanSubscriber = (function (_super) {
 
 /***/ },
 
-/***/ 405:
+/***/ 394:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1396,8 +1396,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(86);
-var subscribeToResult_1 = __webpack_require__(87);
+var OuterSubscriber_1 = __webpack_require__(87);
+var subscribeToResult_1 = __webpack_require__(88);
 /**
  * Combines the source Observable with other Observables to create an Observable
  * whose values are calculated from the latest values of each, only when the
@@ -1523,13 +1523,13 @@ var WithLatestFromSubscriber = (function (_super) {
 
 /***/ },
 
-/***/ 411:
+/***/ 400:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var router_1 = __webpack_require__(76);
-var auth_service_1 = __webpack_require__(159);
+var router_1 = __webpack_require__(77);
+var auth_service_1 = __webpack_require__(160);
 var core_1 = __webpack_require__(0);
 var LoggedInGuard = (function () {
     function LoggedInGuard(authService, router) {
@@ -1555,7 +1555,7 @@ exports.LoggedInGuard = LoggedInGuard;
 
 /***/ },
 
-/***/ 412:
+/***/ 401:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1580,7 +1580,7 @@ var CoursesComponent = (function () {
 CoursesComponent = __decorate([
     core_1.Component({
         selector: 'courses',
-        template: __webpack_require__(696),
+        template: __webpack_require__(697),
     }),
     __metadata("design:paramtypes", [courses_service_1.CoursesService])
 ], CoursesComponent);
@@ -1589,21 +1589,22 @@ exports.CoursesComponent = CoursesComponent;
 
 /***/ },
 
-/***/ 413:
+/***/ 402:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
 var courses_service_1 = __webpack_require__(252);
-var router_1 = __webpack_require__(76);
-var common_1 = __webpack_require__(36);
+var router_1 = __webpack_require__(77);
+var common_1 = __webpack_require__(37);
 var EditCourseComponent = (function () {
     function EditCourseComponent(route, coursesService, location) {
         this.route = route;
         this.coursesService = coursesService;
         this.location = location;
         this.id = '';
+        this.mode = 'Edit';
     }
     EditCourseComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1611,6 +1612,14 @@ var EditCourseComponent = (function () {
             _this.id = params['id'];
             if (_this.id !== 'new') {
                 _this.getCourse();
+            }
+            else {
+                _this.mode = 'Add';
+                _this.renderCourse({
+                    title: '',
+                    description: '',
+                    img: ''
+                });
             }
         });
     };
@@ -1634,7 +1643,7 @@ var EditCourseComponent = (function () {
 EditCourseComponent = __decorate([
     core_1.Component({
         selector: 'home',
-        template: __webpack_require__(697),
+        template: __webpack_require__(698),
     }),
     __metadata("design:paramtypes", [router_1.ActivatedRoute,
         courses_service_1.CoursesService,
@@ -1645,16 +1654,16 @@ exports.EditCourseComponent = EditCourseComponent;
 
 /***/ },
 
-/***/ 414:
+/***/ 403:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
-var auth_service_1 = __webpack_require__(159);
-var md5 = __webpack_require__(700);
-var router_1 = __webpack_require__(76);
-var forms_1 = __webpack_require__(160);
+var auth_service_1 = __webpack_require__(160);
+var md5 = __webpack_require__(701);
+var router_1 = __webpack_require__(77);
+var forms_1 = __webpack_require__(161);
 var LoginComponent = (function () {
     function LoginComponent(authService, router, fb) {
         this.authService = authService;
@@ -1682,7 +1691,7 @@ var LoginComponent = (function () {
     };
     LoginComponent.prototype.showError = function (fieldName, validator) {
         var field = this.loginForm.controls[fieldName];
-        return field.touched && field.hasError(validator);
+        return field.touched && (validator ? field.hasError(validator) : !field.valid);
     };
     LoginComponent.prototype.logIn = function () {
         var _this = this;
@@ -1704,8 +1713,8 @@ var LoginComponent = (function () {
 LoginComponent = __decorate([
     core_1.Component({
         selector: 'login',
-        template: __webpack_require__(698),
-        styles: [__webpack_require__(702)],
+        template: __webpack_require__(699),
+        styles: [__webpack_require__(703)],
         providers: [auth_service_1.AuthService]
     }),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
@@ -1717,12 +1726,12 @@ exports.LoginComponent = LoginComponent;
 
 /***/ },
 
-/***/ 415:
+/***/ 404:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-__webpack_require__(727);
+__webpack_require__(721);
 var MLab = (function () {
     function MLab() {
         this.baseUrl = 'https://api.mlab.com/api/1/databases';
@@ -1740,40 +1749,40 @@ exports.MLab = MLab;
 
 /***/ },
 
-/***/ 434:
+/***/ 423:
 /***/ function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 435:
+/***/ 424:
 /***/ function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 438:
+/***/ 427:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
 var platform_browser_1 = __webpack_require__(112);
-var app_component_1 = __webpack_require__(757);
-var app_routes_1 = __webpack_require__(758);
+var app_component_1 = __webpack_require__(748);
+var app_routes_1 = __webpack_require__(749);
 var http_1 = __webpack_require__(111);
-var courses_component_1 = __webpack_require__(412);
-var login_component_1 = __webpack_require__(414);
-var forms_1 = __webpack_require__(160);
-var loggedin_guard_1 = __webpack_require__(411);
-var auth_service_1 = __webpack_require__(159);
+var courses_component_1 = __webpack_require__(401);
+var login_component_1 = __webpack_require__(403);
+var forms_1 = __webpack_require__(161);
+var loggedin_guard_1 = __webpack_require__(400);
+var auth_service_1 = __webpack_require__(160);
 var courses_service_1 = __webpack_require__(252);
-var edit_course_component_1 = __webpack_require__(413);
+var edit_course_component_1 = __webpack_require__(402);
 var store_1 = __webpack_require__(68);
-var store_devtools_1 = __webpack_require__(215);
-var store_log_monitor_1 = __webpack_require__(542);
+var store_devtools_1 = __webpack_require__(216);
+var store_log_monitor_1 = __webpack_require__(543);
 var AppModule = (function () {
     function AppModule() {
     }
@@ -1816,7 +1825,7 @@ exports.AppModule = AppModule;
 
 /***/ },
 
-/***/ 533:
+/***/ 534:
 /***/ function(module, exports) {
 
 "use strict";
@@ -1839,14 +1848,14 @@ exports.compose = function () {
 
 /***/ },
 
-/***/ 534:
+/***/ 535:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var pluck_1 = __webpack_require__(742);
-var map_1 = __webpack_require__(243);
-var distinctUntilChanged_1 = __webpack_require__(400);
+var pluck_1 = __webpack_require__(733);
+var map_1 = __webpack_require__(76);
+var distinctUntilChanged_1 = __webpack_require__(388);
 function select(pathOrMapFn) {
     var paths = [];
     for (var _i = 1; _i < arguments.length; _i++) {
@@ -1870,16 +1879,16 @@ exports.select = select;
 
 /***/ },
 
-/***/ 535:
+/***/ 536:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var store_1 = __webpack_require__(68);
 var core_1 = __webpack_require__(0);
-var devtools_1 = __webpack_require__(350);
-var config_1 = __webpack_require__(349);
-var extension_1 = __webpack_require__(351);
+var devtools_1 = __webpack_require__(338);
+var config_1 = __webpack_require__(337);
+var extension_1 = __webpack_require__(339);
 function _createReduxDevtoolsExtension() {
     if (typeof window !== 'undefined' && window.devToolsExtension) {
         return window.devtoolsExtension;
@@ -1949,13 +1958,13 @@ exports.StoreDevtoolsModule = StoreDevtoolsModule;
 
 /***/ },
 
-/***/ 536:
+/***/ 537:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var store_1 = __webpack_require__(68);
-var utils_1 = __webpack_require__(216);
+var utils_1 = __webpack_require__(217);
 var actions_1 = __webpack_require__(147);
 exports.INIT_ACTION = { type: store_1.Dispatcher.INIT };
 /**
@@ -2205,16 +2214,16 @@ exports.liftReducerWith = liftReducerWith;
 
 /***/ },
 
-/***/ 537:
+/***/ 538:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-__webpack_require__(239);
-__webpack_require__(77);
+__webpack_require__(240);
+__webpack_require__(89);
 var core_1 = __webpack_require__(0);
-var Subject_1 = __webpack_require__(35);
-var keycodes_1 = __webpack_require__(540);
+var Subject_1 = __webpack_require__(36);
+var keycodes_1 = __webpack_require__(541);
 var CommanderComponent = (function () {
     function CommanderComponent() {
         var _this = this;
@@ -2292,20 +2301,20 @@ exports.CommanderComponent = CommanderComponent;
 
 /***/ },
 
-/***/ 538:
+/***/ 539:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-__webpack_require__(710);
-__webpack_require__(239);
-__webpack_require__(77);
+__webpack_require__(711);
+__webpack_require__(240);
+__webpack_require__(89);
 __webpack_require__(712);
-var store_devtools_1 = __webpack_require__(215);
+var store_devtools_1 = __webpack_require__(216);
 var core_1 = __webpack_require__(0);
-var Subject_1 = __webpack_require__(35);
-var Observable_1 = __webpack_require__(2);
-var actions_1 = __webpack_require__(217);
+var Subject_1 = __webpack_require__(36);
+var Observable_1 = __webpack_require__(4);
+var actions_1 = __webpack_require__(218);
 var DockMonitorComponent = (function () {
     function DockMonitorComponent(tools, actions) {
         var _this = this;
@@ -2348,7 +2357,7 @@ exports.DockMonitorComponent = DockMonitorComponent;
 
 /***/ },
 
-/***/ 539:
+/***/ 540:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2447,7 +2456,7 @@ exports.DockComponent = DockComponent;
 
 /***/ },
 
-/***/ 540:
+/***/ 541:
 /***/ function(module, exports) {
 
 "use strict";
@@ -2499,13 +2508,13 @@ exports.KEYCODES = {
 
 /***/ },
 
-/***/ 541:
+/***/ 542:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var store_1 = __webpack_require__(68);
-var actions_1 = __webpack_require__(217);
+var actions_1 = __webpack_require__(218);
 exports.POSITIONS = ['left', 'top', 'right', 'bottom'];
 function useDockMonitor(_options) {
     if (_options === void 0) { _options = {}; }
@@ -2543,16 +2552,16 @@ exports.useDockMonitor = useDockMonitor;
 
 /***/ },
 
-/***/ 542:
+/***/ 543:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
-var common_1 = __webpack_require__(36);
-var dock_monitor_1 = __webpack_require__(352);
-var log_monitor_1 = __webpack_require__(546);
-var store_log_monitor_1 = __webpack_require__(550);
+var common_1 = __webpack_require__(37);
+var dock_monitor_1 = __webpack_require__(340);
+var log_monitor_1 = __webpack_require__(547);
+var store_log_monitor_1 = __webpack_require__(551);
 var StoreLogMonitorModule = (function () {
     function StoreLogMonitorModule() {
     }
@@ -2576,21 +2585,21 @@ var StoreLogMonitorModule = (function () {
     return StoreLogMonitorModule;
 }());
 exports.StoreLogMonitorModule = StoreLogMonitorModule;
-var dock_monitor_2 = __webpack_require__(352);
+var dock_monitor_2 = __webpack_require__(340);
 exports.useLogMonitor = dock_monitor_2.useDockMonitor;
 
 
 /***/ },
 
-/***/ 543:
+/***/ 544:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
-var common_1 = __webpack_require__(36);
-var json_node_1 = __webpack_require__(544);
-var json_tree_1 = __webpack_require__(545);
+var common_1 = __webpack_require__(37);
+var json_node_1 = __webpack_require__(545);
+var json_tree_1 = __webpack_require__(546);
 var JsonTreeModule = (function () {
     function JsonTreeModule() {
     }
@@ -2617,13 +2626,13 @@ exports.JsonTreeModule = JsonTreeModule;
 
 /***/ },
 
-/***/ 544:
+/***/ 545:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
-var types = __webpack_require__(353);
+var types = __webpack_require__(341);
 var JsonNodeComponent = (function () {
     function JsonNodeComponent() {
         this.expanded = false;
@@ -2668,13 +2677,13 @@ exports.JsonNodeComponent = JsonNodeComponent;
 
 /***/ },
 
-/***/ 545:
+/***/ 546:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
-var types_1 = __webpack_require__(353);
+var types_1 = __webpack_require__(341);
 var JsonTreeComponent = (function () {
     function JsonTreeComponent() {
         this.children = [];
@@ -2706,17 +2715,17 @@ exports.JsonTreeComponent = JsonTreeComponent;
 
 /***/ },
 
-/***/ 546:
+/***/ 547:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
-var common_1 = __webpack_require__(36);
-var json_tree_1 = __webpack_require__(543);
-var log_monitor_1 = __webpack_require__(549);
-var log_monitor_button_1 = __webpack_require__(547);
-var log_monitor_entry_1 = __webpack_require__(548);
+var common_1 = __webpack_require__(37);
+var json_tree_1 = __webpack_require__(544);
+var log_monitor_1 = __webpack_require__(550);
+var log_monitor_button_1 = __webpack_require__(548);
+var log_monitor_entry_1 = __webpack_require__(549);
 var LogMonitorModule = (function () {
     function LogMonitorModule() {
     }
@@ -2745,7 +2754,7 @@ exports.LogMonitorModule = LogMonitorModule;
 
 /***/ },
 
-/***/ 547:
+/***/ 548:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2783,7 +2792,7 @@ exports.LogMonitorButtonComponent = LogMonitorButtonComponent;
 
 /***/ },
 
-/***/ 548:
+/***/ 549:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2842,14 +2851,14 @@ exports.LogMonitorEntryComponent = LogMonitorEntryComponent;
 
 /***/ },
 
-/***/ 549:
+/***/ 550:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-__webpack_require__(77);
+__webpack_require__(89);
 var core_1 = __webpack_require__(0);
-var store_devtools_1 = __webpack_require__(215);
+var store_devtools_1 = __webpack_require__(216);
 var LogMonitorComponent = (function () {
     function LogMonitorComponent(devtools) {
         this.devtools = devtools;
@@ -2918,7 +2927,7 @@ exports.LogMonitorComponent = LogMonitorComponent;
 
 /***/ },
 
-/***/ 550:
+/***/ 551:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2950,16 +2959,16 @@ exports.StoreLogMonitorComponent = StoreLogMonitorComponent;
 
 /***/ },
 
-/***/ 551:
+/***/ 552:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var reducer_1 = __webpack_require__(355);
-var dispatcher_1 = __webpack_require__(354);
-var store_1 = __webpack_require__(357);
-var state_1 = __webpack_require__(356);
-var utils_1 = __webpack_require__(358);
+var reducer_1 = __webpack_require__(343);
+var dispatcher_1 = __webpack_require__(342);
+var store_1 = __webpack_require__(345);
+var state_1 = __webpack_require__(344);
+var utils_1 = __webpack_require__(346);
 var core_1 = __webpack_require__(0);
 exports.INITIAL_REDUCER = new core_1.OpaqueToken('Token ngrx/store/reducer');
 exports.INITIAL_STATE = new core_1.OpaqueToken('Token ngrx/store/initial-state');
@@ -3036,17 +3045,17 @@ exports.StoreModule = StoreModule;
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
-__export(__webpack_require__(354));
-__export(__webpack_require__(551));
-__export(__webpack_require__(355));
-__export(__webpack_require__(356));
-__export(__webpack_require__(357));
-__export(__webpack_require__(358));
+__export(__webpack_require__(342));
+__export(__webpack_require__(552));
+__export(__webpack_require__(343));
+__export(__webpack_require__(344));
+__export(__webpack_require__(345));
+__export(__webpack_require__(346));
 //# sourceMappingURL=index.js.map
 
 /***/ },
 
-/***/ 694:
+/***/ 695:
 /***/ function(module, exports) {
 
 (function() {
@@ -3149,35 +3158,35 @@ __export(__webpack_require__(358));
 
 /***/ },
 
-/***/ 695:
+/***/ 696:
 /***/ function(module, exports) {
 
 module.exports = "<nav class=\"navbar navbar-fixed-top navbar-dark bg-inverse\">\n    <div class=\"container\">\n        <a class=\"navbar-brand\" [routerLink]=\"['courses']\">Angular courses</a>\n        <ul class=\"nav navbar-nav\">\n            <li class=\"nav-item active\" routerLinkActive=\"active\" *ngIf=\"user\">\n                <a class=\"nav-link\" [routerLink]=\"['courses']\">Courses list</a>\n            </li>\n        </ul>\n        <ul class=\"nav navbar-nav pull-xs-right\" *ngIf=\"user\">\n            <li class=\"nav-item\">\n                <span class=\"nav-link\">{{user}}</span>\n            </li>\n            <li class=\"nav-item\">\n                <button class=\"btn btn-outline-secondary\" (click)=\"authService.logout()\">\n                    Logout\n                </button>\n            </li>\n        </ul>\n    </div>\n</nav>\n\n<div class=\"container app-container\">\n    <router-outlet></router-outlet>\n</div>\n\n<ngrx-store-log-monitor toggleCommand=\"ctrl-h\" positionCommand=\"ctrl-m\"></ngrx-store-log-monitor>\n";
 
 /***/ },
 
-/***/ 696:
+/***/ 697:
 /***/ function(module, exports) {
 
 module.exports = "<div class=\"row\">\n    <div class=\"col-sm-12\">\n        <div class=\"card card-block\">\n            <form class=\"form-inline\">\n                <div class=\"form-group\">\n                    <label class=\"sr-only\" for=\"search\">search</label>\n                    <input type=\"text\" class=\"form-control\" id=\"search\"\n                           placeholder=\"search\">\n                    <button type=\"submit\" class=\"btn btn-info\">Find</button>\n                </div>\n                <div class=\"form-group pull-xs-right\">\n                    <button type=\"submit\" class=\"btn btn-outline-success\" [routerLink]=\"['/courses', 'new']\">\n                        Add course\n                    </button>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n\n<div class=\"row\">\n    <div class=\"col-xs-4 grid-card\" *ngFor=\"let item of list\">\n        <div class=\"card\">\n            <img class=\"card-img-top\" src=\"{{item.img}}\" width=\"100%\" alt=\"Card image cap\">\n            <div class=\"card-block\">\n                <h4 class=\"card-title\">{{item.title}}</h4>\n                <p class=\"card-text\">{{item.description}}</p>\n                <div class=\"text-xs-right\">\n                    <a href=\"#\" class=\"btn btn-outline-primary\" [routerLink]=\"['/courses', item._id.$oid]\">\n                        Go somewhere\n                    </a>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
 
-/***/ 697:
-/***/ function(module, exports) {
-
-module.exports = "<div class=\"row flex-items-xs-center\" *ngIf=\"course\">\n    <div class=\"card\">\n        <img class=\"card-img-top\" src=\"{{course.img}}\" width=\"100%\" alt=\"Card image cap\">\n        <div class=\"card-block\">\n            <h4 class=\"card-title\">{{course.title}}</h4>\n            <p class=\"card-text\">{{course.description}}</p>\n            <div class=\"text-xs-right\">\n                <a href=\"#\" class=\"btn btn-outline-primary\" (click)=\"goBack()\">Go back</a>\n            </div>\n        </div>\n    </div>\n</div>\n";
-
-/***/ },
-
 /***/ 698:
 /***/ function(module, exports) {
 
-module.exports = "<form class=\"form-signin\" novalidate\n      [formGroup]=\"loginForm\"\n      (ngSubmit)=\"logIn()\">\n    <h2 class=\"form-signin-heading\">Please sign in</h2>\n\n    <div class=\"form-group\">\n        <label for=\"login\" class=\"sr-only\">Login</label>\n        <input type=\"text\" id=\"login\" class=\"form-control\" placeholder=\"Login\"\n               formControlName=\"login\">\n        <div class=\"error-tooltip\" *ngIf=\"showError('login', 'required')\">\n            login is required\n        </div>\n        <div class=\"error-tooltip\" *ngIf=\"showError('login', 'pattern')\">\n            field could contain English letters only\n        </div>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"inputPassword\" class=\"sr-only\">Password</label>\n        <input type=\"password\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Password\"\n               formControlName=\"password\">\n        <div class=\"error-tooltip\" *ngIf=\"showError('password', 'required')\">\n            password is required\n        </div>\n        <div class=\"error-tooltip\" *ngIf=\"showError('password', 'pattern')\">\n            field could contain English letters and numbers\n        </div>\n    </div>\n    <div class=\"form-group\">\n        <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\" [disabled]=\"!loginForm.valid\">\n            Sign in\n        </button>\n    </div>\n\n    <div class=\"alert alert-danger\" *ngIf=\"message\">{{message}}</div>\n</form>\n";
+module.exports = "<div class=\"col-sm-12\">\n    <div class=\"card\">\n        <div class=\"card-header\">\n            <h4 class=\"pull-xs-left\">{{mode}} Course</h4>\n\n            <div class=\"pull-xs-right\">\n                <a href=\"#\" class=\"btn btn-success\" (click)=\"goBack()\">Save</a>\n                <a href=\"#\" class=\"btn btn-primary\" (click)=\"goBack()\">Go back</a>\n            </div>\n        </div>\n        <div class=\"card-block\" *ngIf=\"course\">\n            <div class=\"col-xs-10 offset-xs-2\">\n                <div class=\"form-group row\">\n                    <label for=\"title\" class=\"col-xs-2 col-form-label\">Title</label>\n                    <div class=\"col-xs-10\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"course.title\" id=\"title\">\n                    </div>\n                </div>\n\n                <div class=\"form-group row\">\n                    <label for=\"description\" class=\"col-xs-2 col-form-label\">Description</label>\n                    <div class=\"col-xs-10\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"course.description\" id=\"description\">\n                    </div>\n                </div>\n\n                <div class=\"form-group row\">\n                    <label class=\"col-xs-2 col-form-label\">Image</label>\n                    <div class=\"col-xs-10\">\n                        <img [src]=\"course.img\">\n                    </div>\n                </div>\n\n            </div>\n        </div>\n    </div>\n</div>\n\n";
 
 /***/ },
 
 /***/ 699:
+/***/ function(module, exports) {
+
+module.exports = "<form class=\"form-signin\" novalidate\n      [formGroup]=\"loginForm\"\n      (ngSubmit)=\"logIn()\">\n    <h2 class=\"form-signin-heading\">Please sign in</h2>\n\n    <div class=\"form-group\" [ngClass]=\"{'has-danger': showError('login')}\">\n        <label for=\"login\" class=\"sr-only\">Login</label>\n        <input type=\"text\" id=\"login\" class=\"form-control\" placeholder=\"Login\"\n               formControlName=\"login\"\n               [ngClass]=\"{'form-control-danger': showError('login')}\">\n        <div class=\"error-tooltip\" *ngIf=\"showError('login', 'required')\">\n            login is required\n        </div>\n        <div class=\"error-tooltip\" *ngIf=\"showError('login', 'pattern')\">\n            field could contain English letters only\n        </div>\n    </div>\n\n    <div class=\"form-group\" [ngClass]=\"{'has-danger': showError('password')}\">\n        <label for=\"inputPassword\" class=\"sr-only\">Password</label>\n        <input type=\"password\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Password\"\n               formControlName=\"password\"\n               [ngClass]=\"{'form-control-danger': showError('password')}\">\n        <div class=\"error-tooltip\" *ngIf=\"showError('password', 'required')\">\n            password is required\n        </div>\n        <div class=\"error-tooltip\" *ngIf=\"showError('password', 'pattern')\">\n            field could contain English letters and numbers\n        </div>\n    </div>\n\n    <div class=\"form-group\">\n        <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\" [disabled]=\"!loginForm.valid\">\n            Sign in\n        </button>\n    </div>\n\n    <div class=\"alert alert-danger\" *ngIf=\"message\">{{message}}</div>\n</form>\n";
+
+/***/ },
+
+/***/ 700:
 /***/ function(module, exports) {
 
 /*!
@@ -3205,14 +3214,14 @@ function isSlowBuffer (obj) {
 
 /***/ },
 
-/***/ 700:
+/***/ 701:
 /***/ function(module, exports, __webpack_require__) {
 
 (function(){
-  var crypt = __webpack_require__(694),
-      utf8 = __webpack_require__(359).utf8,
-      isBuffer = __webpack_require__(699),
-      bin = __webpack_require__(359).bin,
+  var crypt = __webpack_require__(695),
+      utf8 = __webpack_require__(347).utf8,
+      isBuffer = __webpack_require__(700),
+      bin = __webpack_require__(347).bin,
 
   // The core
   md5 = function (message, options) {
@@ -3372,21 +3381,21 @@ function isSlowBuffer (obj) {
 
 /***/ },
 
-/***/ 701:
-/***/ function(module, exports) {
-
-module.exports = ".app-container {\n  padding-top: 60px;\n  box-sizing: border-box;\n  min-height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n"
-
-/***/ },
-
 /***/ 702:
 /***/ function(module, exports) {
 
-module.exports = "@-webkit-keyframes show-tooltip {\n  0% {\n    opacity: 0;\n    -webkit-transform: translateY(-50%) translateX(-4px);\n            transform: translateY(-50%) translateX(-4px);\n  }\n  100% {\n    opacity: 1;\n    -webkit-transform: translateY(-50%) translateX(0);\n            transform: translateY(-50%) translateX(0);\n  }\n}\n\n@keyframes show-tooltip {\n  0% {\n    opacity: 0;\n    -webkit-transform: translateY(-50%) translateX(-4px);\n            transform: translateY(-50%) translateX(-4px);\n  }\n  100% {\n    opacity: 1;\n    -webkit-transform: translateY(-50%) translateX(0);\n            transform: translateY(-50%) translateX(0);\n  }\n}\n\n:host {\n  width: 100%;\n  -ms-flex-item-align: center;\n      align-self: center;\n  display: block;\n}\n\n.form-signin {\n  max-width: 330px;\n  padding: 15px;\n  margin: 0 auto;\n}\n\n.form-signin-heading {\n  margin-bottom: 10px;\n}\n\n.form-control {\n  padding: 10px;\n  font-size: 16px;\n}\n\n.form-group {\n  position: relative;\n}\n\n.error-tooltip {\n  opacity: 0;\n  position: absolute;\n  left: 103%;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  padding: 3px 7px;\n  border-radius: 2px;\n  background: #f2dede;\n  -webkit-animation: show-tooltip .3s ease 1 forwards;\n          animation: show-tooltip .3s ease 1 forwards;\n  color: #a94442;\n  text-align: center;\n  width: 100%;\n  max-width: 180px\n}\n\n.error-tooltip:before {\n  content: '';\n  position: absolute;\n  width: 0;\n  height: 0;\n  border-color: transparent;\n  border-style: solid;\n  display: block;\n  top: 50%;\n  left: -5px;\n  margin-top: -5px;\n  border-width: 5px 5px 5px 0;\n  border-right-color: #f2dede;\n}\n"
+module.exports = ".app-container {\n  padding-top: 60px;\n  box-sizing: border-box;\n  min-height: 100%;\n}\n"
 
 /***/ },
 
-/***/ 706:
+/***/ 703:
+/***/ function(module, exports) {
+
+module.exports = "@-webkit-keyframes show-tooltip {\n  0% {\n    opacity: 0;\n    -webkit-transform: translateY(-50%) translateX(-4px);\n            transform: translateY(-50%) translateX(-4px);\n  }\n  100% {\n    opacity: 1;\n    -webkit-transform: translateY(-50%) translateX(0);\n            transform: translateY(-50%) translateX(0);\n  }\n}\n\n@keyframes show-tooltip {\n  0% {\n    opacity: 0;\n    -webkit-transform: translateY(-50%) translateX(-4px);\n            transform: translateY(-50%) translateX(-4px);\n  }\n  100% {\n    opacity: 1;\n    -webkit-transform: translateY(-50%) translateX(0);\n            transform: translateY(-50%) translateX(0);\n  }\n}\n\n:host {\n  position: relative;\n  top: calc(50vh - 160px);\n}\n\n.form-signin {\n  max-width: 330px;\n  padding: 15px;\n  margin: 0 auto;\n}\n\n.form-signin-heading {\n  margin-bottom: 10px;\n}\n\n.form-control {\n  padding: 10px;\n  font-size: 16px;\n}\n\n.form-group {\n  position: relative;\n}\n\n.error-tooltip {\n  opacity: 0;\n  position: absolute;\n  left: 103%;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  padding: 3px 7px;\n  border-radius: 2px;\n  background: #f2dede;\n  -webkit-animation: show-tooltip .3s ease 1 forwards;\n          animation: show-tooltip .3s ease 1 forwards;\n  color: #a94442;\n  text-align: center;\n  width: 100%;\n  max-width: 180px\n}\n\n.error-tooltip:before {\n  content: '';\n  position: absolute;\n  width: 0;\n  height: 0;\n  border-color: transparent;\n  border-style: solid;\n  display: block;\n  top: 50%;\n  left: -5px;\n  margin-top: -5px;\n  border-width: 5px 5px 5px 0;\n  border-right-color: #f2dede;\n}\n"
+
+/***/ },
+
+/***/ 707:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3396,9 +3405,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Subject_1 = __webpack_require__(35);
+var Subject_1 = __webpack_require__(36);
 var queue_1 = __webpack_require__(245);
-var observeOn_1 = __webpack_require__(158);
+var observeOn_1 = __webpack_require__(159);
 /**
  * @class ReplaySubject<T>
  */
@@ -3472,7 +3481,7 @@ var ReplayEvent = (function () {
 
 /***/ },
 
-/***/ 707:
+/***/ 708:
 /***/ function(module, exports) {
 
 "use strict";
@@ -3528,25 +3537,25 @@ exports.Scheduler = Scheduler;
 
 /***/ },
 
-/***/ 709:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(2);
-var empty_1 = __webpack_require__(733);
-Observable_1.Observable.empty = empty_1.empty;
-//# sourceMappingURL=empty.js.map
-
-/***/ },
-
 /***/ 710:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var Observable_1 = __webpack_require__(2);
-var merge_1 = __webpack_require__(734);
+var Observable_1 = __webpack_require__(4);
+var empty_1 = __webpack_require__(727);
+Observable_1.Observable.empty = empty_1.empty;
+//# sourceMappingURL=empty.js.map
+
+/***/ },
+
+/***/ 711:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var Observable_1 = __webpack_require__(4);
+var merge_1 = __webpack_require__(728);
 Observable_1.Observable.merge = merge_1.merge;
 //# sourceMappingURL=merge.js.map
 
@@ -3557,10 +3566,46 @@ Observable_1.Observable.merge = merge_1.merge;
 
 "use strict";
 "use strict";
-var Observable_1 = __webpack_require__(2);
-var distinctUntilChanged_1 = __webpack_require__(400);
+var Observable_1 = __webpack_require__(4);
+var distinctUntilChanged_1 = __webpack_require__(388);
 Observable_1.Observable.prototype.distinctUntilChanged = distinctUntilChanged_1.distinctUntilChanged;
 //# sourceMappingURL=distinctUntilChanged.js.map
+
+/***/ },
+
+/***/ 713:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var Observable_1 = __webpack_require__(4);
+var merge_1 = __webpack_require__(390);
+Observable_1.Observable.prototype.merge = merge_1.merge;
+//# sourceMappingURL=merge.js.map
+
+/***/ },
+
+/***/ 714:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var Observable_1 = __webpack_require__(4);
+var observeOn_1 = __webpack_require__(159);
+Observable_1.Observable.prototype.observeOn = observeOn_1.observeOn;
+//# sourceMappingURL=observeOn.js.map
+
+/***/ },
+
+/***/ 715:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var Observable_1 = __webpack_require__(4);
+var publishReplay_1 = __webpack_require__(734);
+Observable_1.Observable.prototype.publishReplay = publishReplay_1.publishReplay;
+//# sourceMappingURL=publishReplay.js.map
 
 /***/ },
 
@@ -3569,10 +3614,34 @@ Observable_1.Observable.prototype.distinctUntilChanged = distinctUntilChanged_1.
 
 "use strict";
 "use strict";
-var Observable_1 = __webpack_require__(2);
-var merge_1 = __webpack_require__(401);
-Observable_1.Observable.prototype.merge = merge_1.merge;
-//# sourceMappingURL=merge.js.map
+var Observable_1 = __webpack_require__(4);
+var scan_1 = __webpack_require__(392);
+Observable_1.Observable.prototype.scan = scan_1.scan;
+//# sourceMappingURL=scan.js.map
+
+/***/ },
+
+/***/ 717:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var Observable_1 = __webpack_require__(4);
+var share_1 = __webpack_require__(736);
+Observable_1.Observable.prototype.share = share_1.share;
+//# sourceMappingURL=share.js.map
+
+/***/ },
+
+/***/ 718:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var Observable_1 = __webpack_require__(4);
+var skip_1 = __webpack_require__(737);
+Observable_1.Observable.prototype.skip = skip_1.skip;
+//# sourceMappingURL=skip.js.map
 
 /***/ },
 
@@ -3581,10 +3650,10 @@ Observable_1.Observable.prototype.merge = merge_1.merge;
 
 "use strict";
 "use strict";
-var Observable_1 = __webpack_require__(2);
-var observeOn_1 = __webpack_require__(158);
-Observable_1.Observable.prototype.observeOn = observeOn_1.observeOn;
-//# sourceMappingURL=observeOn.js.map
+var Observable_1 = __webpack_require__(4);
+var switchMapTo_1 = __webpack_require__(738);
+Observable_1.Observable.prototype.switchMapTo = switchMapTo_1.switchMapTo;
+//# sourceMappingURL=switchMapTo.js.map
 
 /***/ },
 
@@ -3593,10 +3662,22 @@ Observable_1.Observable.prototype.observeOn = observeOn_1.observeOn;
 
 "use strict";
 "use strict";
-var Observable_1 = __webpack_require__(2);
-var publishReplay_1 = __webpack_require__(743);
-Observable_1.Observable.prototype.publishReplay = publishReplay_1.publishReplay;
-//# sourceMappingURL=publishReplay.js.map
+var Observable_1 = __webpack_require__(4);
+var takeUntil_1 = __webpack_require__(739);
+Observable_1.Observable.prototype.takeUntil = takeUntil_1.takeUntil;
+//# sourceMappingURL=takeUntil.js.map
+
+/***/ },
+
+/***/ 721:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var Observable_1 = __webpack_require__(4);
+var toPromise_1 = __webpack_require__(393);
+Observable_1.Observable.prototype.toPromise = toPromise_1.toPromise;
+//# sourceMappingURL=toPromise.js.map
 
 /***/ },
 
@@ -3605,86 +3686,14 @@ Observable_1.Observable.prototype.publishReplay = publishReplay_1.publishReplay;
 
 "use strict";
 "use strict";
-var Observable_1 = __webpack_require__(2);
-var scan_1 = __webpack_require__(403);
-Observable_1.Observable.prototype.scan = scan_1.scan;
-//# sourceMappingURL=scan.js.map
-
-/***/ },
-
-/***/ 723:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(2);
-var share_1 = __webpack_require__(745);
-Observable_1.Observable.prototype.share = share_1.share;
-//# sourceMappingURL=share.js.map
-
-/***/ },
-
-/***/ 724:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(2);
-var skip_1 = __webpack_require__(746);
-Observable_1.Observable.prototype.skip = skip_1.skip;
-//# sourceMappingURL=skip.js.map
-
-/***/ },
-
-/***/ 725:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(2);
-var switchMapTo_1 = __webpack_require__(747);
-Observable_1.Observable.prototype.switchMapTo = switchMapTo_1.switchMapTo;
-//# sourceMappingURL=switchMapTo.js.map
-
-/***/ },
-
-/***/ 726:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(2);
-var takeUntil_1 = __webpack_require__(748);
-Observable_1.Observable.prototype.takeUntil = takeUntil_1.takeUntil;
-//# sourceMappingURL=takeUntil.js.map
-
-/***/ },
-
-/***/ 727:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(2);
-var toPromise_1 = __webpack_require__(404);
-Observable_1.Observable.prototype.toPromise = toPromise_1.toPromise;
-//# sourceMappingURL=toPromise.js.map
-
-/***/ },
-
-/***/ 728:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(2);
-var withLatestFrom_1 = __webpack_require__(405);
+var Observable_1 = __webpack_require__(4);
+var withLatestFrom_1 = __webpack_require__(394);
 Observable_1.Observable.prototype.withLatestFrom = withLatestFrom_1.withLatestFrom;
 //# sourceMappingURL=withLatestFrom.js.map
 
 /***/ },
 
-/***/ 732:
+/***/ 726:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3694,8 +3703,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Observable_1 = __webpack_require__(2);
-var ConnectableObservable_1 = __webpack_require__(396);
+var Observable_1 = __webpack_require__(4);
+var ConnectableObservable_1 = __webpack_require__(383);
 var MulticastObservable = (function (_super) {
     __extends(MulticastObservable, _super);
     function MulticastObservable(source, subjectFactory, selector) {
@@ -3718,29 +3727,29 @@ exports.MulticastObservable = MulticastObservable;
 
 /***/ },
 
-/***/ 733:
+/***/ 727:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var EmptyObservable_1 = __webpack_require__(241);
+var EmptyObservable_1 = __webpack_require__(242);
 exports.empty = EmptyObservable_1.EmptyObservable.create;
 //# sourceMappingURL=empty.js.map
 
 /***/ },
 
-/***/ 734:
+/***/ 728:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var merge_1 = __webpack_require__(401);
+var merge_1 = __webpack_require__(390);
 exports.merge = merge_1.mergeStatic;
 //# sourceMappingURL=merge.js.map
 
 /***/ },
 
-/***/ 738:
+/***/ 730:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3750,7 +3759,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Subscriber_1 = __webpack_require__(23);
+var Subscriber_1 = __webpack_require__(22);
 /**
  * Filter items emitted by the source Observable by only emitting those that
  * satisfy a specified predicate.
@@ -3840,12 +3849,12 @@ var FilterSubscriber = (function (_super) {
 
 /***/ },
 
-/***/ 742:
+/***/ 733:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var map_1 = __webpack_require__(243);
+var map_1 = __webpack_require__(76);
 /**
  * Maps each source value (an object) to its specified nested property.
  *
@@ -3905,13 +3914,13 @@ function plucker(props, length) {
 
 /***/ },
 
-/***/ 743:
+/***/ 734:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var ReplaySubject_1 = __webpack_require__(706);
-var multicast_1 = __webpack_require__(402);
+var ReplaySubject_1 = __webpack_require__(707);
+var multicast_1 = __webpack_require__(391);
 /**
  * @param bufferSize
  * @param windowTime
@@ -3930,13 +3939,13 @@ exports.publishReplay = publishReplay;
 
 /***/ },
 
-/***/ 745:
+/***/ 736:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var multicast_1 = __webpack_require__(402);
-var Subject_1 = __webpack_require__(35);
+var multicast_1 = __webpack_require__(391);
+var Subject_1 = __webpack_require__(36);
 function shareSubjectFactory() {
     return new Subject_1.Subject();
 }
@@ -3961,7 +3970,7 @@ exports.share = share;
 
 /***/ },
 
-/***/ 746:
+/***/ 737:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3971,7 +3980,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Subscriber_1 = __webpack_require__(23);
+var Subscriber_1 = __webpack_require__(22);
 /**
  * Returns an Observable that skips `n` items emitted by an Observable.
  *
@@ -4019,7 +4028,7 @@ var SkipSubscriber = (function (_super) {
 
 /***/ },
 
-/***/ 747:
+/***/ 738:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4029,8 +4038,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(86);
-var subscribeToResult_1 = __webpack_require__(87);
+var OuterSubscriber_1 = __webpack_require__(87);
+var subscribeToResult_1 = __webpack_require__(88);
 /**
  * Projects each source value to the same Observable which is flattened multiple
  * times with {@link switch} in the output Observable.
@@ -4152,7 +4161,7 @@ var SwitchMapToSubscriber = (function (_super) {
 
 /***/ },
 
-/***/ 748:
+/***/ 739:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4162,8 +4171,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var OuterSubscriber_1 = __webpack_require__(86);
-var subscribeToResult_1 = __webpack_require__(87);
+var OuterSubscriber_1 = __webpack_require__(87);
+var subscribeToResult_1 = __webpack_require__(88);
 /**
  * Emits the values emitted by the source Observable until a `notifier`
  * Observable emits a value.
@@ -4234,7 +4243,7 @@ var TakeUntilSubscriber = (function (_super) {
 
 /***/ },
 
-/***/ 749:
+/***/ 740:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4285,7 +4294,7 @@ exports.Action = Action;
 
 /***/ },
 
-/***/ 750:
+/***/ 741:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4296,7 +4305,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var root_1 = __webpack_require__(54);
-var Action_1 = __webpack_require__(749);
+var Action_1 = __webpack_require__(740);
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @ignore
@@ -4434,7 +4443,7 @@ exports.AsyncAction = AsyncAction;
 
 /***/ },
 
-/***/ 751:
+/***/ 742:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4444,7 +4453,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Scheduler_1 = __webpack_require__(707);
+var Scheduler_1 = __webpack_require__(708);
 var AsyncScheduler = (function (_super) {
     __extends(AsyncScheduler, _super);
     function AsyncScheduler() {
@@ -4492,7 +4501,7 @@ exports.AsyncScheduler = AsyncScheduler;
 
 /***/ },
 
-/***/ 752:
+/***/ 743:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4502,7 +4511,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var AsyncAction_1 = __webpack_require__(750);
+var AsyncAction_1 = __webpack_require__(741);
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @ignore
@@ -4546,7 +4555,7 @@ exports.QueueAction = QueueAction;
 
 /***/ },
 
-/***/ 753:
+/***/ 744:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4556,7 +4565,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var AsyncScheduler_1 = __webpack_require__(751);
+var AsyncScheduler_1 = __webpack_require__(742);
 var QueueScheduler = (function (_super) {
     __extends(QueueScheduler, _super);
     function QueueScheduler() {
@@ -4569,13 +4578,13 @@ exports.QueueScheduler = QueueScheduler;
 
 /***/ },
 
-/***/ 757:
+/***/ 748:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
-var auth_service_1 = __webpack_require__(159);
+var auth_service_1 = __webpack_require__(160);
 var store_1 = __webpack_require__(68);
 var AppComponent = (function () {
     function AppComponent(authService, store) {
@@ -4595,8 +4604,8 @@ var AppComponent = (function () {
 AppComponent = __decorate([
     core_1.Component({
         selector: 'app',
-        template: __webpack_require__(695),
-        styles: [__webpack_require__(701)]
+        template: __webpack_require__(696),
+        styles: [__webpack_require__(702)]
     }),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
         store_1.Store])
@@ -4606,16 +4615,16 @@ exports.AppComponent = AppComponent;
 
 /***/ },
 
-/***/ 758:
+/***/ 749:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var router_1 = __webpack_require__(76);
-var loggedin_guard_1 = __webpack_require__(411);
-var login_component_1 = __webpack_require__(414);
-var courses_component_1 = __webpack_require__(412);
-var edit_course_component_1 = __webpack_require__(413);
+var router_1 = __webpack_require__(77);
+var loggedin_guard_1 = __webpack_require__(400);
+var login_component_1 = __webpack_require__(403);
+var courses_component_1 = __webpack_require__(401);
+var edit_course_component_1 = __webpack_require__(402);
 var appRoutes = [
     { path: '', redirectTo: 'courses', pathMatch: 'full' },
     { path: 'courses', component: courses_component_1.CoursesComponent, canActivate: [loggedin_guard_1.LoggedInGuard] },
@@ -4627,19 +4636,19 @@ exports.routing = router_1.RouterModule.forRoot(appRoutes, { useHash: true });
 
 /***/ },
 
-/***/ 760:
+/***/ 750:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var platform_browser_dynamic_1 = __webpack_require__(161);
-var app_module_1 = __webpack_require__(438);
-__webpack_require__(435);
-__webpack_require__(434);
+var platform_browser_dynamic_1 = __webpack_require__(162);
+var app_module_1 = __webpack_require__(427);
+__webpack_require__(424);
+__webpack_require__(423);
 platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1.AppModule);
 
 
 /***/ }
 
-},[760]);
+},[750]);
 //# sourceMappingURL=main.js.map
