@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
 
     showError(fieldName, validator) {
         const field = this.loginForm.controls[fieldName];
-        return field.touched && field.hasError(validator);
+        return field.touched && (validator ? field.hasError(validator) : !field.valid);
     }
 
     logIn() {

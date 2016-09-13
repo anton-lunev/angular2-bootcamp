@@ -12,6 +12,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
     course: Object;
     id: string = '';
     routeSub: Subscription;
+    mode: string = 'Edit';
 
     constructor(private route: ActivatedRoute,
                 private coursesService: CoursesService,
@@ -23,6 +24,13 @@ export class EditCourseComponent implements OnInit, OnDestroy {
             this.id = params['id'];
             if (this.id !== 'new') {
                 this.getCourse();
+            } else {
+                this.mode = 'Add';
+                this.renderCourse({
+                    title: '',
+                    description: '',
+                    img: ''
+                });
             }
         });
     }

@@ -3,10 +3,11 @@
       (ngSubmit)="logIn()">
     <h2 class="form-signin-heading">Please sign in</h2>
 
-    <div class="form-group">
+    <div class="form-group" [ngClass]="{'has-danger': showError('login')}">
         <label for="login" class="sr-only">Login</label>
         <input type="text" id="login" class="form-control" placeholder="Login"
-               formControlName="login">
+               formControlName="login"
+               [ngClass]="{'form-control-danger': showError('login')}">
         <div class="error-tooltip" *ngIf="showError('login', 'required')">
             login is required
         </div>
@@ -14,10 +15,12 @@
             field could contain English letters only
         </div>
     </div>
-    <div class="form-group">
+
+    <div class="form-group" [ngClass]="{'has-danger': showError('password')}">
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password"
-               formControlName="password">
+               formControlName="password"
+               [ngClass]="{'form-control-danger': showError('password')}">
         <div class="error-tooltip" *ngIf="showError('password', 'required')">
             password is required
         </div>
@@ -25,6 +28,7 @@
             field could contain English letters and numbers
         </div>
     </div>
+
     <div class="form-group">
         <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="!loginForm.valid">
             Sign in
