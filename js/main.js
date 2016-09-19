@@ -1,72 +1,16 @@
 webpackJsonp([1],{
 
-/***/ 147:
-/***/ function(module, exports) {
-
-"use strict";
-"use strict";
-exports.ActionTypes = {
-    PERFORM_ACTION: 'PERFORM_ACTION',
-    RESET: 'RESET',
-    ROLLBACK: 'ROLLBACK',
-    COMMIT: 'COMMIT',
-    SWEEP: 'SWEEP',
-    TOGGLE_ACTION: 'TOGGLE_ACTION',
-    SET_ACTIONS_ACTIVE: 'SET_ACTIONS_ACTIVE',
-    JUMP_TO_STATE: 'JUMP_TO_STATE',
-    IMPORT_STATE: 'IMPORT_STATE'
-};
-/**
-* Action creators to change the History state.
-*/
-exports.StoreDevtoolActions = {
-    performAction: function (action) {
-        if (typeof action.type === 'undefined') {
-            throw new Error('Actions may not have an undefined "type" property. ' +
-                'Have you misspelled a constant?');
-        }
-        return { type: exports.ActionTypes.PERFORM_ACTION, action: action, timestamp: Date.now() };
-    },
-    reset: function () {
-        return { type: exports.ActionTypes.RESET, timestamp: Date.now() };
-    },
-    rollback: function () {
-        return { type: exports.ActionTypes.ROLLBACK, timestamp: Date.now() };
-    },
-    commit: function () {
-        return { type: exports.ActionTypes.COMMIT, timestamp: Date.now() };
-    },
-    sweep: function () {
-        return { type: exports.ActionTypes.SWEEP };
-    },
-    toggleAction: function (id) {
-        return { type: exports.ActionTypes.TOGGLE_ACTION, id: id };
-    },
-    setActionsActive: function (start, end, active) {
-        if (active === void 0) { active = true; }
-        return { type: exports.ActionTypes.SET_ACTIONS_ACTIVE, start: start, end: end, active: active };
-    },
-    jumpToState: function (index) {
-        return { type: exports.ActionTypes.JUMP_TO_STATE, index: index };
-    },
-    importState: function (nextLiftedState) {
-        return { type: exports.ActionTypes.IMPORT_STATE, nextLiftedState: nextLiftedState };
-    }
-};
-
-
-/***/ },
-
-/***/ 160:
+/***/ 111:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
-var http_1 = __webpack_require__(111);
+var http_1 = __webpack_require__(112);
 var router_1 = __webpack_require__(77);
-var mlab_1 = __webpack_require__(404);
-var store_1 = __webpack_require__(68);
+var mlab_1 = __webpack_require__(406);
+var store_1 = __webpack_require__(69);
+var authActions = __webpack_require__(407);
 var AuthService = (function (_super) {
     __extends(AuthService, _super);
     function AuthService(http, route, store) {
@@ -75,14 +19,11 @@ var AuthService = (function (_super) {
         this.route = route;
         this.store = store;
         this.collection = 'users';
-        this.initReducers();
-        this.initUser();
     }
     AuthService.prototype.initUser = function () {
         var user = localStorage.getItem('username');
         if (user) {
-            console.log(user);
-            this.store.dispatch({ type: 'USER_LOADED', payload: user });
+            this.store.dispatch({ type: authActions.USER_LOADED, payload: user });
         }
     };
     AuthService.prototype.login = function (username, password) {
@@ -95,16 +36,16 @@ var AuthService = (function (_super) {
             var data = result.json();
             if (data) {
                 localStorage.setItem('username', data.name);
-                _this.store.dispatch({ type: 'USER_LOADED', payload: data.name });
+                _this.store.dispatch({ type: authActions.USER_LOADED, payload: data.name });
             }
             else {
-                _this.store.dispatch({ type: 'USER_ERROR' });
+                _this.store.dispatch({ type: authActions.USER_ERROR });
             }
             return data;
         });
     };
     AuthService.prototype.logout = function () {
-        this.store.dispatch({ type: 'USER_LOGOUT' });
+        this.store.dispatch({ type: authActions.USER_LOGOUT });
         localStorage.removeItem('username');
         this.route.navigate(['login']);
     };
@@ -113,23 +54,6 @@ var AuthService = (function (_super) {
     };
     AuthService.prototype.isLoggedIn = function () {
         return this.getUser() !== null;
-    };
-    AuthService.prototype.initReducers = function () {
-        this.store.replaceReducer(store_1.combineReducers({
-            user: function (state, action) {
-                if (state === void 0) { state = null; }
-                console.log(state, action);
-                switch (action.type) {
-                    case 'USER_LOADED':
-                        return action.payload;
-                    case 'USER_LOGOUT':
-                    case 'USER_ERROR':
-                        return null;
-                    default:
-                        return state;
-                }
-            }
-        }));
     };
     return AuthService;
 }(mlab_1.MLab));
@@ -144,29 +68,92 @@ exports.AuthService = AuthService;
 
 /***/ },
 
+/***/ 147:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(exports, "b", function() { return ActionTypes; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return StoreDevtoolActions; });
+var ActionTypes = {
+    PERFORM_ACTION: 'PERFORM_ACTION',
+    RESET: 'RESET',
+    ROLLBACK: 'ROLLBACK',
+    COMMIT: 'COMMIT',
+    SWEEP: 'SWEEP',
+    TOGGLE_ACTION: 'TOGGLE_ACTION',
+    SET_ACTIONS_ACTIVE: 'SET_ACTIONS_ACTIVE',
+    JUMP_TO_STATE: 'JUMP_TO_STATE',
+    IMPORT_STATE: 'IMPORT_STATE'
+};
+/**
+* Action creators to change the History state.
+*/
+var StoreDevtoolActions = {
+    performAction: function (action) {
+        if (typeof action.type === 'undefined') {
+            throw new Error('Actions may not have an undefined "type" property. ' +
+                'Have you misspelled a constant?');
+        }
+        return { type: ActionTypes.PERFORM_ACTION, action: action, timestamp: Date.now() };
+    },
+    reset: function () {
+        return { type: ActionTypes.RESET, timestamp: Date.now() };
+    },
+    rollback: function () {
+        return { type: ActionTypes.ROLLBACK, timestamp: Date.now() };
+    },
+    commit: function () {
+        return { type: ActionTypes.COMMIT, timestamp: Date.now() };
+    },
+    sweep: function () {
+        return { type: ActionTypes.SWEEP };
+    },
+    toggleAction: function (id) {
+        return { type: ActionTypes.TOGGLE_ACTION, id: id };
+    },
+    setActionsActive: function (start, end, active) {
+        if (active === void 0) { active = true; }
+        return { type: ActionTypes.SET_ACTIONS_ACTIVE, start: start, end: end, active: active };
+    },
+    jumpToState: function (index) {
+        return { type: ActionTypes.JUMP_TO_STATE, index: index };
+    },
+    importState: function (nextLiftedState) {
+        return { type: ActionTypes.IMPORT_STATE, nextLiftedState: nextLiftedState };
+    }
+};
+//# sourceMappingURL=actions.js.map
+
+/***/ },
+
+/***/ 215:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_instrument__ = __webpack_require__(544);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_devtools__ = __webpack_require__(337);
+/* harmony reexport (binding) */ __webpack_require__.d(exports, "StoreDevtoolsModule", function() { return __WEBPACK_IMPORTED_MODULE_0__src_instrument__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(exports, "StoreDevtools", function() { return __WEBPACK_IMPORTED_MODULE_1__src_devtools__["a"]; });
+
+
+//# sourceMappingURL=index.js.map
+
+/***/ },
+
 /***/ 216:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var instrument_1 = __webpack_require__(536);
-exports.StoreDevtoolsModule = instrument_1.StoreDevtoolsModule;
-var devtools_1 = __webpack_require__(338);
-exports.StoreDevtools = devtools_1.StoreDevtools;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions__ = __webpack_require__(147);
+/* harmony export (immutable) */ exports["e"] = difference;
+/* harmony export (immutable) */ exports["b"] = unliftState;
+/* harmony export (immutable) */ exports["a"] = unliftAction;
+/* harmony export (immutable) */ exports["d"] = liftAction;
+/* harmony export (immutable) */ exports["c"] = applyOperators;
 
-
-/***/ },
-
-/***/ 217:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var actions_1 = __webpack_require__(147);
 function difference(first, second) {
     return first.filter(function (item) { return second.indexOf(item) < 0; });
 }
-exports.difference = difference;
 /**
  * Provides an app's view into the state of the lifted store.
  */
@@ -175,28 +162,32 @@ function unliftState(liftedState) {
     var state = computedStates[currentStateIndex].state;
     return state;
 }
-exports.unliftState = unliftState;
 function unliftAction(liftedState) {
     return liftedState.actionsById[liftedState.nextActionId - 1];
 }
-exports.unliftAction = unliftAction;
 /**
 * Lifts an app's action into an action on the lifted store.
 */
 function liftAction(action) {
-    return actions_1.StoreDevtoolActions.performAction(action);
+    return __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* StoreDevtoolActions */].performAction(action);
 }
-exports.liftAction = liftAction;
-
+function applyOperators(input$, operators) {
+    return operators.reduce(function (source$, _a) {
+        var operator = _a[0], args = _a.slice(1);
+        return operator.apply(source$, args);
+    }, input$);
+}
+//# sourceMappingURL=utils.js.map
 
 /***/ },
 
-/***/ 218:
+/***/ 217:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var core_1 = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return DockActions; });
+
 var DockActions = (function () {
     function DockActions() {
     }
@@ -217,49 +208,36 @@ var DockActions = (function () {
     DockActions.CHANGE_SIZE = '@@redux-devtools-log-monitor/CHANGE_SIZE';
     DockActions.CHANGE_MONITOR = '@@redux-devtools-log-monitor/CHANGE_MONITOR';
     DockActions.decorators = [
-        { type: core_1.Injectable },
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"] },
     ];
     /** @nocollapse */
     DockActions.ctorParameters = [];
     return DockActions;
 }());
-exports.DockActions = DockActions;
-
+//# sourceMappingURL=actions.js.map
 
 /***/ },
 
-/***/ 240:
+/***/ 243:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var Observable_1 = __webpack_require__(4);
-var filter_1 = __webpack_require__(730);
-Observable_1.Observable.prototype.filter = filter_1.filter;
-//# sourceMappingURL=filter.js.map
-
-/***/ },
-
-/***/ 245:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var QueueAction_1 = __webpack_require__(743);
-var QueueScheduler_1 = __webpack_require__(744);
+var QueueAction_1 = __webpack_require__(739);
+var QueueScheduler_1 = __webpack_require__(740);
 exports.queue = new QueueScheduler_1.QueueScheduler(QueueAction_1.QueueAction);
 //# sourceMappingURL=queue.js.map
 
 /***/ },
 
-/***/ 252:
+/***/ 250:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
-var http_1 = __webpack_require__(111);
-var mlab_1 = __webpack_require__(404);
+var http_1 = __webpack_require__(112);
+var mlab_1 = __webpack_require__(406);
 var CoursesService = (function (_super) {
     __extends(CoursesService, _super);
     function CoursesService(http) {
@@ -289,81 +267,135 @@ exports.CoursesService = CoursesService;
 
 /***/ },
 
-/***/ 337:
+/***/ 335:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var core_1 = __webpack_require__(0);
-exports.STORE_DEVTOOLS_CONFIG = new core_1.OpaqueToken('@ngrx/devtools Options');
+var pluck_1 = __webpack_require__(392);
+var map_1 = __webpack_require__(30);
+var distinctUntilChanged_1 = __webpack_require__(387);
+function select(pathOrMapFn) {
+    var paths = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        paths[_i - 1] = arguments[_i];
+    }
+    var mapped$;
+    if (typeof pathOrMapFn === 'string') {
+        mapped$ = pluck_1.pluck.call.apply(pluck_1.pluck, [this, pathOrMapFn].concat(paths));
+    }
+    else if (typeof pathOrMapFn === 'function') {
+        mapped$ = map_1.map.call(this, pathOrMapFn);
+    }
+    else {
+        throw new TypeError(("Unexpected type " + typeof pathOrMapFn + " in select operator,")
+            + " expected 'string' or 'function'");
+    }
+    return distinctUntilChanged_1.distinctUntilChanged.call(mapped$);
+}
+exports.select = select;
 
 
 /***/ },
 
-/***/ 338:
+/***/ 336:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return STORE_DEVTOOLS_CONFIG; });
+
+var STORE_DEVTOOLS_CONFIG = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["OpaqueToken"]('@ngrx/devtools Options');
+//# sourceMappingURL=config.js.map
+
+/***/ },
+
+/***/ 337:
+/***/ function(module, exports, __webpack_require__) {
+
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_store__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_operator_map__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_operator_merge__ = __webpack_require__(390);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_operator_merge___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_operator_merge__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operator_observeOn__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operator_observeOn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_operator_observeOn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_operator_publishReplay__ = __webpack_require__(730);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_operator_publishReplay___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_operator_publishReplay__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_operator_scan__ = __webpack_require__(393);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_operator_scan___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_operator_scan__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_operator_skip__ = __webpack_require__(733);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_operator_skip___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_operator_skip__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_operator_withLatestFrom__ = __webpack_require__(395);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_operator_withLatestFrom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rxjs_operator_withLatestFrom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_scheduler_queue__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_scheduler_queue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_rxjs_scheduler_queue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__extension__ = __webpack_require__(338);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils__ = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__reducer__ = __webpack_require__(545);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__actions__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__config__ = __webpack_require__(336);
+/* harmony export (binding) */ __webpack_require__.d(exports, "b", function() { return DevtoolsDispatcher; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return StoreDevtools; });
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-__webpack_require__(716);
-__webpack_require__(713);
-__webpack_require__(89);
-__webpack_require__(722);
-__webpack_require__(715);
-__webpack_require__(718);
-__webpack_require__(714);
-var queue_1 = __webpack_require__(245);
-var store_1 = __webpack_require__(68);
-var core_1 = __webpack_require__(0);
-var reducer_1 = __webpack_require__(537);
-var actions_1 = __webpack_require__(147);
-var utils_1 = __webpack_require__(217);
-var config_1 = __webpack_require__(337);
-var extension_1 = __webpack_require__(339);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var DevtoolsDispatcher = (function (_super) {
     __extends(DevtoolsDispatcher, _super);
     function DevtoolsDispatcher() {
         _super.apply(this, arguments);
     }
     DevtoolsDispatcher.decorators = [
-        { type: core_1.Injectable },
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"] },
     ];
     /** @nocollapse */
     DevtoolsDispatcher.ctorParameters = [];
     return DevtoolsDispatcher;
-}(store_1.Dispatcher));
-exports.DevtoolsDispatcher = DevtoolsDispatcher;
+}(__WEBPACK_IMPORTED_MODULE_1__ngrx_store__["Dispatcher"]));
 var StoreDevtools = (function () {
     function StoreDevtools(dispatcher, actions$, reducers$, extension, initialState, config) {
-        var liftedInitialState = reducer_1.liftInitialState(initialState, config.monitor);
-        var liftReducer = reducer_1.liftReducerWith(initialState, liftedInitialState, config.monitor, {
+        var liftedInitialState = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_12__reducer__["a" /* liftInitialState */])(initialState, config.monitor);
+        var liftReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_12__reducer__["b" /* liftReducerWith */])(initialState, liftedInitialState, config.monitor, {
             maxAge: config.maxAge
         });
-        var liftedActions$ = actions$
-            .skip(1)
-            .merge(extension.actions$)
-            .map(utils_1.liftAction)
-            .merge(dispatcher, extension.liftedActions$)
-            .observeOn(queue_1.queue);
-        var liftedReducers$ = reducers$
-            .map(liftReducer);
-        var liftedState = liftedActions$
-            .withLatestFrom(liftedReducers$)
-            .scan(function (liftedState, _a) {
-            var action = _a[0], reducer = _a[1];
-            var nextState = reducer(liftedState, action);
-            extension.notify(action, nextState);
-            return nextState;
-        }, liftedInitialState)
-            .publishReplay(1)
-            .refCount();
-        var state = liftedState
-            .map(utils_1.unliftState);
+        var liftedActions$ = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_11__utils__["c" /* applyOperators */])(actions$, [
+            [__WEBPACK_IMPORTED_MODULE_7_rxjs_operator_skip__["skip"], 1],
+            [__WEBPACK_IMPORTED_MODULE_3_rxjs_operator_merge__["merge"], extension.actions$],
+            [__WEBPACK_IMPORTED_MODULE_2_rxjs_operator_map__["map"], __WEBPACK_IMPORTED_MODULE_11__utils__["d" /* liftAction */]],
+            [__WEBPACK_IMPORTED_MODULE_3_rxjs_operator_merge__["merge"], dispatcher, extension.liftedActions$],
+            [__WEBPACK_IMPORTED_MODULE_4_rxjs_operator_observeOn__["observeOn"], __WEBPACK_IMPORTED_MODULE_9_rxjs_scheduler_queue__["queue"]]
+        ]);
+        var liftedReducers$ = __WEBPACK_IMPORTED_MODULE_2_rxjs_operator_map__["map"].call(reducers$, liftReducer);
+        var liftedState = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_11__utils__["c" /* applyOperators */])(liftedActions$, [
+            [__WEBPACK_IMPORTED_MODULE_8_rxjs_operator_withLatestFrom__["withLatestFrom"], liftedReducers$],
+            [__WEBPACK_IMPORTED_MODULE_6_rxjs_operator_scan__["scan"], function (liftedState, _a) {
+                    var action = _a[0], reducer = _a[1];
+                    var nextState = reducer(liftedState, action);
+                    extension.notify(action, nextState);
+                    return nextState;
+                }, liftedInitialState],
+            [__WEBPACK_IMPORTED_MODULE_5_rxjs_operator_publishReplay__["publishReplay"], 1]
+        ]).refCount();
+        var state = __WEBPACK_IMPORTED_MODULE_2_rxjs_operator_map__["map"].call(liftedState, __WEBPACK_IMPORTED_MODULE_11__utils__["b" /* unliftState */]);
         this.dispatcher = dispatcher;
         this.liftedState = liftedState;
         this.state = state;
@@ -377,69 +409,88 @@ var StoreDevtools = (function () {
     StoreDevtools.prototype.error = function (error) { };
     StoreDevtools.prototype.complete = function () { };
     StoreDevtools.prototype.performAction = function (action) {
-        this.dispatch(actions_1.StoreDevtoolActions.performAction(action));
+        this.dispatch(__WEBPACK_IMPORTED_MODULE_13__actions__["a" /* StoreDevtoolActions */].performAction(action));
     };
     StoreDevtools.prototype.reset = function () {
-        this.dispatch(actions_1.StoreDevtoolActions.reset());
+        this.dispatch(__WEBPACK_IMPORTED_MODULE_13__actions__["a" /* StoreDevtoolActions */].reset());
     };
     StoreDevtools.prototype.rollback = function () {
-        this.dispatch(actions_1.StoreDevtoolActions.rollback());
+        this.dispatch(__WEBPACK_IMPORTED_MODULE_13__actions__["a" /* StoreDevtoolActions */].rollback());
     };
     StoreDevtools.prototype.commit = function () {
-        this.dispatch(actions_1.StoreDevtoolActions.commit());
+        this.dispatch(__WEBPACK_IMPORTED_MODULE_13__actions__["a" /* StoreDevtoolActions */].commit());
     };
     StoreDevtools.prototype.sweep = function () {
-        this.dispatch(actions_1.StoreDevtoolActions.sweep());
+        this.dispatch(__WEBPACK_IMPORTED_MODULE_13__actions__["a" /* StoreDevtoolActions */].sweep());
     };
     StoreDevtools.prototype.toggleAction = function (id) {
-        this.dispatch(actions_1.StoreDevtoolActions.toggleAction(id));
+        this.dispatch(__WEBPACK_IMPORTED_MODULE_13__actions__["a" /* StoreDevtoolActions */].toggleAction(id));
     };
     StoreDevtools.prototype.jumpToState = function (index) {
-        this.dispatch(actions_1.StoreDevtoolActions.jumpToState(index));
+        this.dispatch(__WEBPACK_IMPORTED_MODULE_13__actions__["a" /* StoreDevtoolActions */].jumpToState(index));
     };
     StoreDevtools.prototype.importState = function (nextLiftedState) {
-        this.dispatch(actions_1.StoreDevtoolActions.importState(nextLiftedState));
+        this.dispatch(__WEBPACK_IMPORTED_MODULE_13__actions__["a" /* StoreDevtoolActions */].importState(nextLiftedState));
     };
     StoreDevtools.decorators = [
-        { type: core_1.Injectable },
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"] },
     ];
     /** @nocollapse */
     StoreDevtools.ctorParameters = [
         { type: DevtoolsDispatcher, },
-        { type: store_1.Dispatcher, },
-        { type: store_1.Reducer, },
-        { type: extension_1.DevtoolsExtension, },
-        { type: undefined, decorators: [{ type: core_1.Inject, args: [store_1.INITIAL_STATE,] },] },
-        { type: undefined, decorators: [{ type: core_1.Inject, args: [config_1.STORE_DEVTOOLS_CONFIG,] },] },
+        { type: __WEBPACK_IMPORTED_MODULE_1__ngrx_store__["Dispatcher"], },
+        { type: __WEBPACK_IMPORTED_MODULE_1__ngrx_store__["Reducer"], },
+        { type: __WEBPACK_IMPORTED_MODULE_10__extension__["a" /* DevtoolsExtension */], },
+        { type: undefined, decorators: [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"], args: [__WEBPACK_IMPORTED_MODULE_1__ngrx_store__["INITIAL_STATE"],] },] },
+        { type: undefined, decorators: [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"], args: [__WEBPACK_IMPORTED_MODULE_14__config__["a" /* STORE_DEVTOOLS_CONFIG */],] },] },
     ];
     return StoreDevtools;
 }());
-exports.StoreDevtools = StoreDevtools;
-
+//# sourceMappingURL=devtools.js.map
 
 /***/ },
 
-/***/ 339:
+/***/ 338:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-__webpack_require__(710);
-__webpack_require__(240);
-__webpack_require__(719);
-__webpack_require__(720);
-__webpack_require__(717);
-var Observable_1 = __webpack_require__(4);
-var core_1 = __webpack_require__(0);
-var actions_1 = __webpack_require__(147);
-var utils_1 = __webpack_require__(217);
-exports.ExtensionActionTypes = {
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_observable_empty__ = __webpack_require__(725);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_observable_empty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_observable_empty__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_operator_filter__ = __webpack_require__(389);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_operator_filter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_operator_filter__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_operator_share__ = __webpack_require__(732);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_operator_share___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_operator_share__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_operator_switchMap__ = __webpack_require__(734);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_operator_switchMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_operator_switchMap__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_operator_takeUntil__ = __webpack_require__(735);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_operator_takeUntil___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_operator_takeUntil__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__actions__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils__ = __webpack_require__(216);
+/* unused harmony export ExtensionActionTypes */
+/* harmony export (binding) */ __webpack_require__.d(exports, "b", function() { return REDUX_DEVTOOLS_EXTENSION; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return DevtoolsExtension; });
+
+
+
+
+
+
+
+
+
+
+var ExtensionActionTypes = {
     START: 'START',
     DISPATCH: 'DISPATCH',
     STOP: 'STOP',
     ACTION: 'ACTION'
 };
-exports.REDUX_DEVTOOLS_EXTENSION = new core_1.OpaqueToken('Redux Devtools Extension');
+var REDUX_DEVTOOLS_EXTENSION = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["OpaqueToken"]('Redux Devtools Extension');
 var DevtoolsExtension = (function () {
     function DevtoolsExtension(devtoolsExtension) {
         this.instanceId = "ngrx-store-" + Date.now();
@@ -447,18 +498,18 @@ var DevtoolsExtension = (function () {
         this.createActionStreams();
     }
     DevtoolsExtension.prototype.notify = function (action, state) {
-        if (!this.devtoolsExtension || action.type !== actions_1.ActionTypes.PERFORM_ACTION) {
+        if (!this.devtoolsExtension || action.type !== __WEBPACK_IMPORTED_MODULE_8__actions__["b" /* ActionTypes */].PERFORM_ACTION) {
             return;
         }
-        this.devtoolsExtension.send(utils_1.unliftAction(state), utils_1.unliftState(state), false, this.instanceId);
+        this.devtoolsExtension.send(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_9__utils__["a" /* unliftAction */])(state), __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_9__utils__["b" /* unliftState */])(state), false, this.instanceId);
         this.devtoolsExtension.send(null, state, false, this.instanceId);
     };
     DevtoolsExtension.prototype.createChangesObservable = function () {
         var _this = this;
         if (!this.devtoolsExtension) {
-            return Observable_1.Observable.empty();
+            return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_rxjs_observable_empty__["empty"])();
         }
-        return new Observable_1.Observable(function (subscriber) {
+        return new __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__["Observable"](function (subscriber) {
             var connection = _this.devtoolsExtension.connect({ instanceId: _this.instanceId });
             connection.subscribe(function (change) { return subscriber.next(change); });
             return connection.unsubscribe();
@@ -466,69 +517,77 @@ var DevtoolsExtension = (function () {
     };
     DevtoolsExtension.prototype.createActionStreams = function () {
         // Listens to all changes based on our instanceId
-        var changes$ = this.createChangesObservable().share();
+        var changes$ = __WEBPACK_IMPORTED_MODULE_5_rxjs_operator_share__["share"].call(this.createChangesObservable());
         // Listen for the start action
-        var start$ = changes$
-            .filter(function (change) { return change.type === exports.ExtensionActionTypes.START; });
+        var start$ = __WEBPACK_IMPORTED_MODULE_3_rxjs_operator_filter__["filter"].call(changes$, function (change) { return change.type === ExtensionActionTypes.START; });
         // Listen for the stop action
-        var stop$ = changes$
-            .filter(function (change) { return change.type === exports.ExtensionActionTypes.STOP; });
+        var stop$ = __WEBPACK_IMPORTED_MODULE_3_rxjs_operator_filter__["filter"].call(changes$, function (change) { return change.type === ExtensionActionTypes.STOP; });
         // Listen for lifted actions
-        var liftedActions$ = changes$
-            .filter(function (change) { return change.type === exports.ExtensionActionTypes.DISPATCH; })
-            .map(function (change) { return change.payload; });
-        // .filter(action => action.type !== 'JUMP_TO_STATE');
+        var liftedActions$ = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_9__utils__["c" /* applyOperators */])(changes$, [
+            [__WEBPACK_IMPORTED_MODULE_3_rxjs_operator_filter__["filter"], function (change) { return change.type === ExtensionActionTypes.DISPATCH; }],
+            [__WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__["map"], function (change) { return change.payload; }]
+        ]);
         // Listen for unlifted actions
-        var actions$ = changes$
-            .filter(function (change) { return change.type === exports.ExtensionActionTypes.DISPATCH; })
-            .map(function (change) { return change.payload; });
+        var actions$ = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_9__utils__["c" /* applyOperators */])(changes$, [
+            [__WEBPACK_IMPORTED_MODULE_3_rxjs_operator_filter__["filter"], function (change) { return change.type === ExtensionActionTypes.DISPATCH; }],
+            [__WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__["map"], function (change) { return change.payload; }]
+        ]);
+        var actionsUntilStop$ = __WEBPACK_IMPORTED_MODULE_7_rxjs_operator_takeUntil__["takeUntil"].call(actions$, stop$);
+        var liftedUntilStop$ = __WEBPACK_IMPORTED_MODULE_7_rxjs_operator_takeUntil__["takeUntil"].call(liftedActions$, stop$);
         // Only take the action sources between the start/stop events
-        this.actions$ = start$.switchMapTo(actions$.takeUntil(stop$));
-        this.liftedActions$ = start$.switchMapTo(liftedActions$.takeUntil(stop$));
+        this.actions$ = __WEBPACK_IMPORTED_MODULE_6_rxjs_operator_switchMap__["switchMap"].call(start$, function () { return actionsUntilStop$; });
+        this.liftedActions$ = __WEBPACK_IMPORTED_MODULE_6_rxjs_operator_switchMap__["switchMap"].call(start$, function () { return liftedUntilStop$; });
     };
     DevtoolsExtension.decorators = [
-        { type: core_1.Injectable },
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"] },
     ];
     /** @nocollapse */
     DevtoolsExtension.ctorParameters = [
-        { type: undefined, decorators: [{ type: core_1.Inject, args: [exports.REDUX_DEVTOOLS_EXTENSION,] },] },
+        { type: undefined, decorators: [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"], args: [REDUX_DEVTOOLS_EXTENSION,] },] },
     ];
     return DevtoolsExtension;
 }());
-exports.DevtoolsExtension = DevtoolsExtension;
-
+//# sourceMappingURL=extension.js.map
 
 /***/ },
 
-/***/ 340:
+/***/ 339:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var core_1 = __webpack_require__(0);
-var common_1 = __webpack_require__(37);
-var commander_1 = __webpack_require__(538);
-var dock_1 = __webpack_require__(540);
-var dock_monitor_1 = __webpack_require__(539);
-var actions_1 = __webpack_require__(218);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__commander__ = __webpack_require__(547);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dock__ = __webpack_require__(549);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dock_monitor__ = __webpack_require__(548);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__reducer__ = __webpack_require__(551);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return DockMonitorModule; });
+/* harmony reexport (binding) */ __webpack_require__.d(exports, "b", function() { return __WEBPACK_IMPORTED_MODULE_6__reducer__["a"]; });
+
+
+
+
+
+
 var DockMonitorModule = (function () {
     function DockMonitorModule() {
     }
     DockMonitorModule.decorators = [
-        { type: core_1.NgModule, args: [{
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"], args: [{
                     imports: [
-                        common_1.CommonModule
+                        __WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"]
                     ],
                     declarations: [
-                        commander_1.CommanderComponent,
-                        dock_1.DockComponent,
-                        dock_monitor_1.DockMonitorComponent
+                        __WEBPACK_IMPORTED_MODULE_2__commander__["a" /* CommanderComponent */],
+                        __WEBPACK_IMPORTED_MODULE_3__dock__["a" /* DockComponent */],
+                        __WEBPACK_IMPORTED_MODULE_4__dock_monitor__["a" /* DockMonitorComponent */]
                     ],
                     providers: [
-                        actions_1.DockActions
+                        __WEBPACK_IMPORTED_MODULE_5__actions__["a" /* DockActions */]
                     ],
                     exports: [
-                        dock_monitor_1.DockMonitorComponent
+                        __WEBPACK_IMPORTED_MODULE_4__dock_monitor__["a" /* DockMonitorComponent */]
                     ]
                 },] },
     ];
@@ -536,20 +595,23 @@ var DockMonitorModule = (function () {
     DockMonitorModule.ctorParameters = [];
     return DockMonitorModule;
 }());
-exports.DockMonitorModule = DockMonitorModule;
-var reducer_1 = __webpack_require__(542);
-exports.useDockMonitor = reducer_1.useDockMonitor;
 
+//# sourceMappingURL=index.js.map
 
 /***/ },
 
-/***/ 341:
+/***/ 340:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var compose_1 = __webpack_require__(534);
-exports.KNOWN = {
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ngrx_core_compose__ = __webpack_require__(538);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ngrx_core_compose___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ngrx_core_compose__);
+/* harmony export (binding) */ __webpack_require__.d(exports, "c", function() { return KNOWN; });
+/* harmony export (immutable) */ exports["b"] = getTypeOf;
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return getLabelFor; });
+/* harmony export (immutable) */ exports["d"] = getChildrenFor;
+
+var KNOWN = {
     Array: 'array',
     Object: 'object',
     Null: 'null',
@@ -565,18 +627,17 @@ function getTypeOf(object) {
     var literalType = typeof object;
     if (literalType === 'object') {
         if (Array.isArray(object)) {
-            return exports.KNOWN.Array;
+            return KNOWN.Array;
         }
         if (object === null) {
-            return exports.KNOWN.Null;
+            return KNOWN.Null;
         }
         if (typeof object[Symbol.iterator] === 'function') {
-            return exports.KNOWN.Iterable;
+            return KNOWN.Iterable;
         }
     }
     return literalType;
 }
-exports.getTypeOf = getTypeOf;
 var arrayLength = function (value) { return value.length; };
 var lengthLabel = function (single, plural) { return function (length) { return (length + " " + (length === 1 ? single : plural)); }; };
 var typeIndicator = function (typeIndicator) { return function (input) { return (typeIndicator + " " + input); }; };
@@ -585,56 +646,57 @@ var withQuotes = function (val) { return ("\"" + val + "\""); };
 var toString = function (val) { return val.toString(); };
 var iterableToArray = function (value) { return Array.from(value); };
 var labelFactoriesForTypes = (_a = {},
-    _a[exports.KNOWN.Array] = compose_1.compose(typeIndicator('[]'), lengthLabel('item', 'items'), arrayLength),
-    _a[exports.KNOWN.Object] = compose_1.compose(typeIndicator('{}'), lengthLabel('key', 'keys'), arrayLength, Object.getOwnPropertyNames),
-    _a[exports.KNOWN.Null] = typeIdentity(exports.KNOWN.Null),
-    _a[exports.KNOWN.Undefined] = typeIdentity(exports.KNOWN.Undefined),
-    _a[exports.KNOWN.Boolean] = function (val) { return val ? 'true' : 'false'; },
-    _a[exports.KNOWN.Number] = toString,
-    _a[exports.KNOWN.String] = withQuotes,
-    _a[exports.KNOWN.Symbol] = compose_1.compose(withQuotes, toString),
-    _a[exports.KNOWN.Function] = typeIdentity(exports.KNOWN.Function),
-    _a[exports.KNOWN.Iterable] = compose_1.compose(typeIndicator('()'), lengthLabel('entry', 'entries'), arrayLength, iterableToArray),
+    _a[KNOWN.Array] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__ngrx_core_compose__["compose"])(typeIndicator('[]'), lengthLabel('item', 'items'), arrayLength),
+    _a[KNOWN.Object] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__ngrx_core_compose__["compose"])(typeIndicator('{}'), lengthLabel('key', 'keys'), arrayLength, Object.getOwnPropertyNames),
+    _a[KNOWN.Null] = typeIdentity(KNOWN.Null),
+    _a[KNOWN.Undefined] = typeIdentity(KNOWN.Undefined),
+    _a[KNOWN.Boolean] = function (val) { return val ? 'true' : 'false'; },
+    _a[KNOWN.Number] = toString,
+    _a[KNOWN.String] = withQuotes,
+    _a[KNOWN.Symbol] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__ngrx_core_compose__["compose"])(withQuotes, toString),
+    _a[KNOWN.Function] = typeIdentity(KNOWN.Function),
+    _a[KNOWN.Iterable] = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__ngrx_core_compose__["compose"])(typeIndicator('()'), lengthLabel('entry', 'entries'), arrayLength, iterableToArray),
     _a
 );
 var lookupLabelForType = function (type) { return labelFactoriesForTypes[type]; };
-exports.getLabelFor = function (object) { return labelFactoriesForTypes[getTypeOf(object)](object); };
+var getLabelFor = function (object) { return labelFactoriesForTypes[getTypeOf(object)](object); };
 function getChildrenFor(object) {
     var literalType = getTypeOf(object);
-    if (literalType === exports.KNOWN.Object) {
+    if (literalType === KNOWN.Object) {
         return Object.getOwnPropertyNames(object).map(function (name) {
             return { key: name, value: object[name] };
         });
     }
-    else if (literalType === exports.KNOWN.Array) {
+    else if (literalType === KNOWN.Array) {
         return object.map(function (value, index) {
             return { key: index, value: value };
         });
     }
-    else if (literalType === exports.KNOWN.Iterable) {
+    else if (literalType === KNOWN.Iterable) {
         return Array.from(object).map(function (value, index) {
             return { key: index, value: value };
         });
     }
     throw new TypeError("Tried to get children for non-enumerable type \"" + literalType + "\"");
 }
-exports.getChildrenFor = getChildrenFor;
 var _a;
-
+//# sourceMappingURL=types.js.map
 
 /***/ },
 
-/***/ 342:
+/***/ 341:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_BehaviorSubject__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_BehaviorSubject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_BehaviorSubject__);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return Dispatcher; });
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var BehaviorSubject_1 = __webpack_require__(108);
+
 var Dispatcher = (function (_super) {
     __extends(Dispatcher, _super);
     function Dispatcher() {
@@ -648,23 +710,24 @@ var Dispatcher = (function (_super) {
     };
     Dispatcher.INIT = '@ngrx/store/init';
     return Dispatcher;
-}(BehaviorSubject_1.BehaviorSubject));
-exports.Dispatcher = Dispatcher;
+}(__WEBPACK_IMPORTED_MODULE_0_rxjs_BehaviorSubject__["BehaviorSubject"]));
 //# sourceMappingURL=dispatcher.js.map
 
 /***/ },
 
-/***/ 343:
+/***/ 342:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_BehaviorSubject__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_BehaviorSubject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_BehaviorSubject__);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return Reducer; });
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var BehaviorSubject_1 = __webpack_require__(108);
+
 var Reducer = (function (_super) {
     __extends(Reducer, _super);
     function Reducer(_dispatcher, initialReducer) {
@@ -680,9 +743,52 @@ var Reducer = (function (_super) {
     };
     Reducer.REPLACE = '@ngrx/store/replace-reducer';
     return Reducer;
-}(BehaviorSubject_1.BehaviorSubject));
-exports.Reducer = Reducer;
+}(__WEBPACK_IMPORTED_MODULE_0_rxjs_BehaviorSubject__["BehaviorSubject"]));
 //# sourceMappingURL=reducer.js.map
+
+/***/ },
+
+/***/ 343:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_operator_withLatestFrom__ = __webpack_require__(395);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_operator_withLatestFrom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_operator_withLatestFrom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_operator_scan__ = __webpack_require__(393);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_operator_scan___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_operator_scan__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_operator_observeOn__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_operator_observeOn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_operator_observeOn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_scheduler_queue__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_scheduler_queue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_scheduler_queue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject__);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return State; });
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+
+
+
+
+
+var State = (function (_super) {
+    __extends(State, _super);
+    function State(_initialState, action$, reducer$) {
+        var _this = this;
+        _super.call(this, _initialState);
+        var actionInQueue$ = __WEBPACK_IMPORTED_MODULE_2_rxjs_operator_observeOn__["observeOn"].call(action$, __WEBPACK_IMPORTED_MODULE_3_rxjs_scheduler_queue__["queue"]);
+        var actionAndReducer$ = __WEBPACK_IMPORTED_MODULE_0_rxjs_operator_withLatestFrom__["withLatestFrom"].call(actionInQueue$, reducer$);
+        var state$ = __WEBPACK_IMPORTED_MODULE_1_rxjs_operator_scan__["scan"].call(actionAndReducer$, function (state, _a) {
+            var action = _a[0], reducer = _a[1];
+            return reducer(state, action);
+        }, _initialState);
+        state$.subscribe(function (value) { return _this.next(value); });
+    }
+    return State;
+}(__WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject__["BehaviorSubject"]));
+//# sourceMappingURL=state.js.map
 
 /***/ },
 
@@ -690,56 +796,24 @@ exports.Reducer = Reducer;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ngrx_core__ = __webpack_require__(539);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return Store; });
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var withLatestFrom_1 = __webpack_require__(394);
-var scan_1 = __webpack_require__(392);
-var observeOn_1 = __webpack_require__(159);
-var queue_1 = __webpack_require__(245);
-var BehaviorSubject_1 = __webpack_require__(108);
-var State = (function (_super) {
-    __extends(State, _super);
-    function State(_initialState, action$, reducer$) {
-        var _this = this;
-        _super.call(this, _initialState);
-        var actionInQueue$ = observeOn_1.observeOn.call(action$, queue_1.queue);
-        var actionAndReducer$ = withLatestFrom_1.withLatestFrom.call(actionInQueue$, reducer$);
-        var state$ = scan_1.scan.call(actionAndReducer$, function (state, _a) {
-            var action = _a[0], reducer = _a[1];
-            return reducer(state, action);
-        }, _initialState);
-        state$.subscribe(function (value) { return _this.next(value); });
-    }
-    return State;
-}(BehaviorSubject_1.BehaviorSubject));
-exports.State = State;
-//# sourceMappingURL=state.js.map
 
-/***/ },
 
-/***/ 345:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var select_1 = __webpack_require__(535);
-var Observable_1 = __webpack_require__(4);
 var Store = (function (_super) {
     __extends(Store, _super);
     function Store(_dispatcher, _reducer, state$) {
         _super.call(this);
         this._dispatcher = _dispatcher;
         this._reducer = _reducer;
-        this.select = select_1.select.bind(this);
+        this.select = __WEBPACK_IMPORTED_MODULE_0__ngrx_core__["a" /* select */].bind(this);
         this.source = state$;
     }
     Store.prototype.lift = function (operator) {
@@ -763,17 +837,16 @@ var Store = (function (_super) {
         // noop
     };
     return Store;
-}(Observable_1.Observable));
-exports.Store = Store;
+}(__WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__["Observable"]));
 //# sourceMappingURL=store.js.map
 
 /***/ },
 
-/***/ 346:
-/***/ function(module, exports) {
+/***/ 345:
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+/* harmony export (immutable) */ exports["a"] = combineReducers;
 function combineReducers(reducers) {
     var reducerKeys = Object.keys(reducers);
     var finalReducers = {};
@@ -799,12 +872,11 @@ function combineReducers(reducers) {
         return hasChanged ? nextState : state;
     };
 }
-exports.combineReducers = combineReducers;
 //# sourceMappingURL=utils.js.map
 
 /***/ },
 
-/***/ 347:
+/***/ 346:
 /***/ function(module, exports) {
 
 var charenc = {
@@ -844,7 +916,7 @@ module.exports = charenc;
 
 /***/ },
 
-/***/ 383:
+/***/ 382:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -854,9 +926,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Subject_1 = __webpack_require__(36);
-var Observable_1 = __webpack_require__(4);
-var Subscriber_1 = __webpack_require__(22);
+var Subject_1 = __webpack_require__(54);
+var Observable_1 = __webpack_require__(10);
+var Subscriber_1 = __webpack_require__(19);
 var Subscription_1 = __webpack_require__(109);
 /**
  * @class ConnectableObservable<T>
@@ -1005,7 +1077,7 @@ var RefCountSubscriber = (function (_super) {
 
 /***/ },
 
-/***/ 388:
+/***/ 387:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1015,9 +1087,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Subscriber_1 = __webpack_require__(22);
-var tryCatch_1 = __webpack_require__(399);
-var errorObject_1 = __webpack_require__(250);
+var Subscriber_1 = __webpack_require__(19);
+var tryCatch_1 = __webpack_require__(400);
+var errorObject_1 = __webpack_require__(248);
 /**
  * Returns an Observable that emits all items emitted by the source Observable that are distinct by comparison from the previous item.
  * If a comparator function is provided, then it will be called for each item to test for whether or not that value should be emitted.
@@ -1089,14 +1161,114 @@ var DistinctUntilChangedSubscriber = (function (_super) {
 
 /***/ },
 
+/***/ 389:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var Subscriber_1 = __webpack_require__(19);
+/**
+ * Filter items emitted by the source Observable by only emitting those that
+ * satisfy a specified predicate.
+ *
+ * <span class="informal">Like
+ * [Array.prototype.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter),
+ * it only emits a value from the source if it passes a criterion function.</span>
+ *
+ * <img src="./img/filter.png" width="100%">
+ *
+ * Similar to the well-known `Array.prototype.filter` method, this operator
+ * takes values from the source Observable, passes them through a `predicate`
+ * function and only emits those values that yielded `true`.
+ *
+ * @example <caption>Emit only click events whose target was a DIV element</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var clicksOnDivs = clicks.filter(ev => ev.target.tagName === 'DIV');
+ * clicksOnDivs.subscribe(x => console.log(x));
+ *
+ * @see {@link distinct}
+ * @see {@link distinctKey}
+ * @see {@link distinctUntilChanged}
+ * @see {@link distinctUntilKeyChanged}
+ * @see {@link ignoreElements}
+ * @see {@link partition}
+ * @see {@link skip}
+ *
+ * @param {function(value: T, index: number): boolean} predicate A function that
+ * evaluates each value emitted by the source Observable. If it returns `true`,
+ * the value is emitted, if `false` the value is not passed to the output
+ * Observable. The `index` parameter is the number `i` for the i-th source
+ * emission that has happened since the subscription, starting from the number
+ * `0`.
+ * @param {any} [thisArg] An optional argument to determine the value of `this`
+ * in the `predicate` function.
+ * @return {Observable} An Observable of values from the source that were
+ * allowed by the `predicate` function.
+ * @method filter
+ * @owner Observable
+ */
+function filter(predicate, thisArg) {
+    return this.lift(new FilterOperator(predicate, thisArg));
+}
+exports.filter = filter;
+var FilterOperator = (function () {
+    function FilterOperator(predicate, thisArg) {
+        this.predicate = predicate;
+        this.thisArg = thisArg;
+    }
+    FilterOperator.prototype.call = function (subscriber, source) {
+        return source._subscribe(new FilterSubscriber(subscriber, this.predicate, this.thisArg));
+    };
+    return FilterOperator;
+}());
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+var FilterSubscriber = (function (_super) {
+    __extends(FilterSubscriber, _super);
+    function FilterSubscriber(destination, predicate, thisArg) {
+        _super.call(this, destination);
+        this.predicate = predicate;
+        this.thisArg = thisArg;
+        this.count = 0;
+        this.predicate = predicate;
+    }
+    // the try catch block below is left specifically for
+    // optimization and perf reasons. a tryCatcher is not necessary here.
+    FilterSubscriber.prototype._next = function (value) {
+        var result;
+        try {
+            result = this.predicate.call(this.thisArg, value, this.count++);
+        }
+        catch (err) {
+            this.destination.error(err);
+            return;
+        }
+        if (result) {
+            this.destination.next(value);
+        }
+    };
+    return FilterSubscriber;
+}(Subscriber_1.Subscriber));
+//# sourceMappingURL=filter.js.map
+
+/***/ },
+
 /***/ 390:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var ArrayObservable_1 = __webpack_require__(241);
+var ArrayObservable_1 = __webpack_require__(239);
 var mergeAll_1 = __webpack_require__(158);
-var isScheduler_1 = __webpack_require__(398);
+var isScheduler_1 = __webpack_require__(399);
 /**
  * Creates an output Observable which concurrently emits all values from every
  * given input Observable.
@@ -1231,8 +1403,8 @@ exports.mergeStatic = mergeStatic;
 
 "use strict";
 "use strict";
-var MulticastObservable_1 = __webpack_require__(726);
-var ConnectableObservable_1 = __webpack_require__(383);
+var MulticastObservable_1 = __webpack_require__(724);
+var ConnectableObservable_1 = __webpack_require__(382);
 /**
  * Returns an Observable that emits the results of invoking a specified selector on items
  * emitted by a ConnectableObservable that shares a single subscription to the underlying stream.
@@ -1276,12 +1448,77 @@ exports.multicast = multicast;
 
 "use strict";
 "use strict";
+var map_1 = __webpack_require__(30);
+/**
+ * Maps each source value (an object) to its specified nested property.
+ *
+ * <span class="informal">Like {@link map}, but meant only for picking one of
+ * the nested properties of every emitted object.</span>
+ *
+ * <img src="./img/pluck.png" width="100%">
+ *
+ * Given a list of strings describing a path to an object property, retrieves
+ * the value of a specified nested property from all values in the source
+ * Observable. If a property can't be resolved, it will return `undefined` for
+ * that value.
+ *
+ * @example <caption>Map every every click to the tagName of the clicked target element</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var tagNames = clicks.pluck('target', 'tagName');
+ * tagNames.subscribe(x => console.log(x));
+ *
+ * @see {@link map}
+ *
+ * @param {...string} properties The nested properties to pluck from each source
+ * value (an object).
+ * @return {Observable} Returns a new Observable of property values from the
+ * source values.
+ * @method pluck
+ * @owner Observable
+ */
+function pluck() {
+    var properties = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        properties[_i - 0] = arguments[_i];
+    }
+    var length = properties.length;
+    if (length === 0) {
+        throw new Error('list of properties cannot be empty.');
+    }
+    return map_1.map.call(this, plucker(properties, length));
+}
+exports.pluck = pluck;
+function plucker(props, length) {
+    var mapper = function (x) {
+        var currentProp = x;
+        for (var i = 0; i < length; i++) {
+            var p = currentProp[props[i]];
+            if (typeof p !== 'undefined') {
+                currentProp = p;
+            }
+            else {
+                return undefined;
+            }
+        }
+        return currentProp;
+    };
+    return mapper;
+}
+//# sourceMappingURL=pluck.js.map
+
+/***/ },
+
+/***/ 393:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Subscriber_1 = __webpack_require__(22);
+var Subscriber_1 = __webpack_require__(19);
 /**
  * Applies an accumulator function over the source Observable, and returns each
  * intermediate result, with an optional seed value.
@@ -1386,7 +1623,7 @@ var ScanSubscriber = (function (_super) {
 
 /***/ },
 
-/***/ 394:
+/***/ 395:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1523,13 +1760,34 @@ var WithLatestFromSubscriber = (function (_super) {
 
 /***/ },
 
-/***/ 400:
+/***/ 401:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var router_1 = __webpack_require__(77);
-var auth_service_1 = __webpack_require__(160);
+var loggedin_guard_1 = __webpack_require__(402);
+var login_component_1 = __webpack_require__(405);
+var courses_component_1 = __webpack_require__(403);
+var edit_course_component_1 = __webpack_require__(404);
+var appRoutes = [
+    { path: '', redirectTo: 'courses', pathMatch: 'full' },
+    { path: 'courses', component: courses_component_1.CoursesComponent, canActivate: [loggedin_guard_1.LoggedInGuard] },
+    { path: 'courses/:id', component: edit_course_component_1.EditCourseComponent, canActivate: [loggedin_guard_1.LoggedInGuard] },
+    { path: 'login', component: login_component_1.LoginComponent }
+];
+exports.routing = router_1.RouterModule.forRoot(appRoutes, { useHash: true });
+
+
+/***/ },
+
+/***/ 402:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var router_1 = __webpack_require__(77);
+var auth_service_1 = __webpack_require__(111);
 var core_1 = __webpack_require__(0);
 var LoggedInGuard = (function () {
     function LoggedInGuard(authService, router) {
@@ -1555,13 +1813,13 @@ exports.LoggedInGuard = LoggedInGuard;
 
 /***/ },
 
-/***/ 401:
+/***/ 403:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
-var courses_service_1 = __webpack_require__(252);
+var courses_service_1 = __webpack_require__(250);
 var CoursesComponent = (function () {
     function CoursesComponent(coursesService) {
         this.coursesService = coursesService;
@@ -1580,7 +1838,7 @@ var CoursesComponent = (function () {
 CoursesComponent = __decorate([
     core_1.Component({
         selector: 'courses',
-        template: __webpack_require__(697),
+        template: __webpack_require__(707),
     }),
     __metadata("design:paramtypes", [courses_service_1.CoursesService])
 ], CoursesComponent);
@@ -1589,13 +1847,13 @@ exports.CoursesComponent = CoursesComponent;
 
 /***/ },
 
-/***/ 402:
+/***/ 404:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
-var courses_service_1 = __webpack_require__(252);
+var courses_service_1 = __webpack_require__(250);
 var router_1 = __webpack_require__(77);
 var common_1 = __webpack_require__(37);
 var EditCourseComponent = (function () {
@@ -1643,7 +1901,7 @@ var EditCourseComponent = (function () {
 EditCourseComponent = __decorate([
     core_1.Component({
         selector: 'home',
-        template: __webpack_require__(698),
+        template: __webpack_require__(708),
     }),
     __metadata("design:paramtypes", [router_1.ActivatedRoute,
         courses_service_1.CoursesService,
@@ -1654,16 +1912,16 @@ exports.EditCourseComponent = EditCourseComponent;
 
 /***/ },
 
-/***/ 403:
+/***/ 405:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
-var auth_service_1 = __webpack_require__(160);
-var md5 = __webpack_require__(701);
+var auth_service_1 = __webpack_require__(111);
+var md5 = __webpack_require__(711);
 var router_1 = __webpack_require__(77);
-var forms_1 = __webpack_require__(161);
+var forms_1 = __webpack_require__(160);
 var LoginComponent = (function () {
     function LoginComponent(authService, router, fb) {
         this.authService = authService;
@@ -1713,8 +1971,8 @@ var LoginComponent = (function () {
 LoginComponent = __decorate([
     core_1.Component({
         selector: 'login',
-        template: __webpack_require__(699),
-        styles: [__webpack_require__(703)],
+        template: __webpack_require__(709),
+        styles: [__webpack_require__(713)],
         providers: [auth_service_1.AuthService]
     }),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
@@ -1726,12 +1984,12 @@ exports.LoginComponent = LoginComponent;
 
 /***/ },
 
-/***/ 404:
+/***/ 406:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-__webpack_require__(721);
+__webpack_require__(720);
 var MLab = (function () {
     function MLab() {
         this.baseUrl = 'https://api.mlab.com/api/1/databases';
@@ -1749,40 +2007,52 @@ exports.MLab = MLab;
 
 /***/ },
 
-/***/ 423:
+/***/ 407:
 /***/ function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+"use strict";
+"use strict";
+exports.USER_LOADED = 'USER_LOADED';
+exports.USER_LOGOUT = 'USER_LOGOUT';
+exports.USER_ERROR = 'USER_ERROR';
 
-/***/ },
-
-/***/ 424:
-/***/ function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ },
 
 /***/ 427:
+/***/ function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ },
+
+/***/ 428:
+/***/ function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ },
+
+/***/ 432:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
-var platform_browser_1 = __webpack_require__(112);
-var app_component_1 = __webpack_require__(748);
-var app_routes_1 = __webpack_require__(749);
-var http_1 = __webpack_require__(111);
-var courses_component_1 = __webpack_require__(401);
-var login_component_1 = __webpack_require__(403);
-var forms_1 = __webpack_require__(161);
-var loggedin_guard_1 = __webpack_require__(400);
-var auth_service_1 = __webpack_require__(160);
-var courses_service_1 = __webpack_require__(252);
-var edit_course_component_1 = __webpack_require__(402);
-var store_1 = __webpack_require__(68);
-var store_devtools_1 = __webpack_require__(216);
-var store_log_monitor_1 = __webpack_require__(543);
+var platform_browser_1 = __webpack_require__(89);
+var http_1 = __webpack_require__(112);
+var forms_1 = __webpack_require__(160);
+var store_1 = __webpack_require__(69);
+var store_devtools_1 = __webpack_require__(215);
+var store_log_monitor_1 = __webpack_require__(546);
+var app_component_1 = __webpack_require__(744);
+var app_routes_1 = __webpack_require__(401);
+var loggedin_guard_1 = __webpack_require__(402);
+var auth_service_1 = __webpack_require__(111);
+var store_2 = __webpack_require__(749);
+var courses_module_1 = __webpack_require__(747);
+var login_component_1 = __webpack_require__(405);
+var header_component_1 = __webpack_require__(745);
 var AppModule = (function () {
     function AppModule() {
     }
@@ -1795,7 +2065,9 @@ AppModule = __decorate([
             http_1.HttpModule,
             forms_1.FormsModule,
             forms_1.ReactiveFormsModule,
+            courses_module_1.CoursesModule,
             app_routes_1.routing,
+            store_1.StoreModule.provideStore(store_2.reducers),
             store_devtools_1.StoreDevtoolsModule.instrumentStore({
                 monitor: store_log_monitor_1.useLogMonitor({
                     visible: false,
@@ -1803,18 +2075,15 @@ AppModule = __decorate([
                 })
             }),
             store_log_monitor_1.StoreLogMonitorModule,
-            store_1.StoreModule.provideStore({}),
         ],
         declarations: [
             app_component_1.AppComponent,
-            login_component_1.LoginComponent,
-            courses_component_1.CoursesComponent,
-            edit_course_component_1.EditCourseComponent
+            header_component_1.AppHeaderComponent,
+            login_component_1.LoginComponent
         ],
         providers: [
             loggedin_guard_1.LoggedInGuard,
-            auth_service_1.AuthService,
-            courses_service_1.CoursesService
+            auth_service_1.AuthService
         ],
         bootstrap: [app_component_1.AppComponent]
     }),
@@ -1825,7 +2094,7 @@ exports.AppModule = AppModule;
 
 /***/ },
 
-/***/ 534:
+/***/ 538:
 /***/ function(module, exports) {
 
 "use strict";
@@ -1848,14 +2117,147 @@ exports.compose = function () {
 
 /***/ },
 
-/***/ 535:
+/***/ 539:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_operator_enterZone__ = __webpack_require__(541);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_operator_leaveZone__ = __webpack_require__(542);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_operator_select__ = __webpack_require__(543);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__src_compose__ = __webpack_require__(540);
+/* unused harmony namespace reexport */
+/* unused harmony namespace reexport */
+/* harmony namespace reexport (by used) */ __webpack_require__.d(exports, "a", function() { return __WEBPACK_IMPORTED_MODULE_2__src_operator_select__["a"]; });
+/* unused harmony namespace reexport */
+
+
+
+
+//# sourceMappingURL=index.js.map
+
+/***/ },
+
+/***/ 540:
+/***/ function(module, exports, __webpack_require__) {
+
 "use strict";
-var pluck_1 = __webpack_require__(733);
-var map_1 = __webpack_require__(76);
-var distinctUntilChanged_1 = __webpack_require__(388);
+/* unused harmony export compose */
+var compose = function () {
+    var functions = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        functions[_i - 0] = arguments[_i];
+    }
+    return function (arg) {
+        if (functions.length === 0) {
+            return arg;
+        }
+        var last = functions[functions.length - 1];
+        var rest = functions.slice(0, -1);
+        return rest.reduceRight(function (composed, fn) { return fn(composed); }, last(arg));
+    };
+};
+//# sourceMappingURL=compose.js.map
+
+/***/ },
+
+/***/ 541:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Subscriber__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Subscriber___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_Subscriber__);
+/* unused harmony export enterZone */
+/* unused harmony export EnterZoneOperator */
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+
+function enterZone(zone) {
+    return this.lift(new EnterZoneOperator(zone));
+}
+var EnterZoneOperator = (function () {
+    function EnterZoneOperator(_zone) {
+        this._zone = _zone;
+    }
+    EnterZoneOperator.prototype.call = function (subscriber, source) {
+        return source._subscribe(new EnterZoneSubscriber(subscriber, this._zone));
+    };
+    return EnterZoneOperator;
+}());
+var EnterZoneSubscriber = (function (_super) {
+    __extends(EnterZoneSubscriber, _super);
+    function EnterZoneSubscriber(destination, _zone) {
+        _super.call(this, destination);
+        this._zone = _zone;
+    }
+    EnterZoneSubscriber.prototype._next = function (value) {
+        var _this = this;
+        this._zone.run(function () { return _this.destination.next(value); });
+    };
+    return EnterZoneSubscriber;
+}(__WEBPACK_IMPORTED_MODULE_0_rxjs_Subscriber__["Subscriber"]));
+//# sourceMappingURL=enterZone.js.map
+
+/***/ },
+
+/***/ 542:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Subscriber__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_Subscriber___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_Subscriber__);
+/* unused harmony export leaveZone */
+/* unused harmony export LeaveZoneOperator */
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+
+function leaveZone(zone) {
+    return this.lift(new LeaveZoneOperator(zone));
+}
+var LeaveZoneOperator = (function () {
+    function LeaveZoneOperator(_zone) {
+        this._zone = _zone;
+    }
+    LeaveZoneOperator.prototype.call = function (subscriber, source) {
+        return source._subscribe(new LeaveZoneSubscriber(subscriber, this._zone));
+    };
+    return LeaveZoneOperator;
+}());
+var LeaveZoneSubscriber = (function (_super) {
+    __extends(LeaveZoneSubscriber, _super);
+    function LeaveZoneSubscriber(destination, _zone) {
+        _super.call(this, destination);
+        this._zone = _zone;
+    }
+    LeaveZoneSubscriber.prototype._next = function (value) {
+        var _this = this;
+        this._zone.runOutsideAngular(function () { return _this.destination.next(value); });
+    };
+    return LeaveZoneSubscriber;
+}(__WEBPACK_IMPORTED_MODULE_0_rxjs_Subscriber__["Subscriber"]));
+//# sourceMappingURL=leaveZone.js.map
+
+/***/ },
+
+/***/ 543:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_operator_pluck__ = __webpack_require__(392);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_operator_pluck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs_operator_pluck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_operator_map__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_operator_distinctUntilChanged__ = __webpack_require__(387);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_operator_distinctUntilChanged___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_operator_distinctUntilChanged__);
+/* harmony export (immutable) */ exports["a"] = select;
+
+
+
 function select(pathOrMapFn) {
     var paths = [];
     for (var _i = 1; _i < arguments.length; _i++) {
@@ -1863,47 +2265,51 @@ function select(pathOrMapFn) {
     }
     var mapped$;
     if (typeof pathOrMapFn === 'string') {
-        mapped$ = pluck_1.pluck.call.apply(pluck_1.pluck, [this, pathOrMapFn].concat(paths));
+        mapped$ = __WEBPACK_IMPORTED_MODULE_0_rxjs_operator_pluck__["pluck"].call.apply(__WEBPACK_IMPORTED_MODULE_0_rxjs_operator_pluck__["pluck"], [this, pathOrMapFn].concat(paths));
     }
     else if (typeof pathOrMapFn === 'function') {
-        mapped$ = map_1.map.call(this, pathOrMapFn);
+        mapped$ = __WEBPACK_IMPORTED_MODULE_1_rxjs_operator_map__["map"].call(this, pathOrMapFn);
     }
     else {
         throw new TypeError(("Unexpected type " + typeof pathOrMapFn + " in select operator,")
             + " expected 'string' or 'function'");
     }
-    return distinctUntilChanged_1.distinctUntilChanged.call(mapped$);
+    return __WEBPACK_IMPORTED_MODULE_2_rxjs_operator_distinctUntilChanged__["distinctUntilChanged"].call(mapped$);
 }
-exports.select = select;
-
+//# sourceMappingURL=select.js.map
 
 /***/ },
 
-/***/ 536:
+/***/ 544:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var store_1 = __webpack_require__(68);
-var core_1 = __webpack_require__(0);
-var devtools_1 = __webpack_require__(338);
-var config_1 = __webpack_require__(337);
-var extension_1 = __webpack_require__(339);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ngrx_store__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__devtools__ = __webpack_require__(337);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config__ = __webpack_require__(336);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__extension__ = __webpack_require__(338);
+/* unused harmony export _createReduxDevtoolsExtension */
+/* unused harmony export _createState */
+/* unused harmony export _createReducer */
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return StoreDevtoolsModule; });
+
+
+
+
+
 function _createReduxDevtoolsExtension() {
     if (typeof window !== 'undefined' && window.devToolsExtension) {
         return window.devtoolsExtension;
     }
     return null;
 }
-exports._createReduxDevtoolsExtension = _createReduxDevtoolsExtension;
 function _createState(devtools) {
     return devtools.state;
 }
-exports._createState = _createState;
 function _createReducer(dispatcher, reducer) {
-    return new store_1.Reducer(dispatcher, reducer);
+    return new __WEBPACK_IMPORTED_MODULE_0__ngrx_store__["Reducer"](dispatcher, reducer);
 }
-exports._createReducer = _createReducer;
 var StoreDevtoolsModule = (function () {
     function StoreDevtoolsModule() {
     }
@@ -1920,30 +2326,30 @@ var StoreDevtoolsModule = (function () {
             ngModule: StoreDevtoolsModule,
             providers: [
                 {
-                    provide: store_1.State,
-                    deps: [devtools_1.StoreDevtools],
+                    provide: __WEBPACK_IMPORTED_MODULE_0__ngrx_store__["State"],
+                    deps: [__WEBPACK_IMPORTED_MODULE_2__devtools__["a" /* StoreDevtools */]],
                     useFactory: _createState
                 },
                 {
-                    provide: store_1.Reducer,
-                    deps: [devtools_1.DevtoolsDispatcher, store_1.INITIAL_REDUCER],
+                    provide: __WEBPACK_IMPORTED_MODULE_0__ngrx_store__["Reducer"],
+                    deps: [__WEBPACK_IMPORTED_MODULE_2__devtools__["b" /* DevtoolsDispatcher */], __WEBPACK_IMPORTED_MODULE_0__ngrx_store__["INITIAL_REDUCER"]],
                     useFactory: _createReducer
                 },
-                { provide: config_1.STORE_DEVTOOLS_CONFIG, useValue: options }
+                { provide: __WEBPACK_IMPORTED_MODULE_3__config__["a" /* STORE_DEVTOOLS_CONFIG */], useValue: options }
             ]
         };
     };
     StoreDevtoolsModule.decorators = [
-        { type: core_1.NgModule, args: [{
+        { type: __WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"], args: [{
                     imports: [
-                        store_1.StoreModule
+                        __WEBPACK_IMPORTED_MODULE_0__ngrx_store__["StoreModule"]
                     ],
                     providers: [
-                        extension_1.DevtoolsExtension,
-                        devtools_1.DevtoolsDispatcher,
-                        devtools_1.StoreDevtools,
+                        __WEBPACK_IMPORTED_MODULE_4__extension__["a" /* DevtoolsExtension */],
+                        __WEBPACK_IMPORTED_MODULE_2__devtools__["b" /* DevtoolsDispatcher */],
+                        __WEBPACK_IMPORTED_MODULE_2__devtools__["a" /* StoreDevtools */],
                         {
-                            provide: extension_1.REDUX_DEVTOOLS_EXTENSION,
+                            provide: __WEBPACK_IMPORTED_MODULE_4__extension__["b" /* REDUX_DEVTOOLS_EXTENSION */],
                             useFactory: _createReduxDevtoolsExtension
                         }
                     ]
@@ -1953,20 +2359,24 @@ var StoreDevtoolsModule = (function () {
     StoreDevtoolsModule.ctorParameters = [];
     return StoreDevtoolsModule;
 }());
-exports.StoreDevtoolsModule = StoreDevtoolsModule;
-
+//# sourceMappingURL=instrument.js.map
 
 /***/ },
 
-/***/ 537:
+/***/ 545:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var store_1 = __webpack_require__(68);
-var utils_1 = __webpack_require__(217);
-var actions_1 = __webpack_require__(147);
-exports.INIT_ACTION = { type: store_1.Dispatcher.INIT };
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ngrx_store__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__(147);
+/* unused harmony export INIT_ACTION */
+/* harmony export (immutable) */ exports["a"] = liftInitialState;
+/* harmony export (immutable) */ exports["b"] = liftReducerWith;
+
+
+
+var INIT_ACTION = { type: __WEBPACK_IMPORTED_MODULE_0__ngrx_store__["Dispatcher"].INIT };
 /**
 * Computes the next entry in the log by applying an action.
 */
@@ -2020,7 +2430,7 @@ function liftInitialState(initialCommittedState, monitorReducer) {
     return {
         monitorState: monitorReducer(undefined, {}),
         nextActionId: 1,
-        actionsById: { 0: utils_1.liftAction(exports.INIT_ACTION) },
+        actionsById: { 0: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["d" /* liftAction */])(INIT_ACTION) },
         stagedActionIds: [0],
         skippedActionIds: [],
         committedState: initialCommittedState,
@@ -2028,7 +2438,6 @@ function liftInitialState(initialCommittedState, monitorReducer) {
         computedStates: []
     };
 }
-exports.liftInitialState = liftInitialState;
 /**
 * Creates a history state reducer from an app's reducer.
 */
@@ -2071,9 +2480,9 @@ function liftReducerWith(initialCommittedState, initialLiftedState, monitorReduc
         // value whenever we feel like we don't have to recompute the states.
         var minInvalidatedStateIndex = 0;
         switch (liftedAction.type) {
-            case actions_1.ActionTypes.RESET: {
+            case __WEBPACK_IMPORTED_MODULE_2__actions__["b" /* ActionTypes */].RESET: {
                 // Get back to the state the store was created with.
-                actionsById = { 0: utils_1.liftAction(exports.INIT_ACTION) };
+                actionsById = { 0: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["d" /* liftAction */])(INIT_ACTION) };
                 nextActionId = 1;
                 stagedActionIds = [0];
                 skippedActionIds = [];
@@ -2082,10 +2491,10 @@ function liftReducerWith(initialCommittedState, initialLiftedState, monitorReduc
                 computedStates = [];
                 break;
             }
-            case actions_1.ActionTypes.COMMIT: {
+            case __WEBPACK_IMPORTED_MODULE_2__actions__["b" /* ActionTypes */].COMMIT: {
                 // Consider the last committed state the new starting point.
                 // Squash any staged actions into a single committed state.
-                actionsById = { 0: utils_1.liftAction(exports.INIT_ACTION) };
+                actionsById = { 0: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["d" /* liftAction */])(INIT_ACTION) };
                 nextActionId = 1;
                 stagedActionIds = [0];
                 skippedActionIds = [];
@@ -2094,10 +2503,10 @@ function liftReducerWith(initialCommittedState, initialLiftedState, monitorReduc
                 computedStates = [];
                 break;
             }
-            case actions_1.ActionTypes.ROLLBACK: {
+            case __WEBPACK_IMPORTED_MODULE_2__actions__["b" /* ActionTypes */].ROLLBACK: {
                 // Forget about any staged actions.
                 // Start again from the last committed state.
-                actionsById = { 0: utils_1.liftAction(exports.INIT_ACTION) };
+                actionsById = { 0: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["d" /* liftAction */])(INIT_ACTION) };
                 nextActionId = 1;
                 stagedActionIds = [0];
                 skippedActionIds = [];
@@ -2105,7 +2514,7 @@ function liftReducerWith(initialCommittedState, initialLiftedState, monitorReduc
                 computedStates = [];
                 break;
             }
-            case actions_1.ActionTypes.TOGGLE_ACTION: {
+            case __WEBPACK_IMPORTED_MODULE_2__actions__["b" /* ActionTypes */].TOGGLE_ACTION: {
                 // Toggle whether an action with given ID is skipped.
                 // Being skipped means it is a no-op during the computation.
                 var actionId_1 = liftedAction.id;
@@ -2120,7 +2529,7 @@ function liftReducerWith(initialCommittedState, initialLiftedState, monitorReduc
                 minInvalidatedStateIndex = stagedActionIds.indexOf(actionId_1);
                 break;
             }
-            case actions_1.ActionTypes.SET_ACTIONS_ACTIVE: {
+            case __WEBPACK_IMPORTED_MODULE_2__actions__["b" /* ActionTypes */].SET_ACTIONS_ACTIVE: {
                 // Toggle whether an action with given ID is skipped.
                 // Being skipped means it is a no-op during the computation.
                 var start = liftedAction.start, end = liftedAction.end, active = liftedAction.active;
@@ -2128,7 +2537,7 @@ function liftReducerWith(initialCommittedState, initialLiftedState, monitorReduc
                 for (var i = start; i < end; i++)
                     actionIds.push(i);
                 if (active) {
-                    skippedActionIds = utils_1.difference(skippedActionIds, actionIds);
+                    skippedActionIds = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["e" /* difference */])(skippedActionIds, actionIds);
                 }
                 else {
                     skippedActionIds = skippedActionIds.concat(actionIds);
@@ -2137,7 +2546,7 @@ function liftReducerWith(initialCommittedState, initialLiftedState, monitorReduc
                 minInvalidatedStateIndex = stagedActionIds.indexOf(start);
                 break;
             }
-            case actions_1.ActionTypes.JUMP_TO_STATE: {
+            case __WEBPACK_IMPORTED_MODULE_2__actions__["b" /* ActionTypes */].JUMP_TO_STATE: {
                 // Without recomputing anything, move the pointer that tell us
                 // which state is considered the current one. Useful for sliders.
                 currentStateIndex = liftedAction.index;
@@ -2145,14 +2554,14 @@ function liftReducerWith(initialCommittedState, initialLiftedState, monitorReduc
                 minInvalidatedStateIndex = Infinity;
                 break;
             }
-            case actions_1.ActionTypes.SWEEP: {
+            case __WEBPACK_IMPORTED_MODULE_2__actions__["b" /* ActionTypes */].SWEEP: {
                 // Forget any actions that are currently being skipped.
-                stagedActionIds = utils_1.difference(stagedActionIds, skippedActionIds);
+                stagedActionIds = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["e" /* difference */])(stagedActionIds, skippedActionIds);
                 skippedActionIds = [];
                 currentStateIndex = Math.min(currentStateIndex, stagedActionIds.length - 1);
                 break;
             }
-            case actions_1.ActionTypes.PERFORM_ACTION: {
+            case __WEBPACK_IMPORTED_MODULE_2__actions__["b" /* ActionTypes */].PERFORM_ACTION: {
                 // Auto-commit as new actions come in.
                 if (options.maxAge && stagedActionIds.length === options.maxAge) {
                     commitExcessActions(1);
@@ -2169,13 +2578,13 @@ function liftReducerWith(initialCommittedState, initialLiftedState, monitorReduc
                 minInvalidatedStateIndex = stagedActionIds.length - 1;
                 break;
             }
-            case actions_1.ActionTypes.IMPORT_STATE: {
+            case __WEBPACK_IMPORTED_MODULE_2__actions__["b" /* ActionTypes */].IMPORT_STATE: {
                 // Completely replace everything.
                 (_b = liftedAction.nextLiftedState, monitorState = _b.monitorState, actionsById = _b.actionsById, nextActionId = _b.nextActionId, stagedActionIds = _b.stagedActionIds, skippedActionIds = _b.skippedActionIds, committedState = _b.committedState, currentStateIndex = _b.currentStateIndex, computedStates = _b.computedStates, _b);
                 break;
             }
-            case store_1.Reducer.REPLACE:
-            case store_1.Dispatcher.INIT: {
+            case __WEBPACK_IMPORTED_MODULE_0__ngrx_store__["Reducer"].REPLACE:
+            case __WEBPACK_IMPORTED_MODULE_0__ngrx_store__["Dispatcher"].INIT: {
                 // Always recompute states on hot reload and init.
                 minInvalidatedStateIndex = 0;
                 if (options.maxAge && stagedActionIds.length > options.maxAge) {
@@ -2209,30 +2618,81 @@ function liftReducerWith(initialCommittedState, initialLiftedState, monitorReduc
         var _b;
     }; };
 }
-exports.liftReducerWith = liftReducerWith;
-
+//# sourceMappingURL=reducer.js.map
 
 /***/ },
 
-/***/ 538:
+/***/ 546:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_dock_monitor_index__ = __webpack_require__(339);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__src_log_monitor_index__ = __webpack_require__(555);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_store_log_monitor__ = __webpack_require__(559);
+/* harmony export (binding) */ __webpack_require__.d(exports, "StoreLogMonitorModule", function() { return StoreLogMonitorModule; });
+/* harmony reexport (binding) */ __webpack_require__.d(exports, "useLogMonitor", function() { return __WEBPACK_IMPORTED_MODULE_2__src_dock_monitor_index__["b"]; });
+
+
+
+
+
+var StoreLogMonitorModule = (function () {
+    function StoreLogMonitorModule() {
+    }
+    StoreLogMonitorModule.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"], args: [{
+                    imports: [
+                        __WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"],
+                        __WEBPACK_IMPORTED_MODULE_2__src_dock_monitor_index__["a" /* DockMonitorModule */],
+                        __WEBPACK_IMPORTED_MODULE_3__src_log_monitor_index__["a" /* LogMonitorModule */]
+                    ],
+                    declarations: [
+                        __WEBPACK_IMPORTED_MODULE_4__src_store_log_monitor__["a" /* StoreLogMonitorComponent */]
+                    ],
+                    exports: [
+                        __WEBPACK_IMPORTED_MODULE_4__src_store_log_monitor__["a" /* StoreLogMonitorComponent */]
+                    ]
+                },] },
+    ];
+    /** @nocollapse */
+    StoreLogMonitorModule.ctorParameters = [];
+    return StoreLogMonitorModule;
+}());
+
+//# sourceMappingURL=index.js.map
+
+/***/ },
+
+/***/ 547:
+/***/ function(module, exports, __webpack_require__) {
+
 "use strict";
-__webpack_require__(240);
-__webpack_require__(89);
-var core_1 = __webpack_require__(0);
-var Subject_1 = __webpack_require__(36);
-var keycodes_1 = __webpack_require__(541);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_operator_filter__ = __webpack_require__(389);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_operator_filter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_operator_filter__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_operator_map__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__keycodes__ = __webpack_require__(550);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return CommanderComponent; });
+
+
+
+
 var CommanderComponent = (function () {
     function CommanderComponent() {
         var _this = this;
-        this.keydown$ = new Subject_1.Subject();
+        this.keydown$ = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
         this._ignoreTags = ['INPUT', 'SELECT', 'TEXTAREA'];
-        this.command = this.keydown$
-            .filter(function (e) { return _this._ignoreTags.indexOf(e.target.tagName) < 0; })
-            .filter(function (e) { return !(e.target.isContentEditable); })
-            .filter(function (e) {
+        this.keydown$ = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        var filtered$ = __WEBPACK_IMPORTED_MODULE_1_rxjs_operator_filter__["filter"].call(this.keydown$, function (e) {
+            if (_this._ignoreTags.indexOf(e.target.tagName) !== -1) {
+                return false;
+            }
+            if (e.target.isContentEditable) {
+                return false;
+            }
             var command = _this.parseCommand(_this.shortcut);
             if (!command) {
                 return false;
@@ -2244,8 +2704,8 @@ var CommanderComponent = (function () {
                 command.ctrl === e.ctrlKey &&
                 command.meta === e.metaKey &&
                 command.shift === e.shiftKey;
-        })
-            .map(function (e) {
+        });
+        this.command = __WEBPACK_IMPORTED_MODULE_2_rxjs_operator_map__["map"].call(filtered$, function (e) {
             e.preventDefault();
             return { command: _this.shortcut };
         });
@@ -2268,10 +2728,10 @@ var CommanderComponent = (function () {
             key[c] = true;
         }
         if (key.ctrl) {
-            key.sequence = keycodes_1.KEYCODES.ctrl[key.name] || key.name;
+            key.sequence = __WEBPACK_IMPORTED_MODULE_3__keycodes__["a" /* KEYCODES */].ctrl[key.name] || key.name;
         }
         else {
-            key.sequence = keycodes_1.KEYCODES.nomod[key.name] || key.name;
+            key.sequence = __WEBPACK_IMPORTED_MODULE_3__keycodes__["a" /* KEYCODES */].nomod[key.name] || key.name;
         }
         if (key.shift && key.sequence && key.sequence.length === 1) {
             key.sequence = key.sequence.toUpperCase();
@@ -2279,90 +2739,89 @@ var CommanderComponent = (function () {
         return key;
     };
     CommanderComponent.decorators = [
-        { type: core_1.Component, args: [{
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
                     selector: 'ngrx-commander',
                     template: '',
                     styles: [':host{ display: none }'],
                     host: {
-                        '(document:keydown)': 'keydown$.next($event)'
+                        '(document:keydown)': 'keydown$.emit($event)'
                     }
                 },] },
     ];
     /** @nocollapse */
     CommanderComponent.ctorParameters = [];
     CommanderComponent.propDecorators = {
-        'shortcut': [{ type: core_1.Input },],
-        'command': [{ type: core_1.Output },],
+        'shortcut': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'command': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
     };
     return CommanderComponent;
 }());
-exports.CommanderComponent = CommanderComponent;
-
+//# sourceMappingURL=commander.js.map
 
 /***/ },
 
-/***/ 539:
+/***/ 548:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-__webpack_require__(711);
-__webpack_require__(240);
-__webpack_require__(89);
-__webpack_require__(712);
-var store_devtools_1 = __webpack_require__(216);
-var core_1 = __webpack_require__(0);
-var Subject_1 = __webpack_require__(36);
-var Observable_1 = __webpack_require__(4);
-var actions_1 = __webpack_require__(218);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_core_operator_select__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_core_operator_select___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ngrx_core_operator_select__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store_devtools__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_observable_merge__ = __webpack_require__(726);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_observable_merge___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_observable_merge__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions__ = __webpack_require__(217);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return DockMonitorComponent; });
+
+
+
+
+
+
 var DockMonitorComponent = (function () {
     function DockMonitorComponent(tools, actions) {
-        var _this = this;
-        this.tools = tools;
-        this.actions = actions;
-        this.state$ = this.tools.liftedState.map(function (s) { return s.monitorState; });
-        this.visible$ = this.state$.map(function (s) { return s.visible; }).distinctUntilChanged();
-        this.position$ = this.state$.map(function (s) { return s.position; }).distinctUntilChanged();
-        this.size$ = this.state$.map(function (s) { return s.size; }).distinctUntilChanged();
-        this.toggle$ = new Subject_1.Subject();
-        this.toggleAction$ = this.toggle$
-            .map(function () { return _this.actions.toggleVisibility(); });
-        this.changePosition$ = new Subject_1.Subject();
-        this.positionAction$ = this.changePosition$
-            .map(function () { return _this.actions.changePosition(); });
-        Observable_1.Observable
-            .merge(this.toggleAction$, this.positionAction$)
-            .subscribe(this.tools);
+        this.state$ = __WEBPACK_IMPORTED_MODULE_1__ngrx_core_operator_select__["select"].call(tools.liftedState, function (s) { return s.monitorState; });
+        this.visible$ = __WEBPACK_IMPORTED_MODULE_1__ngrx_core_operator_select__["select"].call(this.state$, function (s) { return s.visible; });
+        this.position$ = __WEBPACK_IMPORTED_MODULE_1__ngrx_core_operator_select__["select"].call(this.state$, function (s) { return s.position; });
+        this.size$ = __WEBPACK_IMPORTED_MODULE_1__ngrx_core_operator_select__["select"].call(this.state$, function (s) { return s.size; });
+        this.toggle$ = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.changePosition$ = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.actionsSubscription = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3_rxjs_observable_merge__["merge"])(__WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__["map"].call(this.toggle$, function () { return actions.toggleVisibility(); }), __WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__["map"].call(this.changePosition$, function () { return actions.changePosition(); })).subscribe(tools);
     }
+    DockMonitorComponent.prototype.ngOnDestroy = function () {
+        this.actionsSubscription.unsubscribe();
+    };
     DockMonitorComponent.decorators = [
-        { type: core_1.Component, args: [{
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
                     selector: 'dock-monitor',
-                    changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-                    template: "\n    <ngrx-commander [shortcut]=\"toggleCommand\" (command)=\"toggle$.next($event)\"></ngrx-commander>\n    <ngrx-commander [shortcut]=\"positionCommand\" (command)=\"changePosition$.next($event)\"></ngrx-commander>\n\n    <ngrx-dock [visible]=\"visible$ | async\" [position]=\"position$ | async\" [size]=\"size$ | async\">\n      <ng-content></ng-content>\n    </ngrx-dock>\n  "
+                    changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectionStrategy"].OnPush,
+                    template: "\n    <ngrx-commander [shortcut]=\"toggleCommand\" (command)=\"toggle$.emit($event)\"></ngrx-commander>\n    <ngrx-commander [shortcut]=\"positionCommand\" (command)=\"changePosition$.emit($event)\"></ngrx-commander>\n\n    <ngrx-dock [visible]=\"visible$ | async\" [position]=\"position$ | async\" [size]=\"size$ | async\">\n      <ng-content></ng-content>\n    </ngrx-dock>\n  "
                 },] },
     ];
     /** @nocollapse */
     DockMonitorComponent.ctorParameters = [
-        { type: store_devtools_1.StoreDevtools, },
-        { type: actions_1.DockActions, },
+        { type: __WEBPACK_IMPORTED_MODULE_2__ngrx_store_devtools__["StoreDevtools"], },
+        { type: __WEBPACK_IMPORTED_MODULE_5__actions__["a" /* DockActions */], },
     ];
     DockMonitorComponent.propDecorators = {
-        'toggleCommand': [{ type: core_1.Input },],
-        'positionCommand': [{ type: core_1.Input },],
+        'toggleCommand': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'positionCommand': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
     };
     return DockMonitorComponent;
 }());
-exports.DockMonitorComponent = DockMonitorComponent;
-
+//# sourceMappingURL=dock-monitor.js.map
 
 /***/ },
 
-/***/ 540:
+/***/ 549:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var core_1 = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return DockComponent; });
+
 var DockComponent = (function () {
     function DockComponent() {
         this.position = 'right';
@@ -2432,7 +2891,7 @@ var DockComponent = (function () {
         }
     };
     DockComponent.decorators = [
-        { type: core_1.Component, args: [{
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
                     selector: 'ngrx-dock',
                     template: "\n    <div class=\"dock\">\n      <div class=\"dock-content\">\n        <ng-content></ng-content>\n      </div>\n    </div>\n  ",
                     styles: ["\n    :host {\n      position: fixed;\n      top: 0;\n      left: 0;\n      right: 0;\n      bottom: 0;\n      transition: all 0.3s;\n      z-index: 9999;\n    }\n\n    .dock {\n      position: absolute;\n      z-index: 1;\n      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);\n      background-color: white;\n      left: 0;\n      top: 0;\n      width: 100%;\n      height: 100%;\n    }\n\n    .dock-content {\n      width: 100%;\n      height: 100%;\n      overflow: auto;\n    }\n  "]
@@ -2441,29 +2900,28 @@ var DockComponent = (function () {
     /** @nocollapse */
     DockComponent.ctorParameters = [];
     DockComponent.propDecorators = {
-        'position': [{ type: core_1.Input },],
-        'size': [{ type: core_1.Input },],
-        'visible': [{ type: core_1.Input },],
-        'leftPosition': [{ type: core_1.HostBinding, args: ['style.left',] },],
-        'rightPosition': [{ type: core_1.HostBinding, args: ['style.right',] },],
-        'topPosition': [{ type: core_1.HostBinding, args: ['style.top',] },],
-        'bottomPosition': [{ type: core_1.HostBinding, args: ['style.bottom',] },],
+        'position': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'size': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'visible': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'leftPosition': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["HostBinding"], args: ['style.left',] },],
+        'rightPosition': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["HostBinding"], args: ['style.right',] },],
+        'topPosition': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["HostBinding"], args: ['style.top',] },],
+        'bottomPosition': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["HostBinding"], args: ['style.bottom',] },],
     };
     return DockComponent;
 }());
-exports.DockComponent = DockComponent;
-
+//# sourceMappingURL=dock.js.map
 
 /***/ },
 
-/***/ 541:
-/***/ function(module, exports) {
+/***/ 550:
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return KEYCODES; });
 // Most of these are according to this table: http://www.ssicom.org/js/x171166.htm
 // However where nodejs readline diverges, they are adjusted to conform to it
-exports.KEYCODES = {
+var KEYCODES = {
     nomod: {
         escape: '\u001b',
         space: ' ' // actually '\u0020'
@@ -2504,18 +2962,21 @@ exports.KEYCODES = {
         'space': '\u0000'
     }
 };
-
+//# sourceMappingURL=keycodes.js.map
 
 /***/ },
 
-/***/ 542:
+/***/ 551:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var store_1 = __webpack_require__(68);
-var actions_1 = __webpack_require__(218);
-exports.POSITIONS = ['left', 'top', 'right', 'bottom'];
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ngrx_store__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions__ = __webpack_require__(217);
+/* unused harmony export POSITIONS */
+/* harmony export (immutable) */ exports["a"] = useDockMonitor;
+
+
+var POSITIONS = ['left', 'top', 'right', 'bottom'];
 function useDockMonitor(_options) {
     if (_options === void 0) { _options = {}; }
     var options = Object.assign({
@@ -2525,95 +2986,59 @@ function useDockMonitor(_options) {
     }, _options);
     function position(state, action) {
         if (state === void 0) { state = options.position; }
-        return (action.type === actions_1.DockActions.CHANGE_POSITION) ?
-            exports.POSITIONS[(exports.POSITIONS.indexOf(state) + 1) % exports.POSITIONS.length] :
+        return (action.type === __WEBPACK_IMPORTED_MODULE_1__actions__["a" /* DockActions */].CHANGE_POSITION) ?
+            POSITIONS[(POSITIONS.indexOf(state) + 1) % POSITIONS.length] :
             state;
     }
     function size(state, action) {
         if (state === void 0) { state = options.size; }
-        return (action.type === actions_1.DockActions.CHANGE_SIZE) ?
+        return (action.type === __WEBPACK_IMPORTED_MODULE_1__actions__["a" /* DockActions */].CHANGE_SIZE) ?
             action.size :
             state;
     }
     function visible(state, action) {
         if (state === void 0) { state = options.visible; }
-        return (action.type === actions_1.DockActions.TOGGLE_VISIBILITY) ?
+        return (action.type === __WEBPACK_IMPORTED_MODULE_1__actions__["a" /* DockActions */].TOGGLE_VISIBILITY) ?
             !state :
             state;
     }
-    return store_1.combineReducers({
+    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__ngrx_store__["combineReducers"])({
         position: position,
         visible: visible,
         size: size
     });
 }
-exports.useDockMonitor = useDockMonitor;
-
-
-/***/ },
-
-/***/ 543:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var core_1 = __webpack_require__(0);
-var common_1 = __webpack_require__(37);
-var dock_monitor_1 = __webpack_require__(340);
-var log_monitor_1 = __webpack_require__(547);
-var store_log_monitor_1 = __webpack_require__(551);
-var StoreLogMonitorModule = (function () {
-    function StoreLogMonitorModule() {
-    }
-    StoreLogMonitorModule.decorators = [
-        { type: core_1.NgModule, args: [{
-                    imports: [
-                        common_1.CommonModule,
-                        dock_monitor_1.DockMonitorModule,
-                        log_monitor_1.LogMonitorModule
-                    ],
-                    declarations: [
-                        store_log_monitor_1.StoreLogMonitorComponent
-                    ],
-                    exports: [
-                        store_log_monitor_1.StoreLogMonitorComponent
-                    ]
-                },] },
-    ];
-    /** @nocollapse */
-    StoreLogMonitorModule.ctorParameters = [];
-    return StoreLogMonitorModule;
-}());
-exports.StoreLogMonitorModule = StoreLogMonitorModule;
-var dock_monitor_2 = __webpack_require__(340);
-exports.useLogMonitor = dock_monitor_2.useDockMonitor;
-
+//# sourceMappingURL=reducer.js.map
 
 /***/ },
 
-/***/ 544:
+/***/ 552:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var core_1 = __webpack_require__(0);
-var common_1 = __webpack_require__(37);
-var json_node_1 = __webpack_require__(545);
-var json_tree_1 = __webpack_require__(546);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__json_node__ = __webpack_require__(553);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__json_tree__ = __webpack_require__(554);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return JsonTreeModule; });
+
+
+
+
 var JsonTreeModule = (function () {
     function JsonTreeModule() {
     }
     JsonTreeModule.decorators = [
-        { type: core_1.NgModule, args: [{
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"], args: [{
                     imports: [
-                        common_1.CommonModule
+                        __WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"]
                     ],
                     declarations: [
-                        json_node_1.JsonNodeComponent,
-                        json_tree_1.JsonTreeComponent
+                        __WEBPACK_IMPORTED_MODULE_2__json_node__["a" /* JsonNodeComponent */],
+                        __WEBPACK_IMPORTED_MODULE_3__json_tree__["a" /* JsonTreeComponent */]
                     ],
                     exports: [
-                        json_tree_1.JsonTreeComponent
+                        __WEBPACK_IMPORTED_MODULE_3__json_tree__["a" /* JsonTreeComponent */]
                     ]
                 },] },
     ];
@@ -2621,28 +3046,29 @@ var JsonTreeModule = (function () {
     JsonTreeModule.ctorParameters = [];
     return JsonTreeModule;
 }());
-exports.JsonTreeModule = JsonTreeModule;
-
+//# sourceMappingURL=index.js.map
 
 /***/ },
 
-/***/ 545:
+/***/ 553:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var core_1 = __webpack_require__(0);
-var types = __webpack_require__(341);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__types__ = __webpack_require__(340);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return JsonNodeComponent; });
+
+
 var JsonNodeComponent = (function () {
     function JsonNodeComponent() {
         this.expanded = false;
     }
     Object.defineProperty(JsonNodeComponent.prototype, "value", {
         set: function (value) {
-            this.label = types.getLabelFor(value);
-            this.type = types.getTypeOf(value);
-            if (this.type === types.KNOWN.Array || this.type === types.KNOWN.Object || this.type === types.KNOWN.Iterable) {
-                this.children = types.getChildrenFor(value);
+            this.label = __WEBPACK_IMPORTED_MODULE_1__types__["a" /* getLabelFor */](value);
+            this.type = __WEBPACK_IMPORTED_MODULE_1__types__["b" /* getTypeOf */](value);
+            if (this.type === __WEBPACK_IMPORTED_MODULE_1__types__["c" /* KNOWN */].Array || this.type === __WEBPACK_IMPORTED_MODULE_1__types__["c" /* KNOWN */].Object || this.type === __WEBPACK_IMPORTED_MODULE_1__types__["c" /* KNOWN */].Iterable) {
+                this.children = __WEBPACK_IMPORTED_MODULE_1__types__["d" /* getChildrenFor */](value);
             }
             else {
                 this.children = null;
@@ -2657,7 +3083,7 @@ var JsonNodeComponent = (function () {
         }
     };
     JsonNodeComponent.decorators = [
-        { type: core_1.Component, args: [{
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
                     selector: 'ngrx-json-node',
                     styles: ["\n    :host {\n      display: block;\n      padding: 2px 2px 2px 20px;\n      position: relative;\n      color: #70AFCD;\n      font-family: 'monaco', 'Consolas', 'Lucida Console', monospace;\n    }\n    .expanded-indicator {\n      position: absolute;\n      top: 7px;\n      left: 5px;\n      font-size: 10px;\n      transition: transform 200ms;\n    }\n\n    .expanded .expanded-indicator {\n      transform: rotate(90deg);\n    }\n\n    .node-key::after {\n      content: ': ';\n      display: inline;\n    }\n\n    .expanded .node-label {\n      color: #BABBBD !important;\n    }\n\n    .node-label {\n      color: #9AC05C;\n    }\n\n    .node-label.array, .node-label.null, .node-label.iterable {\n      color: #D182C0;\n    }\n\n    .node-label.number, .node-label.undefined, .node-label.boolean {\n      color: #F86936;\n    }\n  "],
                     template: "\n    <div (click)=\"toggle()\" [class.expanded]=\"expanded\">\n      <span class=\"expanded-indicator\" *ngIf=\"children\">\u25B6</span>\n      <span class=\"node-key\">{{ key }}</span>\n      <span class=\"node-label\" [ngClass]=\"type\">{{ label }}</span>\n    </div>\n    <div class=\"child-nodes\" *ngIf=\"children && expanded\">\n      <ngrx-json-node *ngFor=\"let child of children\" [value]=\"child.value\" [key]=\"child.key\"></ngrx-json-node>\n    </div>\n  "
@@ -2666,24 +3092,25 @@ var JsonNodeComponent = (function () {
     /** @nocollapse */
     JsonNodeComponent.ctorParameters = [];
     JsonNodeComponent.propDecorators = {
-        'key': [{ type: core_1.Input },],
-        'expanded': [{ type: core_1.Input },],
-        'value': [{ type: core_1.Input },],
+        'key': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'expanded': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'value': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
     };
     return JsonNodeComponent;
 }());
-exports.JsonNodeComponent = JsonNodeComponent;
-
+//# sourceMappingURL=json-node.js.map
 
 /***/ },
 
-/***/ 546:
+/***/ 554:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var core_1 = __webpack_require__(0);
-var types_1 = __webpack_require__(341);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__types__ = __webpack_require__(340);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return JsonTreeComponent; });
+
+
 var JsonTreeComponent = (function () {
     function JsonTreeComponent() {
         this.children = [];
@@ -2691,13 +3118,13 @@ var JsonTreeComponent = (function () {
     }
     Object.defineProperty(JsonTreeComponent.prototype, "value", {
         set: function (value) {
-            this.children = types_1.getChildrenFor(value);
+            this.children = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__types__["d" /* getChildrenFor */])(value);
         },
         enumerable: true,
         configurable: true
     });
     JsonTreeComponent.decorators = [
-        { type: core_1.Component, args: [{
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
                     selector: 'ngrx-json-tree',
                     template: "\n    <ngrx-json-node *ngFor=\"let child of children\" [expanded]=\"expanded\" [value]=\"child.value\" [key]=\"child.key\"></ngrx-json-node>\n  "
                 },] },
@@ -2705,43 +3132,48 @@ var JsonTreeComponent = (function () {
     /** @nocollapse */
     JsonTreeComponent.ctorParameters = [];
     JsonTreeComponent.propDecorators = {
-        'expanded': [{ type: core_1.Input },],
-        'value': [{ type: core_1.Input },],
+        'expanded': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'value': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
     };
     return JsonTreeComponent;
 }());
-exports.JsonTreeComponent = JsonTreeComponent;
-
+//# sourceMappingURL=json-tree.js.map
 
 /***/ },
 
-/***/ 547:
+/***/ 555:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var core_1 = __webpack_require__(0);
-var common_1 = __webpack_require__(37);
-var json_tree_1 = __webpack_require__(544);
-var log_monitor_1 = __webpack_require__(550);
-var log_monitor_button_1 = __webpack_require__(548);
-var log_monitor_entry_1 = __webpack_require__(549);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__json_tree_index__ = __webpack_require__(552);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__log_monitor__ = __webpack_require__(558);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__log_monitor_button__ = __webpack_require__(556);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__log_monitor_entry__ = __webpack_require__(557);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return LogMonitorModule; });
+
+
+
+
+
+
 var LogMonitorModule = (function () {
     function LogMonitorModule() {
     }
     LogMonitorModule.decorators = [
-        { type: core_1.NgModule, args: [{
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"], args: [{
                     imports: [
-                        common_1.CommonModule,
-                        json_tree_1.JsonTreeModule
+                        __WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"],
+                        __WEBPACK_IMPORTED_MODULE_2__json_tree_index__["a" /* JsonTreeModule */]
                     ],
                     declarations: [
-                        log_monitor_1.LogMonitorComponent,
-                        log_monitor_button_1.LogMonitorButtonComponent,
-                        log_monitor_entry_1.LogMonitorEntryComponent
+                        __WEBPACK_IMPORTED_MODULE_3__log_monitor__["a" /* LogMonitorComponent */],
+                        __WEBPACK_IMPORTED_MODULE_4__log_monitor_button__["a" /* LogMonitorButtonComponent */],
+                        __WEBPACK_IMPORTED_MODULE_5__log_monitor_entry__["a" /* LogMonitorEntryComponent */]
                     ],
                     exports: [
-                        log_monitor_1.LogMonitorComponent
+                        __WEBPACK_IMPORTED_MODULE_3__log_monitor__["a" /* LogMonitorComponent */]
                     ]
                 },] },
     ];
@@ -2749,20 +3181,20 @@ var LogMonitorModule = (function () {
     LogMonitorModule.ctorParameters = [];
     return LogMonitorModule;
 }());
-exports.LogMonitorModule = LogMonitorModule;
-
+//# sourceMappingURL=index.js.map
 
 /***/ },
 
-/***/ 548:
+/***/ 556:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var core_1 = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return LogMonitorButtonComponent; });
+
 var LogMonitorButtonComponent = (function () {
     function LogMonitorButtonComponent() {
-        this.action = new core_1.EventEmitter();
+        this.action = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
     }
     LogMonitorButtonComponent.prototype.handleAction = function ($event) {
         if (!this.disabled) {
@@ -2772,7 +3204,7 @@ var LogMonitorButtonComponent = (function () {
         return false;
     };
     LogMonitorButtonComponent.decorators = [
-        { type: core_1.Component, args: [{
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
                     selector: 'log-monitor-button',
                     template: "\n    <ng-content></ng-content>\n  ",
                     styles: ["\n    :host{\n      flex-grow: 1;\n      display: inline-block;\n      font-family: 'monaco', 'Consolas', 'Lucida Console', monospace;\n      cursor: pointer;\n      font-weight: bold;\n      border-radius: 3px;\n      padding: 4px 8px;\n      margin: 5px 3px 5px 3px;\n      font-size: 0.8em;\n      color: white;\n      text-decoration: none;\n      background-color: #4F5A65;\n    }\n\n    :host.disabled{\n      opacity: 0.2;\n      cursor: text;\n      background-color: transparent;\n    }\n  "]
@@ -2781,28 +3213,28 @@ var LogMonitorButtonComponent = (function () {
     /** @nocollapse */
     LogMonitorButtonComponent.ctorParameters = [];
     LogMonitorButtonComponent.propDecorators = {
-        'disabled': [{ type: core_1.HostBinding, args: ['class.disabled',] }, { type: core_1.Input },],
-        'action': [{ type: core_1.Output },],
-        'handleAction': [{ type: core_1.HostListener, args: ['click', ['$event'],] },],
+        'disabled': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["HostBinding"], args: ['class.disabled',] }, { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'action': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
+        'handleAction': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["HostListener"], args: ['click', ['$event'],] },],
     };
     return LogMonitorButtonComponent;
 }());
-exports.LogMonitorButtonComponent = LogMonitorButtonComponent;
-
+//# sourceMappingURL=log-monitor-button.js.map
 
 /***/ },
 
-/***/ 549:
+/***/ 557:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var core_1 = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return LogMonitorEntryComponent; });
+
 var LogMonitorEntryComponent = (function () {
     function LogMonitorEntryComponent() {
         this.expandEntries = false;
         this.disabled = false;
-        this.toggle = new core_1.EventEmitter();
+        this.toggle = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
     }
     Object.defineProperty(LogMonitorEntryComponent.prototype, "item", {
         get: function () {
@@ -2830,7 +3262,7 @@ var LogMonitorEntryComponent = (function () {
         console.log(this.item.state);
     };
     LogMonitorEntryComponent.decorators = [
-        { type: core_1.Component, args: [{
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
                     selector: 'log-monitor-entry',
                     template: "\n    <div class=\"title-bar\" [ngClass]=\"{ collapsed: item.collapsed }\" (click)=\"handleToggle()\">\n      {{ item.action.type }}\n    </div>\n    <div class=\"action-bar\" *ngIf=\"!item.collapsed\">\n      <ngrx-json-tree [value]=\"stateActionPair\" [expanded]=\"expandEntries\"></ngrx-json-tree>\n    </div>\n  ",
                     styles: ["\n    :host{\n      color: #FFFFFF;\n      background-color: #4F5A65;\n      cursor: pointer;\n    }\n    .title-bar{\n      padding: 8px 0 7px 16px;\n      background-color: rgba(0,0,0,0.1);\n    }\n    .action-bar{\n      padding: 20px;\n    }\n    .collapsed{\n      text-decoration: line-through;\n      font-style: italic;\n      opacity: 0.5;\n    }\n  "]
@@ -2839,35 +3271,40 @@ var LogMonitorEntryComponent = (function () {
     /** @nocollapse */
     LogMonitorEntryComponent.ctorParameters = [];
     LogMonitorEntryComponent.propDecorators = {
-        'expandEntries': [{ type: core_1.Input },],
-        'disabled': [{ type: core_1.Input },],
-        'item': [{ type: core_1.Input },],
-        'toggle': [{ type: core_1.Output },],
+        'expandEntries': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'disabled': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'item': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'toggle': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
     };
     return LogMonitorEntryComponent;
 }());
-exports.LogMonitorEntryComponent = LogMonitorEntryComponent;
-
+//# sourceMappingURL=log-monitor-entry.js.map
 
 /***/ },
 
-/***/ 550:
+/***/ 558:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-__webpack_require__(89);
-var core_1 = __webpack_require__(0);
-var store_devtools_1 = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_operator_map__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store_devtools__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngrx_core_operator_select__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngrx_core_operator_select___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__ngrx_core_operator_select__);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return LogMonitorComponent; });
+
+
+
+
 var LogMonitorComponent = (function () {
     function LogMonitorComponent(devtools) {
         this.devtools = devtools;
         this.expandEntries = true;
-        this.canRevert$ = devtools.liftedState.map(function (s) { return !(s.computedStates.length > 1); });
-        this.canSweep$ = devtools.liftedState.map(function (s) { return !(s.skippedActionIds.length > 0); });
-        this.canCommit$ = devtools.liftedState.map(function (s) { return !(s.computedStates.length > 1); });
-        this.items$ = devtools.liftedState
-            .map(function (_a) {
+        this.canRevert$ = __WEBPACK_IMPORTED_MODULE_3__ngrx_core_operator_select__["select"].call(devtools.liftedState, function (s) { return !(s.computedStates.length > 1); });
+        this.canSweep$ = __WEBPACK_IMPORTED_MODULE_3__ngrx_core_operator_select__["select"].call(devtools.liftedState, function (s) { return !(s.skippedActionIds.length > 0); });
+        this.canCommit$ = __WEBPACK_IMPORTED_MODULE_3__ngrx_core_operator_select__["select"].call(devtools.liftedState, function (s) { return !(s.computedStates.length > 1); });
+        this.items$ = __WEBPACK_IMPORTED_MODULE_1_rxjs_operator_map__["map"].call(devtools.liftedState, function (_a) {
             var actionsById = _a.actionsById, skippedActionIds = _a.skippedActionIds, stagedActionIds = _a.stagedActionIds, computedStates = _a.computedStates;
             var actions = [];
             for (var i = 0; i < stagedActionIds.length; i++) {
@@ -2907,7 +3344,7 @@ var LogMonitorComponent = (function () {
         this.devtools.commit();
     };
     LogMonitorComponent.decorators = [
-        { type: core_1.Component, args: [{
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
                     selector: 'log-monitor',
                     styles: ["\n    :host {\n      display: block;\n      background-color: #2A2F3A;\n      font-family: 'monaco', 'Consolas', 'Lucida Console', monospace;\n      position: relative;\n      overflow-y: hidden;\n      width: 100%;\n      height: 100%;\n      min-width: 300px;\n      direction: ltr;\n    }\n\n    .button-bar {\n      text-align: center;\n      border-bottom-width: 1px;\n      border-bottom-style: solid;\n      border-color: transparent;\n      z-index: 1;\n      display: flex;\n      flex-direction: row;\n      padding: 0 4px;\n    }\n\n    .elements {\n      position: absolute;\n      left: 0;\n      right: 0;\n      top: 38px;\n      bottom: 0;\n      overflow-x: hidden;\n      overflow-y: auto;\n    }\n  "],
                     template: "\n    <div class=\"button-bar\">\n      <log-monitor-button (action)=\"handleReset()\">\n        Reset\n      </log-monitor-button>\n\n      <log-monitor-button (action)=\"handleRollback()\">\n        Revert\n      </log-monitor-button>\n\n      <log-monitor-button (action)=\"handleSweep()\" [disabled]=\"canSweep$ | async\">\n        Sweep\n      </log-monitor-button>\n\n      <log-monitor-button (action)=\"handleCommit()\" [disabled]=\"canCommit$ | async\">\n        Commit\n      </log-monitor-button>\n    </div>\n    <div class=\"elements\">\n      <log-monitor-entry\n        *ngFor=\"let item of (items$ | async); let i = index\"\n        [item]=\"item\"\n        [disabled]=\"i === 0\"\n        [expandEntries]=\"expandEntries\"\n        (toggle)=\"handleToggle($event.id)\">\n      </log-monitor-entry>\n    </div>\n  "
@@ -2915,24 +3352,24 @@ var LogMonitorComponent = (function () {
     ];
     /** @nocollapse */
     LogMonitorComponent.ctorParameters = [
-        { type: store_devtools_1.StoreDevtools, },
+        { type: __WEBPACK_IMPORTED_MODULE_2__ngrx_store_devtools__["StoreDevtools"], },
     ];
     LogMonitorComponent.propDecorators = {
-        'expandEntries': [{ type: core_1.Input },],
+        'expandEntries': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
     };
     return LogMonitorComponent;
 }());
-exports.LogMonitorComponent = LogMonitorComponent;
-
+//# sourceMappingURL=log-monitor.js.map
 
 /***/ },
 
-/***/ 551:
+/***/ 559:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var core_1 = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return StoreLogMonitorComponent; });
+
 var StoreLogMonitorComponent = (function () {
     function StoreLogMonitorComponent() {
         this.toggleCommand = 'ctrl-h';
@@ -2940,7 +3377,7 @@ var StoreLogMonitorComponent = (function () {
         this.expandEntries = false;
     }
     StoreLogMonitorComponent.decorators = [
-        { type: core_1.Component, args: [{
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
                     selector: 'ngrx-store-log-monitor',
                     template: "\n    <dock-monitor [toggleCommand]=\"toggleCommand\" [positionCommand]=\"positionCommand\">\n      <log-monitor [expandEntries]=\"expandEntries\"></log-monitor>\n    </dock-monitor>\n  "
                 },] },
@@ -2948,75 +3385,84 @@ var StoreLogMonitorComponent = (function () {
     /** @nocollapse */
     StoreLogMonitorComponent.ctorParameters = [];
     StoreLogMonitorComponent.propDecorators = {
-        'toggleCommand': [{ type: core_1.Input },],
-        'positionCommand': [{ type: core_1.Input },],
-        'expandEntries': [{ type: core_1.Input },],
+        'toggleCommand': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'positionCommand': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'expandEntries': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
     };
     return StoreLogMonitorComponent;
 }());
-exports.StoreLogMonitorComponent = StoreLogMonitorComponent;
-
+//# sourceMappingURL=store-log-monitor.js.map
 
 /***/ },
 
-/***/ 552:
+/***/ 560:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-var reducer_1 = __webpack_require__(343);
-var dispatcher_1 = __webpack_require__(342);
-var store_1 = __webpack_require__(345);
-var state_1 = __webpack_require__(344);
-var utils_1 = __webpack_require__(346);
-var core_1 = __webpack_require__(0);
-exports.INITIAL_REDUCER = new core_1.OpaqueToken('Token ngrx/store/reducer');
-exports.INITIAL_STATE = new core_1.OpaqueToken('Token ngrx/store/initial-state');
-exports._INITIAL_REDUCER = new core_1.OpaqueToken('Token _ngrx/store/reducer');
-exports._INITIAL_STATE = new core_1.OpaqueToken('Token _ngrx/store/initial-state');
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__reducer__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dispatcher__ = __webpack_require__(341);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(344);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__state__ = __webpack_require__(343);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils__ = __webpack_require__(345);
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return INITIAL_REDUCER; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "b", function() { return INITIAL_STATE; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "c", function() { return _INITIAL_REDUCER; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "d", function() { return _INITIAL_STATE; });
+/* harmony export (immutable) */ exports["e"] = _initialReducerFactory;
+/* harmony export (immutable) */ exports["f"] = _initialStateFactory;
+/* harmony export (immutable) */ exports["g"] = _storeFactory;
+/* harmony export (immutable) */ exports["h"] = _stateFactory;
+/* harmony export (immutable) */ exports["i"] = _reducerFactory;
+/* harmony export (immutable) */ exports["j"] = provideStore;
+/* harmony export (binding) */ __webpack_require__.d(exports, "k", function() { return StoreModule; });
+
+
+
+
+
+
+var INITIAL_REDUCER = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["OpaqueToken"]('Token ngrx/store/reducer');
+var INITIAL_STATE = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["OpaqueToken"]('Token ngrx/store/initial-state');
+var _INITIAL_REDUCER = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["OpaqueToken"]('Token _ngrx/store/reducer');
+var _INITIAL_STATE = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["OpaqueToken"]('Token _ngrx/store/initial-state');
 function _initialReducerFactory(reducer) {
     if (typeof reducer === 'function') {
         return reducer;
     }
-    return utils_1.combineReducers(reducer);
+    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["a" /* combineReducers */])(reducer);
 }
-exports._initialReducerFactory = _initialReducerFactory;
 function _initialStateFactory(initialState, reducer) {
     if (!initialState) {
-        return reducer(undefined, { type: dispatcher_1.Dispatcher.INIT });
+        return reducer(undefined, { type: __WEBPACK_IMPORTED_MODULE_2__dispatcher__["a" /* Dispatcher */].INIT });
     }
     return initialState;
 }
-exports._initialStateFactory = _initialStateFactory;
 function _storeFactory(dispatcher, reducer, state$) {
-    return new store_1.Store(dispatcher, reducer, state$);
+    return new __WEBPACK_IMPORTED_MODULE_3__store__["a" /* Store */](dispatcher, reducer, state$);
 }
-exports._storeFactory = _storeFactory;
 function _stateFactory(initialState, dispatcher, reducer) {
-    return new state_1.State(initialState, dispatcher, reducer);
+    return new __WEBPACK_IMPORTED_MODULE_4__state__["a" /* State */](initialState, dispatcher, reducer);
 }
-exports._stateFactory = _stateFactory;
 function _reducerFactory(dispatcher, reducer) {
-    return new reducer_1.Reducer(dispatcher, reducer);
+    return new __WEBPACK_IMPORTED_MODULE_1__reducer__["a" /* Reducer */](dispatcher, reducer);
 }
-exports._reducerFactory = _reducerFactory;
 ;
 /**
  * @deprecated, use StoreModule.provideStore instead!
  */
 function provideStore(_reducer, _initialState) {
     return [
-        dispatcher_1.Dispatcher,
-        { provide: store_1.Store, useFactory: _storeFactory, deps: [dispatcher_1.Dispatcher, reducer_1.Reducer, state_1.State] },
-        { provide: reducer_1.Reducer, useFactory: _reducerFactory, deps: [dispatcher_1.Dispatcher, exports.INITIAL_REDUCER] },
-        { provide: state_1.State, useFactory: _stateFactory, deps: [exports.INITIAL_STATE, dispatcher_1.Dispatcher, reducer_1.Reducer] },
-        { provide: exports.INITIAL_REDUCER, useFactory: _initialReducerFactory, deps: [exports._INITIAL_REDUCER] },
-        { provide: exports.INITIAL_STATE, useFactory: _initialStateFactory, deps: [exports._INITIAL_STATE, exports.INITIAL_REDUCER] },
-        { provide: exports._INITIAL_STATE, useValue: _initialState },
-        { provide: exports._INITIAL_REDUCER, useValue: _reducer }
+        __WEBPACK_IMPORTED_MODULE_2__dispatcher__["a" /* Dispatcher */],
+        { provide: __WEBPACK_IMPORTED_MODULE_3__store__["a" /* Store */], useFactory: _storeFactory, deps: [__WEBPACK_IMPORTED_MODULE_2__dispatcher__["a" /* Dispatcher */], __WEBPACK_IMPORTED_MODULE_1__reducer__["a" /* Reducer */], __WEBPACK_IMPORTED_MODULE_4__state__["a" /* State */]] },
+        { provide: __WEBPACK_IMPORTED_MODULE_1__reducer__["a" /* Reducer */], useFactory: _reducerFactory, deps: [__WEBPACK_IMPORTED_MODULE_2__dispatcher__["a" /* Dispatcher */], INITIAL_REDUCER] },
+        { provide: __WEBPACK_IMPORTED_MODULE_4__state__["a" /* State */], useFactory: _stateFactory, deps: [INITIAL_STATE, __WEBPACK_IMPORTED_MODULE_2__dispatcher__["a" /* Dispatcher */], __WEBPACK_IMPORTED_MODULE_1__reducer__["a" /* Reducer */]] },
+        { provide: INITIAL_REDUCER, useFactory: _initialReducerFactory, deps: [_INITIAL_REDUCER] },
+        { provide: INITIAL_STATE, useFactory: _initialStateFactory, deps: [_INITIAL_STATE, INITIAL_REDUCER] },
+        { provide: _INITIAL_STATE, useValue: _initialState },
+        { provide: _INITIAL_REDUCER, useValue: _reducer }
     ];
 }
-exports.provideStore = provideStore;
 var StoreModule = (function () {
     function StoreModule() {
     }
@@ -3026,36 +3472,54 @@ var StoreModule = (function () {
             providers: provideStore(_reducer, _initialState)
         };
     };
-    /** @nocollapse */
     StoreModule.decorators = [
-        { type: core_1.NgModule, args: [{},] },
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"], args: [{},] },
     ];
+    /** @nocollapse */
+    StoreModule.ctorParameters = [];
     return StoreModule;
 }());
-exports.StoreModule = StoreModule;
 //# sourceMappingURL=ng2.js.map
 
 /***/ },
 
-/***/ 68:
+/***/ 69:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-__export(__webpack_require__(342));
-__export(__webpack_require__(552));
-__export(__webpack_require__(343));
-__export(__webpack_require__(344));
-__export(__webpack_require__(345));
-__export(__webpack_require__(346));
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_dispatcher__ = __webpack_require__(341);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_ng2__ = __webpack_require__(560);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_reducer__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__src_state__ = __webpack_require__(343);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_store__ = __webpack_require__(344);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__src_utils__ = __webpack_require__(345);
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "Dispatcher", function() { return __WEBPACK_IMPORTED_MODULE_0__src_dispatcher__["a"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "INITIAL_REDUCER", function() { return __WEBPACK_IMPORTED_MODULE_1__src_ng2__["a"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "INITIAL_STATE", function() { return __WEBPACK_IMPORTED_MODULE_1__src_ng2__["b"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "_INITIAL_REDUCER", function() { return __WEBPACK_IMPORTED_MODULE_1__src_ng2__["c"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "_INITIAL_STATE", function() { return __WEBPACK_IMPORTED_MODULE_1__src_ng2__["d"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "_initialReducerFactory", function() { return __WEBPACK_IMPORTED_MODULE_1__src_ng2__["e"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "_initialStateFactory", function() { return __WEBPACK_IMPORTED_MODULE_1__src_ng2__["f"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "_storeFactory", function() { return __WEBPACK_IMPORTED_MODULE_1__src_ng2__["g"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "_stateFactory", function() { return __WEBPACK_IMPORTED_MODULE_1__src_ng2__["h"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "_reducerFactory", function() { return __WEBPACK_IMPORTED_MODULE_1__src_ng2__["i"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "provideStore", function() { return __WEBPACK_IMPORTED_MODULE_1__src_ng2__["j"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "StoreModule", function() { return __WEBPACK_IMPORTED_MODULE_1__src_ng2__["k"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "Reducer", function() { return __WEBPACK_IMPORTED_MODULE_2__src_reducer__["a"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "State", function() { return __WEBPACK_IMPORTED_MODULE_3__src_state__["a"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "Store", function() { return __WEBPACK_IMPORTED_MODULE_4__src_store__["a"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(exports, "combineReducers", function() { return __WEBPACK_IMPORTED_MODULE_5__src_utils__["a"]; });
+
+
+
+
+
+
 //# sourceMappingURL=index.js.map
 
 /***/ },
 
-/***/ 695:
+/***/ 703:
 /***/ function(module, exports) {
 
 (function() {
@@ -3158,35 +3622,49 @@ __export(__webpack_require__(346));
 
 /***/ },
 
-/***/ 696:
+/***/ 704:
 /***/ function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-fixed-top navbar-dark bg-inverse\">\n    <div class=\"container\">\n        <a class=\"navbar-brand\" [routerLink]=\"['courses']\">Angular courses</a>\n        <ul class=\"nav navbar-nav\">\n            <li class=\"nav-item active\" routerLinkActive=\"active\" *ngIf=\"user\">\n                <a class=\"nav-link\" [routerLink]=\"['courses']\">Courses list</a>\n            </li>\n        </ul>\n        <ul class=\"nav navbar-nav pull-xs-right\" *ngIf=\"user\">\n            <li class=\"nav-item\">\n                <span class=\"nav-link\">{{user}}</span>\n            </li>\n            <li class=\"nav-item\">\n                <button class=\"btn btn-outline-secondary\" (click)=\"authService.logout()\">\n                    Logout\n                </button>\n            </li>\n        </ul>\n    </div>\n</nav>\n\n<div class=\"container app-container\">\n    <router-outlet></router-outlet>\n</div>\n\n<ngrx-store-log-monitor toggleCommand=\"ctrl-h\" positionCommand=\"ctrl-m\"></ngrx-store-log-monitor>\n";
+module.exports = "<app-header></app-header>\n\n<div class=\"container app-container\">\n    <router-outlet></router-outlet>\n</div>\n\n<ngrx-store-log-monitor toggleCommand=\"ctrl-h\" positionCommand=\"ctrl-m\"></ngrx-store-log-monitor>\n";
 
 /***/ },
 
-/***/ 697:
+/***/ 705:
 /***/ function(module, exports) {
 
-module.exports = "<div class=\"row\">\n    <div class=\"col-sm-12\">\n        <div class=\"card card-block\">\n            <form class=\"form-inline\">\n                <div class=\"form-group\">\n                    <label class=\"sr-only\" for=\"search\">search</label>\n                    <input type=\"text\" class=\"form-control\" id=\"search\"\n                           placeholder=\"search\">\n                    <button type=\"submit\" class=\"btn btn-info\">Find</button>\n                </div>\n                <div class=\"form-group pull-xs-right\">\n                    <button type=\"submit\" class=\"btn btn-outline-success\" [routerLink]=\"['/courses', 'new']\">\n                        Add course\n                    </button>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n\n<div class=\"row\">\n    <div class=\"col-xs-4 grid-card\" *ngFor=\"let item of list\">\n        <div class=\"card\">\n            <img class=\"card-img-top\" src=\"{{item.img}}\" width=\"100%\" alt=\"Card image cap\">\n            <div class=\"card-block\">\n                <h4 class=\"card-title\">{{item.title}}</h4>\n                <p class=\"card-text\">{{item.description}}</p>\n                <div class=\"text-xs-right\">\n                    <a href=\"#\" class=\"btn btn-outline-primary\" [routerLink]=\"['/courses', item._id.$oid]\">\n                        Go somewhere\n                    </a>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n";
+module.exports = "<nav class=\"navbar navbar-fixed-top navbar-dark bg-inverse\">\n    <div class=\"container\">\n        <a class=\"navbar-brand\" [routerLink]=\"['courses']\">Angular courses</a>\n        <ul class=\"nav navbar-nav\">\n            <li class=\"nav-item active\" routerLinkActive=\"active\" *ngIf=\"user\">\n                <a class=\"nav-link\" [routerLink]=\"['courses']\">Courses list</a>\n            </li>\n        </ul>\n        <ul class=\"nav navbar-nav pull-xs-right\" *ngIf=\"user\">\n            <li class=\"nav-item\">\n                <span class=\"nav-link\">{{user}}</span>\n            </li>\n            <li class=\"nav-item\">\n                <button class=\"btn btn-outline-secondary\" (click)=\"authService.logout()\">\n                    Logout\n                </button>\n            </li>\n        </ul>\n    </div>\n</nav>\n";
 
 /***/ },
 
-/***/ 698:
+/***/ 706:
 /***/ function(module, exports) {
 
-module.exports = "<div class=\"col-sm-12\">\n    <div class=\"card\">\n        <div class=\"card-header\">\n            <h4 class=\"pull-xs-left\">{{mode}} Course</h4>\n\n            <div class=\"pull-xs-right\">\n                <a href=\"#\" class=\"btn btn-success\" (click)=\"goBack()\">Save</a>\n                <a href=\"#\" class=\"btn btn-primary\" (click)=\"goBack()\">Go back</a>\n            </div>\n        </div>\n        <div class=\"card-block\" *ngIf=\"course\">\n            <div class=\"col-xs-10 offset-xs-2\">\n                <div class=\"form-group row\">\n                    <label for=\"title\" class=\"col-xs-2 col-form-label\">Title</label>\n                    <div class=\"col-xs-10\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"course.title\" id=\"title\">\n                    </div>\n                </div>\n\n                <div class=\"form-group row\">\n                    <label for=\"description\" class=\"col-xs-2 col-form-label\">Description</label>\n                    <div class=\"col-xs-10\">\n                        <input class=\"form-control\" type=\"text\" [value]=\"course.description\" id=\"description\">\n                    </div>\n                </div>\n\n                <div class=\"form-group row\">\n                    <label class=\"col-xs-2 col-form-label\">Image</label>\n                    <div class=\"col-xs-10\">\n                        <img [src]=\"course.img\">\n                    </div>\n                </div>\n\n            </div>\n        </div>\n    </div>\n</div>\n\n";
+module.exports = "<div class=\"card\">\n    <img class=\"card-img-top\" src=\"{{course.img}}\" width=\"100%\" alt=\"Card image cap\">\n    <div class=\"card-block\">\n        <h4 class=\"card-title\">{{course.title}}</h4>\n        <p class=\"card-text\">{{course.description}}</p>\n        <div class=\"text-xs-right\">\n            <a href=\"#\" class=\"btn btn-outline-primary\" [routerLink]=\"['/courses', course._id.$oid]\">\n                Edit\n            </a>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
 
-/***/ 699:
+/***/ 707:
+/***/ function(module, exports) {
+
+module.exports = "<div class=\"row\">\n    <div class=\"col-sm-12\">\n        <div class=\"card card-block\">\n            <form class=\"form-inline\">\n                <div class=\"form-group\">\n                    <label class=\"sr-only\" for=\"search\">search</label>\n                    <input type=\"text\" class=\"form-control\" id=\"search\"\n                           placeholder=\"search\">\n                    <button type=\"submit\" class=\"btn btn-info\">Find</button>\n                </div>\n                <div class=\"form-group pull-xs-right\">\n                    <button type=\"submit\" class=\"btn btn-outline-success\" [routerLink]=\"['/courses', 'new']\">\n                        Add course\n                    </button>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n\n<div class=\"row\">\n    <course-item class=\"col-xs-4 grid-card\"\n                 *ngFor=\"let item of list\"\n                 [course]=\"item\">\n    </course-item>\n</div>\n";
+
+/***/ },
+
+/***/ 708:
+/***/ function(module, exports) {
+
+module.exports = "<div class=\"card\">\n    <div class=\"card-header\">\n        <h4 class=\"pull-xs-left\">{{mode}} Course</h4>\n\n        <div class=\"pull-xs-right\">\n            <a href=\"#\" class=\"btn btn-success\" (click)=\"goBack()\">Save</a>\n            <a href=\"#\" class=\"btn btn-primary\" (click)=\"goBack()\">Go back</a>\n        </div>\n    </div>\n    <div class=\"card-block\" *ngIf=\"course\">\n        <div class=\"col-xs-10 offset-xs-2\">\n            <div class=\"form-group row\">\n                <label for=\"title\" class=\"col-xs-2 col-form-label\">Title</label>\n                <div class=\"col-xs-10\">\n                    <input class=\"form-control\" type=\"text\" [value]=\"course.title\" id=\"title\">\n                </div>\n            </div>\n\n            <div class=\"form-group row\">\n                <label for=\"description\" class=\"col-xs-2 col-form-label\">Description</label>\n                <div class=\"col-xs-10\">\n                    <input class=\"form-control\" type=\"text\" [value]=\"course.description\" id=\"description\">\n                </div>\n            </div>\n\n            <div class=\"form-group row\">\n                <label class=\"col-xs-2 col-form-label\">Image</label>\n                <div class=\"col-xs-10\">\n                    <img [src]=\"course.img\">\n                </div>\n            </div>\n\n        </div>\n    </div>\n</div>\n\n";
+
+/***/ },
+
+/***/ 709:
 /***/ function(module, exports) {
 
 module.exports = "<form class=\"form-signin\" novalidate\n      [formGroup]=\"loginForm\"\n      (ngSubmit)=\"logIn()\">\n    <h2 class=\"form-signin-heading\">Please sign in</h2>\n\n    <div class=\"form-group\" [ngClass]=\"{'has-danger': showError('login')}\">\n        <label for=\"login\" class=\"sr-only\">Login</label>\n        <input type=\"text\" id=\"login\" class=\"form-control\" placeholder=\"Login\"\n               formControlName=\"login\"\n               [ngClass]=\"{'form-control-danger': showError('login')}\">\n        <div class=\"error-tooltip\" *ngIf=\"showError('login', 'required')\">\n            login is required\n        </div>\n        <div class=\"error-tooltip\" *ngIf=\"showError('login', 'pattern')\">\n            field could contain English letters only\n        </div>\n    </div>\n\n    <div class=\"form-group\" [ngClass]=\"{'has-danger': showError('password')}\">\n        <label for=\"inputPassword\" class=\"sr-only\">Password</label>\n        <input type=\"password\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Password\"\n               formControlName=\"password\"\n               [ngClass]=\"{'form-control-danger': showError('password')}\">\n        <div class=\"error-tooltip\" *ngIf=\"showError('password', 'required')\">\n            password is required\n        </div>\n        <div class=\"error-tooltip\" *ngIf=\"showError('password', 'pattern')\">\n            field could contain English letters and numbers\n        </div>\n    </div>\n\n    <div class=\"form-group\">\n        <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\" [disabled]=\"!loginForm.valid\">\n            Sign in\n        </button>\n    </div>\n\n    <div class=\"alert alert-danger\" *ngIf=\"message\">{{message}}</div>\n</form>\n";
 
 /***/ },
 
-/***/ 700:
+/***/ 710:
 /***/ function(module, exports) {
 
 /*!
@@ -3214,14 +3692,14 @@ function isSlowBuffer (obj) {
 
 /***/ },
 
-/***/ 701:
+/***/ 711:
 /***/ function(module, exports, __webpack_require__) {
 
 (function(){
-  var crypt = __webpack_require__(695),
-      utf8 = __webpack_require__(347).utf8,
-      isBuffer = __webpack_require__(700),
-      bin = __webpack_require__(347).bin,
+  var crypt = __webpack_require__(703),
+      utf8 = __webpack_require__(346).utf8,
+      isBuffer = __webpack_require__(710),
+      bin = __webpack_require__(346).bin,
 
   // The core
   md5 = function (message, options) {
@@ -3381,21 +3859,21 @@ function isSlowBuffer (obj) {
 
 /***/ },
 
-/***/ 702:
+/***/ 712:
 /***/ function(module, exports) {
 
 module.exports = ".app-container {\n  padding-top: 60px;\n  box-sizing: border-box;\n  min-height: 100%;\n}\n"
 
 /***/ },
 
-/***/ 703:
+/***/ 713:
 /***/ function(module, exports) {
 
 module.exports = "@-webkit-keyframes show-tooltip {\n  0% {\n    opacity: 0;\n    -webkit-transform: translateY(-50%) translateX(-4px);\n            transform: translateY(-50%) translateX(-4px);\n  }\n  100% {\n    opacity: 1;\n    -webkit-transform: translateY(-50%) translateX(0);\n            transform: translateY(-50%) translateX(0);\n  }\n}\n\n@keyframes show-tooltip {\n  0% {\n    opacity: 0;\n    -webkit-transform: translateY(-50%) translateX(-4px);\n            transform: translateY(-50%) translateX(-4px);\n  }\n  100% {\n    opacity: 1;\n    -webkit-transform: translateY(-50%) translateX(0);\n            transform: translateY(-50%) translateX(0);\n  }\n}\n\n:host {\n  position: relative;\n  top: calc(50vh - 160px);\n}\n\n.form-signin {\n  max-width: 330px;\n  padding: 15px;\n  margin: 0 auto;\n}\n\n.form-signin-heading {\n  margin-bottom: 10px;\n}\n\n.form-control {\n  padding: 10px;\n  font-size: 16px;\n}\n\n.form-group {\n  position: relative;\n}\n\n.error-tooltip {\n  opacity: 0;\n  position: absolute;\n  left: 103%;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  padding: 3px 7px;\n  border-radius: 2px;\n  background: #f2dede;\n  -webkit-animation: show-tooltip .3s ease 1 forwards;\n          animation: show-tooltip .3s ease 1 forwards;\n  color: #a94442;\n  text-align: center;\n  width: 100%;\n  max-width: 180px\n}\n\n.error-tooltip:before {\n  content: '';\n  position: absolute;\n  width: 0;\n  height: 0;\n  border-color: transparent;\n  border-style: solid;\n  display: block;\n  top: 50%;\n  left: -5px;\n  margin-top: -5px;\n  border-width: 5px 5px 5px 0;\n  border-right-color: #f2dede;\n}\n"
 
 /***/ },
 
-/***/ 707:
+/***/ 717:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3405,8 +3883,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Subject_1 = __webpack_require__(36);
-var queue_1 = __webpack_require__(245);
+var Subject_1 = __webpack_require__(54);
+var queue_1 = __webpack_require__(243);
 var observeOn_1 = __webpack_require__(159);
 /**
  * @class ReplaySubject<T>
@@ -3481,7 +3959,7 @@ var ReplayEvent = (function () {
 
 /***/ },
 
-/***/ 708:
+/***/ 718:
 /***/ function(module, exports) {
 
 "use strict";
@@ -3537,163 +4015,19 @@ exports.Scheduler = Scheduler;
 
 /***/ },
 
-/***/ 710:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(4);
-var empty_1 = __webpack_require__(727);
-Observable_1.Observable.empty = empty_1.empty;
-//# sourceMappingURL=empty.js.map
-
-/***/ },
-
-/***/ 711:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(4);
-var merge_1 = __webpack_require__(728);
-Observable_1.Observable.merge = merge_1.merge;
-//# sourceMappingURL=merge.js.map
-
-/***/ },
-
-/***/ 712:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(4);
-var distinctUntilChanged_1 = __webpack_require__(388);
-Observable_1.Observable.prototype.distinctUntilChanged = distinctUntilChanged_1.distinctUntilChanged;
-//# sourceMappingURL=distinctUntilChanged.js.map
-
-/***/ },
-
-/***/ 713:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(4);
-var merge_1 = __webpack_require__(390);
-Observable_1.Observable.prototype.merge = merge_1.merge;
-//# sourceMappingURL=merge.js.map
-
-/***/ },
-
-/***/ 714:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(4);
-var observeOn_1 = __webpack_require__(159);
-Observable_1.Observable.prototype.observeOn = observeOn_1.observeOn;
-//# sourceMappingURL=observeOn.js.map
-
-/***/ },
-
-/***/ 715:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(4);
-var publishReplay_1 = __webpack_require__(734);
-Observable_1.Observable.prototype.publishReplay = publishReplay_1.publishReplay;
-//# sourceMappingURL=publishReplay.js.map
-
-/***/ },
-
-/***/ 716:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(4);
-var scan_1 = __webpack_require__(392);
-Observable_1.Observable.prototype.scan = scan_1.scan;
-//# sourceMappingURL=scan.js.map
-
-/***/ },
-
-/***/ 717:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(4);
-var share_1 = __webpack_require__(736);
-Observable_1.Observable.prototype.share = share_1.share;
-//# sourceMappingURL=share.js.map
-
-/***/ },
-
-/***/ 718:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(4);
-var skip_1 = __webpack_require__(737);
-Observable_1.Observable.prototype.skip = skip_1.skip;
-//# sourceMappingURL=skip.js.map
-
-/***/ },
-
-/***/ 719:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(4);
-var switchMapTo_1 = __webpack_require__(738);
-Observable_1.Observable.prototype.switchMapTo = switchMapTo_1.switchMapTo;
-//# sourceMappingURL=switchMapTo.js.map
-
-/***/ },
-
 /***/ 720:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var Observable_1 = __webpack_require__(4);
-var takeUntil_1 = __webpack_require__(739);
-Observable_1.Observable.prototype.takeUntil = takeUntil_1.takeUntil;
-//# sourceMappingURL=takeUntil.js.map
-
-/***/ },
-
-/***/ 721:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(4);
-var toPromise_1 = __webpack_require__(393);
+var Observable_1 = __webpack_require__(10);
+var toPromise_1 = __webpack_require__(394);
 Observable_1.Observable.prototype.toPromise = toPromise_1.toPromise;
 //# sourceMappingURL=toPromise.js.map
 
 /***/ },
 
-/***/ 722:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var Observable_1 = __webpack_require__(4);
-var withLatestFrom_1 = __webpack_require__(394);
-Observable_1.Observable.prototype.withLatestFrom = withLatestFrom_1.withLatestFrom;
-//# sourceMappingURL=withLatestFrom.js.map
-
-/***/ },
-
-/***/ 726:
+/***/ 724:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3703,8 +4037,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Observable_1 = __webpack_require__(4);
-var ConnectableObservable_1 = __webpack_require__(383);
+var Observable_1 = __webpack_require__(10);
+var ConnectableObservable_1 = __webpack_require__(382);
 var MulticastObservable = (function (_super) {
     __extends(MulticastObservable, _super);
     function MulticastObservable(source, subjectFactory, selector) {
@@ -3727,18 +4061,18 @@ exports.MulticastObservable = MulticastObservable;
 
 /***/ },
 
-/***/ 727:
+/***/ 725:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
-var EmptyObservable_1 = __webpack_require__(242);
+var EmptyObservable_1 = __webpack_require__(240);
 exports.empty = EmptyObservable_1.EmptyObservable.create;
 //# sourceMappingURL=empty.js.map
 
 /***/ },
 
-/***/ 728:
+/***/ 726:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3754,172 +4088,7 @@ exports.merge = merge_1.mergeStatic;
 
 "use strict";
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var Subscriber_1 = __webpack_require__(22);
-/**
- * Filter items emitted by the source Observable by only emitting those that
- * satisfy a specified predicate.
- *
- * <span class="informal">Like
- * [Array.prototype.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter),
- * it only emits a value from the source if it passes a criterion function.</span>
- *
- * <img src="./img/filter.png" width="100%">
- *
- * Similar to the well-known `Array.prototype.filter` method, this operator
- * takes values from the source Observable, passes them through a `predicate`
- * function and only emits those values that yielded `true`.
- *
- * @example <caption>Emit only click events whose target was a DIV element</caption>
- * var clicks = Rx.Observable.fromEvent(document, 'click');
- * var clicksOnDivs = clicks.filter(ev => ev.target.tagName === 'DIV');
- * clicksOnDivs.subscribe(x => console.log(x));
- *
- * @see {@link distinct}
- * @see {@link distinctKey}
- * @see {@link distinctUntilChanged}
- * @see {@link distinctUntilKeyChanged}
- * @see {@link ignoreElements}
- * @see {@link partition}
- * @see {@link skip}
- *
- * @param {function(value: T, index: number): boolean} predicate A function that
- * evaluates each value emitted by the source Observable. If it returns `true`,
- * the value is emitted, if `false` the value is not passed to the output
- * Observable. The `index` parameter is the number `i` for the i-th source
- * emission that has happened since the subscription, starting from the number
- * `0`.
- * @param {any} [thisArg] An optional argument to determine the value of `this`
- * in the `predicate` function.
- * @return {Observable} An Observable of values from the source that were
- * allowed by the `predicate` function.
- * @method filter
- * @owner Observable
- */
-function filter(predicate, thisArg) {
-    return this.lift(new FilterOperator(predicate, thisArg));
-}
-exports.filter = filter;
-var FilterOperator = (function () {
-    function FilterOperator(predicate, thisArg) {
-        this.predicate = predicate;
-        this.thisArg = thisArg;
-    }
-    FilterOperator.prototype.call = function (subscriber, source) {
-        return source._subscribe(new FilterSubscriber(subscriber, this.predicate, this.thisArg));
-    };
-    return FilterOperator;
-}());
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-var FilterSubscriber = (function (_super) {
-    __extends(FilterSubscriber, _super);
-    function FilterSubscriber(destination, predicate, thisArg) {
-        _super.call(this, destination);
-        this.predicate = predicate;
-        this.thisArg = thisArg;
-        this.count = 0;
-        this.predicate = predicate;
-    }
-    // the try catch block below is left specifically for
-    // optimization and perf reasons. a tryCatcher is not necessary here.
-    FilterSubscriber.prototype._next = function (value) {
-        var result;
-        try {
-            result = this.predicate.call(this.thisArg, value, this.count++);
-        }
-        catch (err) {
-            this.destination.error(err);
-            return;
-        }
-        if (result) {
-            this.destination.next(value);
-        }
-    };
-    return FilterSubscriber;
-}(Subscriber_1.Subscriber));
-//# sourceMappingURL=filter.js.map
-
-/***/ },
-
-/***/ 733:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var map_1 = __webpack_require__(76);
-/**
- * Maps each source value (an object) to its specified nested property.
- *
- * <span class="informal">Like {@link map}, but meant only for picking one of
- * the nested properties of every emitted object.</span>
- *
- * <img src="./img/pluck.png" width="100%">
- *
- * Given a list of strings describing a path to an object property, retrieves
- * the value of a specified nested property from all values in the source
- * Observable. If a property can't be resolved, it will return `undefined` for
- * that value.
- *
- * @example <caption>Map every every click to the tagName of the clicked target element</caption>
- * var clicks = Rx.Observable.fromEvent(document, 'click');
- * var tagNames = clicks.pluck('target', 'tagName');
- * tagNames.subscribe(x => console.log(x));
- *
- * @see {@link map}
- *
- * @param {...string} properties The nested properties to pluck from each source
- * value (an object).
- * @return {Observable} Returns a new Observable of property values from the
- * source values.
- * @method pluck
- * @owner Observable
- */
-function pluck() {
-    var properties = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        properties[_i - 0] = arguments[_i];
-    }
-    var length = properties.length;
-    if (length === 0) {
-        throw new Error('list of properties cannot be empty.');
-    }
-    return map_1.map.call(this, plucker(properties, length));
-}
-exports.pluck = pluck;
-function plucker(props, length) {
-    var mapper = function (x) {
-        var currentProp = x;
-        for (var i = 0; i < length; i++) {
-            var p = currentProp[props[i]];
-            if (typeof p !== 'undefined') {
-                currentProp = p;
-            }
-            else {
-                return undefined;
-            }
-        }
-        return currentProp;
-    };
-    return mapper;
-}
-//# sourceMappingURL=pluck.js.map
-
-/***/ },
-
-/***/ 734:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-"use strict";
-var ReplaySubject_1 = __webpack_require__(707);
+var ReplaySubject_1 = __webpack_require__(717);
 var multicast_1 = __webpack_require__(391);
 /**
  * @param bufferSize
@@ -3939,13 +4108,13 @@ exports.publishReplay = publishReplay;
 
 /***/ },
 
-/***/ 736:
+/***/ 732:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var multicast_1 = __webpack_require__(391);
-var Subject_1 = __webpack_require__(36);
+var Subject_1 = __webpack_require__(54);
 function shareSubjectFactory() {
     return new Subject_1.Subject();
 }
@@ -3970,7 +4139,7 @@ exports.share = share;
 
 /***/ },
 
-/***/ 737:
+/***/ 733:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3980,7 +4149,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Subscriber_1 = __webpack_require__(22);
+var Subscriber_1 = __webpack_require__(19);
 /**
  * Returns an Observable that skips `n` items emitted by an Observable.
  *
@@ -4028,7 +4197,7 @@ var SkipSubscriber = (function (_super) {
 
 /***/ },
 
-/***/ 738:
+/***/ 734:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4041,32 +4210,37 @@ var __extends = (this && this.__extends) || function (d, b) {
 var OuterSubscriber_1 = __webpack_require__(87);
 var subscribeToResult_1 = __webpack_require__(88);
 /**
- * Projects each source value to the same Observable which is flattened multiple
- * times with {@link switch} in the output Observable.
+ * Projects each source value to an Observable which is merged in the output
+ * Observable, emitting values only from the most recently projected Observable.
  *
- * <span class="informal">It's like {@link switchMap}, but maps each value
- * always to the same inner Observable.</span>
+ * <span class="informal">Maps each value to an Observable, then flattens all of
+ * these inner Observables using {@link switch}.</span>
  *
- * <img src="./img/switchMapTo.png" width="100%">
+ * <img src="./img/switchMap.png" width="100%">
  *
- * Maps each source value to the given Observable `innerObservable` regardless
- * of the source value, and then flattens those resulting Observables into one
- * single Observable, which is the output Observable. The output Observables
- * emits values only from the most recently emitted instance of
- * `innerObservable`.
+ * Returns an Observable that emits items based on applying a function that you
+ * supply to each item emitted by the source Observable, where that function
+ * returns an (so-called "inner") Observable. Each time it observes one of these
+ * inner Observables, the output Observable begins emitting the items emitted by
+ * that inner Observable. When a new inner Observable is emitted, `switchMap`
+ * stops emitting items from the earlier-emitted inner Observable and begins
+ * emitting items from the new one. It continues to behave like this for
+ * subsequent inner Observables.
  *
  * @example <caption>Rerun an interval Observable on every click event</caption>
  * var clicks = Rx.Observable.fromEvent(document, 'click');
- * var result = clicks.switchMapTo(Rx.Observable.interval(1000));
+ * var result = clicks.switchMap((ev) => Rx.Observable.interval(1000));
  * result.subscribe(x => console.log(x));
  *
- * @see {@link concatMapTo}
+ * @see {@link concatMap}
+ * @see {@link exhaustMap}
+ * @see {@link mergeMap}
  * @see {@link switch}
- * @see {@link switchMap}
- * @see {@link mergeMapTo}
+ * @see {@link switchMapTo}
  *
- * @param {Observable} innerObservable An Observable to replace each value from
- * the source Observable.
+ * @param {function(value: T, ?index: number): Observable} project A function
+ * that, when applied to an item emitted by the source Observable, returns an
+ * Observable.
  * @param {function(outerValue: T, innerValue: I, outerIndex: number, innerIndex: number): any} [resultSelector]
  * A function to produce the value on the output Observable based on the values
  * and the indices of the source (outer) emission and the inner Observable
@@ -4075,93 +4249,101 @@ var subscribeToResult_1 = __webpack_require__(88);
  * - `innerValue`: the value that came from the projected Observable
  * - `outerIndex`: the "index" of the value that came from the source
  * - `innerIndex`: the "index" of the value from the projected Observable
- * @return {Observable} An Observable that emits items from the given
- * `innerObservable` every time a value is emitted on the source Observable.
- * @return {Observable} An Observable that emits items from the given
- * `innerObservable` (and optionally transformed through `resultSelector`) every
- * time a value is emitted on the source Observable, and taking only the values
- * from the most recently projected inner Observable.
- * @method switchMapTo
+ * @return {Observable} An Observable that emits the result of applying the
+ * projection function (and the optional `resultSelector`) to each item emitted
+ * by the source Observable and taking only the values from the most recently
+ * projected inner Observable.
+ * @method switchMap
  * @owner Observable
  */
-function switchMapTo(innerObservable, resultSelector) {
-    return this.lift(new SwitchMapToOperator(innerObservable, resultSelector));
+function switchMap(project, resultSelector) {
+    return this.lift(new SwitchMapOperator(project, resultSelector));
 }
-exports.switchMapTo = switchMapTo;
-var SwitchMapToOperator = (function () {
-    function SwitchMapToOperator(observable, resultSelector) {
-        this.observable = observable;
+exports.switchMap = switchMap;
+var SwitchMapOperator = (function () {
+    function SwitchMapOperator(project, resultSelector) {
+        this.project = project;
         this.resultSelector = resultSelector;
     }
-    SwitchMapToOperator.prototype.call = function (subscriber, source) {
-        return source._subscribe(new SwitchMapToSubscriber(subscriber, this.observable, this.resultSelector));
+    SwitchMapOperator.prototype.call = function (subscriber, source) {
+        return source._subscribe(new SwitchMapSubscriber(subscriber, this.project, this.resultSelector));
     };
-    return SwitchMapToOperator;
+    return SwitchMapOperator;
 }());
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @ignore
  * @extends {Ignored}
  */
-var SwitchMapToSubscriber = (function (_super) {
-    __extends(SwitchMapToSubscriber, _super);
-    function SwitchMapToSubscriber(destination, inner, resultSelector) {
+var SwitchMapSubscriber = (function (_super) {
+    __extends(SwitchMapSubscriber, _super);
+    function SwitchMapSubscriber(destination, project, resultSelector) {
         _super.call(this, destination);
-        this.inner = inner;
+        this.project = project;
         this.resultSelector = resultSelector;
         this.index = 0;
     }
-    SwitchMapToSubscriber.prototype._next = function (value) {
+    SwitchMapSubscriber.prototype._next = function (value) {
+        var result;
+        var index = this.index++;
+        try {
+            result = this.project(value, index);
+        }
+        catch (error) {
+            this.destination.error(error);
+            return;
+        }
+        this._innerSub(result, value, index);
+    };
+    SwitchMapSubscriber.prototype._innerSub = function (result, value, index) {
         var innerSubscription = this.innerSubscription;
         if (innerSubscription) {
             innerSubscription.unsubscribe();
         }
-        this.add(this.innerSubscription = subscribeToResult_1.subscribeToResult(this, this.inner, value, this.index++));
+        this.add(this.innerSubscription = subscribeToResult_1.subscribeToResult(this, result, value, index));
     };
-    SwitchMapToSubscriber.prototype._complete = function () {
+    SwitchMapSubscriber.prototype._complete = function () {
         var innerSubscription = this.innerSubscription;
         if (!innerSubscription || innerSubscription.closed) {
             _super.prototype._complete.call(this);
         }
     };
-    SwitchMapToSubscriber.prototype._unsubscribe = function () {
+    SwitchMapSubscriber.prototype._unsubscribe = function () {
         this.innerSubscription = null;
     };
-    SwitchMapToSubscriber.prototype.notifyComplete = function (innerSub) {
+    SwitchMapSubscriber.prototype.notifyComplete = function (innerSub) {
         this.remove(innerSub);
         this.innerSubscription = null;
         if (this.isStopped) {
             _super.prototype._complete.call(this);
         }
     };
-    SwitchMapToSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
-        var _a = this, resultSelector = _a.resultSelector, destination = _a.destination;
-        if (resultSelector) {
-            this.tryResultSelector(outerValue, innerValue, outerIndex, innerIndex);
+    SwitchMapSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
+        if (this.resultSelector) {
+            this._tryNotifyNext(outerValue, innerValue, outerIndex, innerIndex);
         }
         else {
-            destination.next(innerValue);
+            this.destination.next(innerValue);
         }
     };
-    SwitchMapToSubscriber.prototype.tryResultSelector = function (outerValue, innerValue, outerIndex, innerIndex) {
-        var _a = this, resultSelector = _a.resultSelector, destination = _a.destination;
+    SwitchMapSubscriber.prototype._tryNotifyNext = function (outerValue, innerValue, outerIndex, innerIndex) {
         var result;
         try {
-            result = resultSelector(outerValue, innerValue, outerIndex, innerIndex);
+            result = this.resultSelector(outerValue, innerValue, outerIndex, innerIndex);
         }
         catch (err) {
-            destination.error(err);
+            this.destination.error(err);
             return;
         }
-        destination.next(result);
+        this.destination.next(result);
     };
-    return SwitchMapToSubscriber;
+    return SwitchMapSubscriber;
 }(OuterSubscriber_1.OuterSubscriber));
-//# sourceMappingURL=switchMapTo.js.map
+//# sourceMappingURL=switchMap.js.map
 
 /***/ },
 
-/***/ 739:
+/***/ 735:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4243,7 +4425,7 @@ var TakeUntilSubscriber = (function (_super) {
 
 /***/ },
 
-/***/ 740:
+/***/ 736:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4294,7 +4476,7 @@ exports.Action = Action;
 
 /***/ },
 
-/***/ 741:
+/***/ 737:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4304,8 +4486,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var root_1 = __webpack_require__(54);
-var Action_1 = __webpack_require__(740);
+var root_1 = __webpack_require__(55);
+var Action_1 = __webpack_require__(736);
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @ignore
@@ -4443,7 +4625,7 @@ exports.AsyncAction = AsyncAction;
 
 /***/ },
 
-/***/ 742:
+/***/ 738:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4453,7 +4635,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Scheduler_1 = __webpack_require__(708);
+var Scheduler_1 = __webpack_require__(718);
 var AsyncScheduler = (function (_super) {
     __extends(AsyncScheduler, _super);
     function AsyncScheduler() {
@@ -4501,7 +4683,7 @@ exports.AsyncScheduler = AsyncScheduler;
 
 /***/ },
 
-/***/ 743:
+/***/ 739:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4511,7 +4693,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var AsyncAction_1 = __webpack_require__(741);
+var AsyncAction_1 = __webpack_require__(737);
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @ignore
@@ -4555,7 +4737,7 @@ exports.QueueAction = QueueAction;
 
 /***/ },
 
-/***/ 744:
+/***/ 740:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4565,7 +4747,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var AsyncScheduler_1 = __webpack_require__(742);
+var AsyncScheduler_1 = __webpack_require__(738);
 var QueueScheduler = (function (_super) {
     __extends(QueueScheduler, _super);
     function QueueScheduler() {
@@ -4578,39 +4760,156 @@ exports.QueueScheduler = QueueScheduler;
 
 /***/ },
 
-/***/ 748:
+/***/ 744:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 "use strict";
 var core_1 = __webpack_require__(0);
-var auth_service_1 = __webpack_require__(160);
-var store_1 = __webpack_require__(68);
 var AppComponent = (function () {
-    function AppComponent(authService, store) {
-        this.authService = authService;
-        this.store = store;
-        this.subscriptions = [];
+    function AppComponent() {
     }
-    AppComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.subscriptions.push(this.store.select('user').subscribe(function (user) { return _this.user = user; }));
-    };
-    AppComponent.prototype.ngOnDestroy = function () {
-        this.subscriptions.forEach(function (s) { return s.unsubscribe(); });
-    };
     return AppComponent;
 }());
 AppComponent = __decorate([
     core_1.Component({
         selector: 'app',
-        template: __webpack_require__(696),
-        styles: [__webpack_require__(702)]
+        template: __webpack_require__(704),
+        styles: [__webpack_require__(712)]
+    }),
+    __metadata("design:paramtypes", [])
+], AppComponent);
+exports.AppComponent = AppComponent;
+
+
+/***/ },
+
+/***/ 745:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var core_1 = __webpack_require__(0);
+var auth_service_1 = __webpack_require__(111);
+var store_1 = __webpack_require__(69);
+var AppHeaderComponent = (function () {
+    function AppHeaderComponent(authService, store) {
+        this.authService = authService;
+        this.store = store;
+        this.subscriptions = [];
+    }
+    AppHeaderComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.subscriptions.push(this.store.select('user').subscribe(function (user) {
+            _this.user = user;
+        }));
+        this.authService.initUser();
+    };
+    AppHeaderComponent.prototype.ngOnDestroy = function () {
+        this.subscriptions.forEach(function (s) { return s.unsubscribe(); });
+    };
+    return AppHeaderComponent;
+}());
+AppHeaderComponent = __decorate([
+    core_1.Component({
+        selector: 'app-header',
+        template: __webpack_require__(705)
     }),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
         store_1.Store])
-], AppComponent);
-exports.AppComponent = AppComponent;
+], AppHeaderComponent);
+exports.AppHeaderComponent = AppHeaderComponent;
+
+
+/***/ },
+
+/***/ 746:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var core_1 = __webpack_require__(0);
+var CourseItemComponent = (function () {
+    function CourseItemComponent() {
+    }
+    return CourseItemComponent;
+}());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], CourseItemComponent.prototype, "course", void 0);
+CourseItemComponent = __decorate([
+    core_1.Component({
+        selector: 'course-item',
+        template: __webpack_require__(706),
+    }),
+    __metadata("design:paramtypes", [])
+], CourseItemComponent);
+exports.CourseItemComponent = CourseItemComponent;
+
+
+/***/ },
+
+/***/ 747:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var core_1 = __webpack_require__(0);
+var platform_browser_1 = __webpack_require__(89);
+var courses_component_1 = __webpack_require__(403);
+var edit_course_component_1 = __webpack_require__(404);
+var course_item_component_1 = __webpack_require__(746);
+var courses_service_1 = __webpack_require__(250);
+var auth_service_1 = __webpack_require__(111);
+var app_routes_1 = __webpack_require__(401);
+var CoursesModule = (function () {
+    function CoursesModule() {
+    }
+    return CoursesModule;
+}());
+CoursesModule = __decorate([
+    core_1.NgModule({
+        imports: [
+            platform_browser_1.BrowserModule,
+            app_routes_1.routing
+        ],
+        declarations: [
+            courses_component_1.CoursesComponent,
+            course_item_component_1.CourseItemComponent,
+            edit_course_component_1.EditCourseComponent
+        ],
+        providers: [
+            auth_service_1.AuthService,
+            courses_service_1.CoursesService
+        ]
+    }),
+    __metadata("design:paramtypes", [])
+], CoursesModule);
+exports.CoursesModule = CoursesModule;
+
+
+/***/ },
+
+/***/ 748:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var authActions = __webpack_require__(407);
+exports.auth = function (state, action) {
+    if (state === void 0) { state = null; }
+    console.log(action);
+    switch (action.type) {
+        case authActions.USER_LOADED:
+            return action.payload;
+        case authActions.USER_LOGOUT:
+        case authActions.USER_ERROR:
+            return null;
+        default:
+            return state;
+    }
+};
 
 
 /***/ },
@@ -4620,18 +4919,10 @@ exports.AppComponent = AppComponent;
 
 "use strict";
 "use strict";
-var router_1 = __webpack_require__(77);
-var loggedin_guard_1 = __webpack_require__(400);
-var login_component_1 = __webpack_require__(403);
-var courses_component_1 = __webpack_require__(401);
-var edit_course_component_1 = __webpack_require__(402);
-var appRoutes = [
-    { path: '', redirectTo: 'courses', pathMatch: 'full' },
-    { path: 'courses', component: courses_component_1.CoursesComponent, canActivate: [loggedin_guard_1.LoggedInGuard] },
-    { path: 'courses/:id', component: edit_course_component_1.EditCourseComponent, canActivate: [loggedin_guard_1.LoggedInGuard] },
-    { path: 'login', component: login_component_1.LoginComponent }
-];
-exports.routing = router_1.RouterModule.forRoot(appRoutes, { useHash: true });
+var auth_reducer_1 = __webpack_require__(748);
+exports.reducers = {
+    user: auth_reducer_1.auth
+};
 
 
 /***/ },
@@ -4641,10 +4932,10 @@ exports.routing = router_1.RouterModule.forRoot(appRoutes, { useHash: true });
 
 "use strict";
 "use strict";
-var platform_browser_dynamic_1 = __webpack_require__(162);
-var app_module_1 = __webpack_require__(427);
-__webpack_require__(424);
-__webpack_require__(423);
+var platform_browser_dynamic_1 = __webpack_require__(161);
+var app_module_1 = __webpack_require__(432);
+__webpack_require__(428);
+__webpack_require__(427);
 platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1.AppModule);
 
 
