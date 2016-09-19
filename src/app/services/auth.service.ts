@@ -3,7 +3,7 @@ import {Http, URLSearchParams} from '@angular/http';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {MLab} from './mlab';
-import {Store, combineReducers} from '@ngrx/store';
+import {Store} from '@ngrx/store';
 
 @Injectable()
 export class AuthService extends MLab {
@@ -14,9 +14,6 @@ export class AuthService extends MLab {
                 private route: Router,
                 private store: Store<any>) {
         super();
-
-        this.initReducers();
-        this.initUser();
     }
 
     initUser() {
@@ -59,22 +56,5 @@ export class AuthService extends MLab {
 
     isLoggedIn(): boolean {
         return this.getUser() !== null;
-    }
-
-    initReducers() {
-        this.store.replaceReducer(combineReducers({
-            user(state = null, action) {
-                console.log(state, action);
-                switch (action.type) {
-                    case 'USER_LOADED':
-                        return action.payload;
-                    case 'USER_LOGOUT':
-                    case 'USER_ERROR':
-                        return null;
-                    default:
-                        return state;
-                }
-            }
-        }));
     }
 }

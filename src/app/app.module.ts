@@ -13,6 +13,7 @@ import {EditCourseComponent} from './pages/courses/edit/edit-course.component';
 import {StoreModule} from '@ngrx/store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {StoreLogMonitorModule, useLogMonitor} from '@ngrx/store-log-monitor';
+import {reducers} from './reducers';
 
 @NgModule({
     imports: [
@@ -21,6 +22,7 @@ import {StoreLogMonitorModule, useLogMonitor} from '@ngrx/store-log-monitor';
         FormsModule,
         ReactiveFormsModule,
         routing,
+        StoreModule.provideStore(reducers),
         StoreDevtoolsModule.instrumentStore({
             monitor: useLogMonitor({
                 visible: false,
@@ -28,7 +30,6 @@ import {StoreLogMonitorModule, useLogMonitor} from '@ngrx/store-log-monitor';
             })
         }),
         StoreLogMonitorModule,
-        StoreModule.provideStore({}), // TODO make right sort of modules
     ],
     declarations: [
         AppComponent,
