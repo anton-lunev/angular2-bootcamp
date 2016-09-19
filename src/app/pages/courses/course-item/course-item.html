@@ -1,0 +1,12 @@
+<div class="card">
+    <img class="card-img-top" src="{{course.img}}" width="100%" alt="Card image cap">
+    <div class="card-block">
+        <h4 class="card-title">{{course.title}}</h4>
+        <p class="card-text">{{course.description}}</p>
+        <div class="text-xs-right">
+            <a href="#" class="btn btn-outline-primary" [routerLink]="['/courses', course._id.$oid]">
+                Edit
+            </a>
+        </div>
+    </div>
+</div>

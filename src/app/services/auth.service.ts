@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {MLab} from './mlab';
 import {Store} from '@ngrx/store';
+import * as authActions from '../store/auth/auth.actions';
 
 @Injectable()
 export class AuthService extends MLab {
@@ -19,8 +20,7 @@ export class AuthService extends MLab {
     initUser() {
         const user = localStorage.getItem('username');
         if (user) {
-            console.log(user);
-            this.store.dispatch({type: 'USER_LOADED', payload: user});
+            this.store.dispatch({type: authActions.USER_LOADED, payload: user});
         }
     }
 
@@ -35,9 +35,9 @@ export class AuthService extends MLab {
 
                 if (data) {
                     localStorage.setItem('username', data.name);
-                    this.store.dispatch({type: 'USER_LOADED', payload: data.name});
+                    this.store.dispatch({type: authActions.USER_LOADED, payload: data.name});
                 } else {
-                    this.store.dispatch({type: 'USER_ERROR'});
+                    this.store.dispatch({type: authActions.USER_ERROR});
                 }
 
                 return data;
@@ -45,7 +45,7 @@ export class AuthService extends MLab {
     }
 
     logout(): any {
-        this.store.dispatch({type: 'USER_LOGOUT'});
+        this.store.dispatch({type: authActions.USER_LOGOUT});
         localStorage.removeItem('username');
         this.route.navigate(['login']);
     }

@@ -3,7 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {LoggedInGuard} from './guards/loggedin.guard';
 import {LoginComponent} from './pages/login/login.component';
 import {CoursesComponent} from './pages/courses/courses.component';
-import {EditCourseComponent} from './pages/courses/edit/edit-course.component';
+import {EditCourseComponent} from './pages/courses/edit-page/edit-course.component';
 
 const appRoutes: Routes = [
     {path: '', redirectTo: 'courses', pathMatch: 'full'},

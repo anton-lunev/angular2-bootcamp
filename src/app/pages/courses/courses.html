@@ -19,18 +19,8 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-4 grid-card" *ngFor="let item of list">
-        <div class="card">
-            <img class="card-img-top" src="{{item.img}}" width="100%" alt="Card image cap">
-            <div class="card-block">
-                <h4 class="card-title">{{item.title}}</h4>
-                <p class="card-text">{{item.description}}</p>
-                <div class="text-xs-right">
-                    <a href="#" class="btn btn-outline-primary" [routerLink]="['/courses', item._id.$oid]">
-                        Go somewhere
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <course-item class="col-xs-4 grid-card"
+                 *ngFor="let item of list"
+                 [course]="item">
+    </course-item>
 </div>
