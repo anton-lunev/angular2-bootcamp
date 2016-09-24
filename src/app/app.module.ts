@@ -12,6 +12,7 @@ import {reducers} from './store';
 import {CoursesModule} from './pages/courses/courses.module';
 import {LoginComponent} from './pages/login/login.component';
 import {AppHeaderComponent} from './components/header/header.component';
+import {provideRouterConnector} from 'ngrx-store-router';
 
 if (process.env.ENV === 'prod') {
     disableDebugTools();
@@ -42,7 +43,8 @@ if (process.env.ENV !== 'prod') {
     ],
     providers: [
         LoggedInGuard,
-        AuthService
+        AuthService,
+        provideRouterConnector()
     ],
     bootstrap: [AppComponent]
 })
