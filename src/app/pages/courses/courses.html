@@ -4,8 +4,7 @@
             <form class="form-inline">
                 <div class="form-group">
                     <label class="sr-only" for="search">search</label>
-                    <input type="text" class="form-control" id="search"
-                           placeholder="search">
+                    <input type="text" [(ngModel)]="searchQuery" name="searchQuery" class="form-control" id="search" placeholder="search">
                     <button type="submit" class="btn btn-info">Find</button>
                 </div>
                 <div class="form-group pull-xs-right">
@@ -20,7 +19,7 @@
 
 <div class="row">
     <course-item class="col-xs-4 grid-card"
-                 *ngFor="let item of list"
+                 *ngFor="let item of list | search: searchQuery"
                  [course]="item">
     </course-item>
 </div>

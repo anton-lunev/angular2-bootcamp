@@ -1,24 +1,27 @@
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+
 import {CoursesComponent} from './courses.component';
 import {EditCourseComponent} from './edit-page/edit-course.component';
 import {CourseItemComponent} from './course-item/course-item.component';
 import {CoursesService} from '../../services/courses.service';
-import {AuthService} from '../../services/auth.service';
-import {routing} from '../../app.routes';
+import {coursesRouting} from './courses.routing';
+import {SearchPipe} from './search.pipe';
 
 @NgModule({
     imports: [
-        BrowserModule,
-        routing
+        CommonModule,
+        FormsModule,
+        coursesRouting
     ],
     declarations: [
+        SearchPipe,
         CoursesComponent,
         CourseItemComponent,
         EditCourseComponent
     ],
     providers: [
-        AuthService,
         CoursesService
     ]
 })

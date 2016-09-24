@@ -6,7 +6,8 @@ import {CoursesService} from '../../services/courses.service';
     template: require('./courses.html'),
 })
 export class CoursesComponent implements OnInit {
-    list: Object[];
+    list: Object[] = [];
+    searchQuery: string = '';
 
     constructor(private coursesService: CoursesService) {
     }

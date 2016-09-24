@@ -5,7 +5,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {StoreModule} from '@ngrx/store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {AppComponent} from './app.component';
-import {routing} from './app.routes';
+import {appRouting} from './app.routing';
 import {LoggedInGuard} from './guards/loggedin.guard';
 import {AuthService} from './services/auth.service';
 import {reducers} from './store';
@@ -33,7 +33,7 @@ if (process.env.ENV !== 'prod') {
         FormsModule,
         ReactiveFormsModule,
         CoursesModule,
-        routing,
+        appRouting,
         ...NGRX_STORE_MODULES
     ],
     declarations: [
