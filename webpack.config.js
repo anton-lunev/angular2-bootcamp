@@ -3,11 +3,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
+const DefinePlugin = require('webpack/lib/DefinePlugin');
+const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const cssnext = require('postcss-cssnext');
 const path = require('path');
 
-const ENV = process.env.npm_lifecycle_event;
-const isDevDeploy = ENV === 'dev:deploy';
+const npmEvent = process.env.npm_lifecycle_event;
+const ENV = process.env.ENV = npmEvent == 'prod' ? 'prod' : 'dev';
+const isDevDeploy = npmEvent === 'dev:deploy';
+const isProd = ENV === 'prod';
 
 const config = {
     entry: {
@@ -30,8 +34,7 @@ const config = {
     },
 
     resolve: {
-        cache: true,
-        modulesDirectories: ['node_modules'],
+        modules: ['node_modules'],
         extensions: ['', '.ts', '.js', '.json'],
         alias: {
             'app': 'src/app'
@@ -123,9 +126,28 @@ const config = {
          * Do type checking in a separate process, so webpack don't need to wait.
          * See: https://github.com/s-panferov/awesome-typescript-loader#forkchecker-boolean-defaultfalse
          */
-        new ForkCheckerPlugin()
+        new ForkCheckerPlugin(),
+
+        /**
+         * Environment helpers
+         */
+        new DefinePlugin({
+            'process.env': {
+                'ENV': JSON.stringify(ENV),
+                'NODE_ENV': JSON.stringify(ENV)
+            }
+        }),
     ]
 };
+
+if (isProd) {
+    config.plugins.push(new UglifyJsPlugin({
+        beautify: false,
+        mangle: { screw_ie8 : true, keep_fnames: true },
+        compress: { screw_ie8: true },
+        comments: false
+    }))
+}
 
 if (isDevDeploy) {
     config.output.publicPath = '/angular2-bootcamp/';

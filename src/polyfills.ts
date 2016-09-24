@@ -21,7 +21,7 @@ import 'core-js/es7/reflect';
 
 import 'ts-helpers';
 
-if (process.env.ENV === 'build') {
+if (process.env.ENV === 'prod') {
     // Production
 } else {
     // Development
