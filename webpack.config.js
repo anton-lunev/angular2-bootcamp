@@ -9,8 +9,8 @@ const cssnext = require('postcss-cssnext');
 const path = require('path');
 
 const npmEvent = process.env.npm_lifecycle_event;
-const ENV = process.env.ENV = npmEvent == 'prod' ? 'prod' : 'dev';
-const isDevDeploy = npmEvent === 'dev:deploy';
+const ENV = process.env.ENV = npmEvent.includes('prod') ? 'prod' : 'dev';
+const isDeploy = npmEvent === 'prod:deploy';
 const isProd = ENV === 'prod';
 
 const config = {
@@ -149,7 +149,7 @@ if (isProd) {
     }))
 }
 
-if (isDevDeploy) {
+if (isDeploy) {
     config.output.publicPath = '/angular2-bootcamp/';
 }
 

@@ -1,21 +1,30 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {CoursesService} from '../../services/courses.service';
+import {Subscription} from 'rxjs';
+import {Store} from '@ngrx/store';
 
 @Component({
     selector: 'courses',
     template: require('./courses.html'),
 })
-export class CoursesComponent implements OnInit {
+export class CoursesComponent implements OnInit, OnDestroy {
+    subscriptions: Subscription[] = [];
     list: Object[] = [];
     searchQuery: string = '';
 
-    constructor(private coursesService: CoursesService) {
+    constructor(private coursesService: CoursesService,
+                private store: Store<any>) {
     }
 
-    ngOnInit(): void {
-        this.coursesService
-            .getList()
-            .subscribe(res => this.renderCourses(res));
+    ngOnInit() {
+        this.subscriptions.push(
+            this.store.select('courses').subscribe((list: Object[]) => this.renderCourses(list))
+        );
+        this.coursesService.getList().subscribe();
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
     renderCourses(data) {

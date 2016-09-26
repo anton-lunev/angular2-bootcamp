@@ -12,9 +12,8 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --progress --watch --content-base src/",
-    "dev:deploy": "rimraf dist && webpack --progress --profile --bail",
-    "prod": "rimraf dist && webpack --progress --profile --bail",
-    "github:deploy": "npm run prod && gh-pages -d dist"
+    "prod:deploy": "rimraf dist && webpack --progress --profile --bail",
+    "github:deploy": "npm run prod:deploy && gh-pages -d dist"
   },
   "dependencies": {
     "@angular/common": "^2.0.0",
