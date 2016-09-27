@@ -4,8 +4,11 @@
         <h4 class="card-title">{{course.title}}</h4>
         <p class="card-text">{{course.description}}</p>
         <div class="text-xs-right">
-            <a href="#" class="btn btn-outline-primary" [routerLink]="['/courses', course._id.$oid]">
-                Edit
+            <button class="btn btn-sm btn-outline-danger" (click)="deleteItem()">
+                <i class="material-icons">delete</i>
+            </button>
+            <a class="btn btn-sm btn-outline-primary" [routerLink]="['/courses', course._id.$oid]">
+                <i class="material-icons">edit</i>
             </a>
         </div>
     </div>

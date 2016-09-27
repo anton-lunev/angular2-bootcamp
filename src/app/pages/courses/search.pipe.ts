@@ -1,6 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
-// TODO make search via reducer
 @Pipe({
     name: 'search'
 })

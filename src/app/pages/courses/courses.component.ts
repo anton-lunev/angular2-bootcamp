@@ -1,5 +1,6 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {CoursesService} from '../../services/courses.service';
+import * as coursesActions from '../../store/courses/courses.actions';
 import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 
@@ -10,16 +11,17 @@ import {Store} from '@ngrx/store';
 export class CoursesComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
     list: Object[] = [];
-    searchQuery: string = '';
+    filter: Object;
 
     constructor(private coursesService: CoursesService,
                 private store: Store<any>) {
     }
 
     ngOnInit() {
-        this.subscriptions.push(
-            this.store.select('courses').subscribe((list: Object[]) => this.renderCourses(list))
-        );
+        this.subscriptions.push(...[
+            this.store.select('courses').subscribe((list: Object[]) => this.renderCourses(list)),
+            this.store.select('coursesFilter').subscribe((filter: Object) => this.filter = filter)
+        ]);
         this.coursesService.getList().subscribe();
     }
 
@@ -27,7 +29,15 @@ export class CoursesComponent implements OnInit, OnDestroy {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 
+    searchTextChanged(text: string) {
+        this.store.dispatch({type: coursesActions.SEARCH_TEXT, payload: text});
+    }
+
     renderCourses(data) {
         this.list = data;
+    }
+
+    deleteCourse(course) {
+        console.log(course);
     }
 }

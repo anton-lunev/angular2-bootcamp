@@ -4,8 +4,14 @@
             <form class="form-inline">
                 <div class="form-group">
                     <label class="sr-only" for="search">search</label>
-                    <input type="text" [(ngModel)]="searchQuery" name="searchQuery" class="form-control" id="search" placeholder="search">
-                    <button type="submit" class="btn btn-info">Find</button>
+                    <input type="text"
+                           id="search"
+                           class="form-control"
+                           name="searchText"
+                           placeholder="search"
+                           [ngModel]="filter.searchText"
+                           (ngModelChange)="searchTextChanged($event)">
+                    <!--<button type="submit" class="btn btn-info">Find</button>-->
                 </div>
                 <div class="form-group pull-xs-right">
                     <button type="submit" class="btn btn-outline-success" [routerLink]="['/courses', 'new']">
@@ -19,7 +25,8 @@
 
 <div class="row">
     <course-item class="col-xs-4 grid-card"
-                 *ngFor="let item of list | search: searchQuery"
-                 [course]="item">
+                 *ngFor="let item of list | search: filter.searchText"
+                 [course]="item"
+                 (onDelete)="deleteCourse($event)">
     </course-item>
 </div>
