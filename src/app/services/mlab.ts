@@ -6,7 +6,7 @@ export class MLab {
     protected db = 'angular2_db';
     protected collection = '';
 
-    getQueryUrl() {
-        return `${this.baseUrl}/${this.db}/collections/${this.collection}?apiKey=${this.apiKey}`;
+    getQueryUrl(id?: string) {
+        return `${this.baseUrl}/${this.db}/collections/${this.collection}${id ? `/${id}` : ''}?apiKey=${this.apiKey}`;
     }
 }

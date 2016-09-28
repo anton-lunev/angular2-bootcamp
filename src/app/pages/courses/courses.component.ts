@@ -9,7 +9,7 @@ import {Store} from '@ngrx/store';
     template: require('./courses.html'),
 })
 export class CoursesComponent implements OnInit, OnDestroy {
-    subscriptions: Subscription[] = [];
+    subscriptions: Subscription[];
     list: Object[] = [];
     filter: Object;
 
@@ -18,11 +18,11 @@ export class CoursesComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscriptions.push(...[
+        this.subscriptions = [
             this.store.select('courses').subscribe((list: Object[]) => this.renderCourses(list)),
             this.store.select('coursesFilter').subscribe((filter: Object) => this.filter = filter)
-        ]);
-        this.coursesService.getList().subscribe();
+        ];
+        this.coursesService.getList();
     }
 
     ngOnDestroy() {
@@ -38,6 +38,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
     }
 
     deleteCourse(course) {
-        console.log(course);
+        this.coursesService.deleteCourse(course);
     }
 }

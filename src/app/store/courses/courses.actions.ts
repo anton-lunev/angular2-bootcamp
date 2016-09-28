@@ -1,2 +1,5 @@
 export const COURSES_LIST = 'COURSES_LIST';
+export const COURSE_CREATE = 'COURSE_CREATE';
+export const COURSE_UPDATE = 'COURSE_UPDATE';
+export const COURSE_DELETE = 'COURSE_DELETE';
 export const SEARCH_TEXT = 'SEARCH_TEXT';
