@@ -38,6 +38,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
     }
 
     deleteCourse(course) {
-        this.coursesService.deleteCourse(course);
+        this.coursesService.deleteCourse(course).subscribe();
     }
 }

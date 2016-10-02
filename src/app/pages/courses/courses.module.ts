@@ -2,10 +2,12 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 
+import {CoursesService} from '../../services/courses.service';
+import {VideoService} from '../../services/video.service';
+
 import {CoursesComponent} from './courses.component';
 import {EditCourseComponent} from './edit-page/edit-course.component';
 import {CourseItemComponent} from './course-item/course-item.component';
-import {CoursesService} from '../../services/courses.service';
 import {coursesRouting} from './courses.routing';
 import {SearchPipe} from './search.pipe';
 
@@ -22,7 +24,8 @@ import {SearchPipe} from './search.pipe';
         EditCourseComponent
     ],
     providers: [
-        CoursesService
+        CoursesService,
+        VideoService
     ]
 })
 export class CoursesModule {

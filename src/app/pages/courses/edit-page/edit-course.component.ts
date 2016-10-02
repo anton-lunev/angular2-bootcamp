@@ -3,6 +3,7 @@ import {CoursesService} from '../../../services/courses.service';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {Subscription} from 'rxjs';
+import {VideoService} from '../../../services/video.service';
 
 @Component({
     selector: 'home',
@@ -16,6 +17,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 
     constructor(private route: ActivatedRoute,
                 private coursesService: CoursesService,
+                private videoService: VideoService,
                 private location: Location) {
     }
 
@@ -45,8 +47,36 @@ export class EditCourseComponent implements OnInit, OnDestroy {
             .subscribe(res => this.renderCourse(res));
     }
 
+    getVideoDetails(id: string) {
+        this.videoService.getDetails(id).subscribe(details => {
+            console.log(details);
+            if (!details.items.length) {
+                return;
+            }
+            const data = details.items[0];
+            this.renderCourse({
+                videoId: data.id,
+                title: data.snippet.title,
+                description: data.snippet.description,
+                img: data.snippet.thumbnails.high.url,
+                duration: this.videoService.convertDuration(data.contentDetails.duration)
+            });
+        });
+    }
+
     renderCourse(data) {
         this.course = data;
+    }
+
+    saveCourse() {
+        let request;
+        if (this.mode === 'Edit') {
+            Object.assign(this.course, {_id: {$oid: this.id}});
+            request = this.coursesService.updateCourse(this.course);
+        } else {
+            request = this.coursesService.createCourse(this.course);
+        }
+        request.subscribe(() => this.goBack());
     }
 
     goBack() {

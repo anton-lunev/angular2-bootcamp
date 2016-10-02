@@ -3,12 +3,20 @@
         <h4 class="pull-xs-left">{{mode}} Course</h4>
 
         <div class="pull-xs-right">
-            <a href="#" class="btn btn-success" (click)="goBack()">Save</a>
-            <a href="#" class="btn btn-primary" (click)="goBack()">Go back</a>
+            <button class="btn btn-success" (click)="saveCourse()">Save</button>
+            <button class="btn btn-primary" (click)="goBack()">Go back</button>
         </div>
     </div>
     <div class="card-block" *ngIf="course">
         <div class="col-xs-10 offset-xs-2">
+            <div class="form-group row">
+                <label for="videoid" class="col-xs-2 col-form-label">Video id</label>
+                <div class="col-xs-10">
+                    <input class="form-control" type="text" [value]="course.videoId" id="videoid"
+                           (change)="getVideoDetails(videoid.value)" #videoid>
+                </div>
+            </div>
+
             <div class="form-group row">
                 <label for="title" class="col-xs-2 col-form-label">Title</label>
                 <div class="col-xs-10">
@@ -19,13 +27,22 @@
             <div class="form-group row">
                 <label for="description" class="col-xs-2 col-form-label">Description</label>
                 <div class="col-xs-10">
-                    <input class="form-control" type="text" [value]="course.description" id="description">
+                    <textarea class="form-control" [value]="course.description" id="description"></textarea>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-xs-2 col-form-label">Image</label>
+                <label for="duration" class="col-xs-2 col-form-label">Duration</label>
                 <div class="col-xs-10">
+                    <input class="form-control" type="time" [value]="course.duration" id="duration">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="img" class="col-xs-2 col-form-label">Image</label>
+                <div class="col-xs-10">
+                    <input class="form-control" type="text" [value]="course.img" id="img">
+                    <br>
                     <img [src]="course.img">
                 </div>
             </div>

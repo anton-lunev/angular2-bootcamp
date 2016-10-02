@@ -30,23 +30,23 @@ export class CoursesService extends MLab {
             .map(result => result.json());
     }
 
-    createCourse(course) {
-        this.http.post(this.getQueryUrl(), JSON.stringify(course))
+    createCourse(course): Observable<any> {
+        return this.http.post(this.getQueryUrl(), course)
             .map(result => result.json())
             .map(payload => ({type: coursesActions.COURSE_CREATE, payload}))
-            .subscribe(action => this.store.dispatch(action));
+            .do(action => this.store.dispatch(action));
     }
 
-    updateCourse(course) {
-        this.http.put(this.getQueryUrl(), JSON.stringify(course))
+    updateCourse(course): Observable<any> {
+        return this.http.put(this.getQueryUrl(course._id.$oid), {'$set': course})
             .map(result => result.json())
             .map(payload => ({type: coursesActions.COURSE_UPDATE, payload}))
-            .subscribe(action => this.store.dispatch(action));
+            .do(action => this.store.dispatch(action));
     }
 
-    deleteCourse(course) {
-        this.http.delete(this.getQueryUrl(course._id.$oid))
+    deleteCourse(course): Observable<any> {
+        return this.http.delete(this.getQueryUrl(course._id.$oid))
             .map(() => ({type: coursesActions.COURSE_DELETE, payload: course}))
-            .subscribe(action => this.store.dispatch(action));
+            .do(action => this.store.dispatch(action));
     }
 }
