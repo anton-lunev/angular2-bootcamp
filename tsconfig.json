@@ -15,11 +15,8 @@
       "dom",
       "es6"
     ],
-    "types": [
-      "node",
-      "source-map",
-      "uglify-js",
-      "webpack"
+    "typeRoots": [
+      "node_modules/@types"
     ]
   },
   "exclude": [
@@ -28,7 +25,8 @@
   ],
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": true,
-    "useWebpackText": true
+    "useWebpackText": true,
+    "useCache": true
   },
   "compileOnSave": false,
   "buildOnSave": false,

@@ -1,0 +1,11 @@
+<div class="video-popup-wrapper" *ngIf="show" (click)="close()">
+    <div class="video-popup-backdrop" (click)="close()"></div>
+    <div class="video-popup">
+        <iframe class="video-popup__iframe"
+                [src]="videoUrl"
+                frameborder="0"
+                allowfullscreen>
+        </iframe>
+        <i class="material-icons close-popup" (click)="close()">clear</i>
+    </div>
+</div>

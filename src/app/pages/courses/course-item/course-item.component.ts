@@ -8,8 +8,13 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 export class CourseItemComponent {
     @Input() course;
     @Output() onDelete: EventEmitter<any> = new EventEmitter();
+    @Output() onPlay: EventEmitter<any> = new EventEmitter();
 
     constructor() {
+    }
+
+    playVideo() {
+        this.onPlay.emit(this.course);
     }
 
     deleteItem() {

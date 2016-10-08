@@ -8,6 +8,7 @@ import {VideoService} from '../../services/video.service';
 import {CoursesComponent} from './courses.component';
 import {EditCourseComponent} from './edit-page/edit-course.component';
 import {CourseItemComponent} from './course-item/course-item.component';
+import {VideoPopupComponent} from './video-popup/video-popup.component';
 import {coursesRouting} from './courses.routing';
 import {SearchPipe} from './search.pipe';
 
@@ -21,7 +22,8 @@ import {SearchPipe} from './search.pipe';
         SearchPipe,
         CoursesComponent,
         CourseItemComponent,
-        EditCourseComponent
+        EditCourseComponent,
+        VideoPopupComponent
     ],
     providers: [
         CoursesService,

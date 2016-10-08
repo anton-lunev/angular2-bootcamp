@@ -12,6 +12,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[];
     list: Object[] = [];
     filter: Object;
+    videoId: string;
 
     constructor(private coursesService: CoursesService,
                 private store: Store<any>) {
@@ -39,5 +40,12 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
     deleteCourse(course) {
         this.coursesService.deleteCourse(course).subscribe();
+    }
+
+    playVideo(course) {
+        this.videoId = course.videoId;
+    }
+    closePopup() {
+        this.videoId = '';
     }
 }

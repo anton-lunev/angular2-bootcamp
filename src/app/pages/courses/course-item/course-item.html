@@ -1,5 +1,9 @@
 <div class="card">
-    <img class="card-img-top" src="{{course.img}}" width="100%" alt="Card image cap">
+    <div class="card-img" [ngStyle]="{'background-image': 'url(' + course.img + ')'}">
+        <div class="card-play-btn" (click)="playVideo()">
+            <i class="material-icons">play_circle_outline</i>
+        </div>
+    </div>
     <div class="card-block">
         <h4 class="card-title">{{course.title}}</h4>
         <p class="card-text">{{course.description}}</p>
