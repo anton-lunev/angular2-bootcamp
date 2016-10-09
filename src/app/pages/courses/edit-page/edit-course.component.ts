@@ -1,7 +1,8 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {CoursesService} from '../../../services/courses.service';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {CoursesService} from '../../../services/courses.service';
 import {Subscription} from 'rxjs';
 import {VideoService} from '../../../services/video.service';
 
@@ -10,7 +11,14 @@ import {VideoService} from '../../../services/video.service';
     template: require('./edit-course.html'),
 })
 export class EditCourseComponent implements OnInit, OnDestroy {
-    course: Object;
+    courseForm: FormGroup;
+    course: {
+        videoId: string,
+        title: string,
+        description: string,
+        img: string,
+        duration: string
+    };
     id: string = '';
     routeSub: Subscription;
     mode: string = 'Edit';
@@ -18,7 +26,8 @@ export class EditCourseComponent implements OnInit, OnDestroy {
     constructor(private route: ActivatedRoute,
                 private coursesService: CoursesService,
                 private videoService: VideoService,
-                private location: Location) {
+                private location: Location,
+                private fb: FormBuilder) {
     }
 
     ngOnInit(): void {
@@ -35,6 +44,15 @@ export class EditCourseComponent implements OnInit, OnDestroy {
                 });
             }
         });
+
+        this.courseForm = this.fb.group({
+            _id: null,
+            videoId: ['', [Validators.required]],
+            title: ['', [Validators.required]],
+            description: [''],
+            duration: ['', [Validators.required]],
+            img: ['', [Validators.required]]
+        });
     }
 
     ngOnDestroy() {
@@ -48,13 +66,17 @@ export class EditCourseComponent implements OnInit, OnDestroy {
     }
 
     getVideoDetails(id: string) {
-        this.videoService.getDetails(id).subscribe(details => {
-            console.log(details);
+        const parsedId = this.parseYouTubeId(id);
+        if (!parsedId) {
+            return;
+        }
+        this.videoService.getDetails(parsedId).subscribe(details => {
             if (!details.items.length) {
                 return;
             }
             const data = details.items[0];
             this.renderCourse({
+                _id: null,
                 videoId: data.id,
                 title: data.snippet.title,
                 description: data.snippet.description,
@@ -66,9 +88,12 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 
     renderCourse(data) {
         this.course = data;
+        this.courseForm.setValue(data);
     }
 
-    saveCourse() {
+    saveCourse(data) {
+        this.course = data;
+
         let request;
         if (this.mode === 'Edit') {
             Object.assign(this.course, {_id: {$oid: this.id}});
@@ -81,5 +106,17 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 
     goBack() {
         this.location.back();
+    }
+
+    parseYouTubeId(url: string) {
+        let ID;
+        const result = url.replace(/(>|<)/gi, '').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+        if (result[2] !== undefined) {
+            ID = result[2].split(/[^0-9a-z_\-]/i);
+            ID = ID[0];
+        } else if (result[0]) {
+            ID = result[0].trim();
+        }
+        return ID;
     }
 }
