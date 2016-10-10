@@ -3,8 +3,8 @@ import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {CoursesService} from '../../../services/courses.service';
-import {Subscription} from 'rxjs';
 import {VideoService} from '../../../services/video.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'home',
@@ -31,6 +31,16 @@ export class EditCourseComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.courseForm = this.fb.group({
+            _id: null,
+            videoId: ['', [Validators.required]],
+            title: ['', [Validators.required]],
+            description: [''],
+            publishedAt: [''],
+            duration: ['', [Validators.required]],
+            img: ['', [Validators.required]]
+        });
+
         this.routeSub = this.route.params.subscribe(params => {
             this.id = params['id'];
             if (this.id !== 'new') {
@@ -38,20 +48,15 @@ export class EditCourseComponent implements OnInit, OnDestroy {
             } else {
                 this.mode = 'Add';
                 this.renderCourse({
+                    _id: null,
+                    videoId: '',
                     title: '',
                     description: '',
+                    publishedAt: '',
+                    duration: '',
                     img: ''
                 });
             }
-        });
-
-        this.courseForm = this.fb.group({
-            _id: null,
-            videoId: ['', [Validators.required]],
-            title: ['', [Validators.required]],
-            description: [''],
-            duration: ['', [Validators.required]],
-            img: ['', [Validators.required]]
         });
     }
 
@@ -80,8 +85,9 @@ export class EditCourseComponent implements OnInit, OnDestroy {
                 videoId: data.id,
                 title: data.snippet.title,
                 description: data.snippet.description,
-                img: data.snippet.thumbnails.high.url,
-                duration: this.videoService.convertDuration(data.contentDetails.duration)
+                publishedAt: Date.parse(data.snippet.publishedAt),
+                duration: this.videoService.convertDuration(data.contentDetails.duration),
+                img: data.snippet.thumbnails.high.url
             });
         });
     }

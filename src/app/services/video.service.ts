@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, URLSearchParams} from '@angular/http';
 import {Observable} from 'rxjs';
 import {DateFormatter} from '@angular/common/src/facade/intl';
+import {YoutubeVideoCollection} from './video';
 
 @Injectable()
 export class VideoService {
@@ -11,7 +12,7 @@ export class VideoService {
     constructor(private http: Http) {
     }
 
-    searchVideos(query: string): Observable<any> {
+    searchVideos(query: string): Observable<YoutubeVideoCollection> {
         const params = new URLSearchParams();
         params.set('key', this.key);
         params.set('part', 'snippet');
@@ -24,7 +25,7 @@ export class VideoService {
             .map(response => response.json());
     }
 
-    getDetails(id: string) {
+    getDetails(id: string): Observable<YoutubeVideoCollection>  {
         const params = new URLSearchParams();
         params.set('key', this.key);
         params.set('part', 'snippet,contentDetails');
