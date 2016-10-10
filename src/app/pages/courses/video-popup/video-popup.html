@@ -1,11 +1,17 @@
-<div class="video-popup-wrapper" *ngIf="show" (click)="close()">
+<div class="video-popup-wrapper" *ngIf="show">
     <div class="video-popup-backdrop" (click)="close()"></div>
-    <div class="video-popup">
+    <div class="video-popup" [class.video-popup--maximize]="maximize">
         <iframe class="video-popup__iframe"
                 [src]="videoUrl"
                 frameborder="0"
                 allowfullscreen>
         </iframe>
-        <i class="material-icons close-popup" (click)="close()">clear</i>
+        <i class="material-icons btn-popup close-popup" (click)="close()">clear</i>
+        <i class="material-icons btn-popup maximize-popup" [hidden]="maximize" (click)="toggleSize(true)">
+            fullscreen
+        </i>
+        <i class="material-icons btn-popup minimize-popup" [hidden]="!maximize" (click)="toggleSize(false)">
+            fullscreen_exit
+        </i>
     </div>
 </div>

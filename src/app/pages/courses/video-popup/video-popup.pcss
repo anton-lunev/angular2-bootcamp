@@ -42,12 +42,18 @@
 .video-popup {
   width: 960px;
   height: 540px;
-  box-shadow: 0 0 10px #333;
+  box-shadow: 0 0 20px -3px #000;
   background: #000;
   display: flex;
   position: relative;
+  transition: all .2s;
   animation: showPopup .4s ease-in-out 1;
   animation-fill-mode: forwards;
+
+  &--maximize {
+    width: 90%;
+    height: 95%;
+  }
 
   &__iframe {
     width: 100%;
@@ -55,7 +61,7 @@
   }
 }
 
-.close-popup {
+.btn-popup {
   position: absolute;
   right: -50px;
   font-size: 40px;
@@ -67,4 +73,9 @@
   &:hover {
     opacity: 1;
   }
+}
+
+.maximize-popup,
+.minimize-popup {
+  top: 50px;
 }

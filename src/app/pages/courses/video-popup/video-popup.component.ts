@@ -12,6 +12,7 @@ export class VideoPopupComponent implements OnInit, OnChanges {
     show: boolean = false;
     baseUrl: string = 'https://www.youtube.com/embed/';
     videoUrl: SafeResourceUrl;
+    maximize: boolean = false;
 
     constructor(private sanitizer: DomSanitizer) {
     }
@@ -33,6 +34,10 @@ export class VideoPopupComponent implements OnInit, OnChanges {
         this.videoId = '';
         this.show = false;
         this.onClose.emit();
+    }
+
+    toggleSize(maximize: boolean) {
+        this.maximize = maximize;
     }
 
     setUrl() {
