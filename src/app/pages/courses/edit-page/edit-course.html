@@ -1,9 +1,9 @@
 <div class="card">
     <form [formGroup]="courseForm" (ngSubmit)="saveCourse(courseForm.value)" novalidate>
         <div class="card-header">
-            <h4 class="pull-xs-left">{{mode}} Course</h4>
+            <h4 class="float-xs-left">{{mode}} Course</h4>
 
-            <div class="pull-xs-right">
+            <div class="float-xs-right">
                 <button class="btn btn-success" type="submit" [disabled]="courseForm.invalid">Save</button>
                 <button class="btn btn-primary" (click)="goBack()">Go back</button>
             </div>
@@ -20,38 +20,59 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row" [class.has-danger]="showError('title')">
                     <label for="title" class="col-xs-2 col-form-label">Title</label>
                     <div class="col-xs-10">
                         <input class="form-control" type="text" formControlName="title" id="title">
+                        <div class="form-control-feedback" *ngIf="showError('title', 'required')">
+                            Required field
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row" [class.has-danger]="showError('description')">
                     <label for="description" class="col-xs-2 col-form-label">Description</label>
                     <div class="col-xs-10">
                         <textarea class="form-control" formControlName="description" id="description"></textarea>
+                        <div class="form-control-feedback" *ngIf="showError('description', 'required')">
+                            Required field
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row" [class.has-danger]="showError('publishedAt')">
                     <label for="publishedAt" class="col-xs-2 col-form-label">Date</label>
                     <div class="col-xs-10">
                         <input class="form-control" type="date" formControlName="publishedAt" id="publishedAt">
+                        <div class="form-control-feedback" *ngIf="showError('publishedAt', 'pattern')">
+                            Invalid date
+                        </div>
+                        <div class="form-control-feedback" *ngIf="showError('publishedAt', 'required')">
+                            Required field
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row" [class.has-danger]="showError('duration')">
                     <label for="duration" class="col-xs-2 col-form-label">Duration</label>
-                    <div class="col-xs-10">
-                        <input class="form-control" type="time" formControlName="duration" id="duration">
+                    <div class="col-xs-5">
+                        <div class="input-group">
+                            <input class="form-control" type="number" formControlName="duration" id="duration">
+                            <div class="input-group-addon">{{courseForm.controls.duration.value | time}}</div>
+                        </div>
+                        <div class="form-control-feedback" *ngIf="showError('duration', 'required')">
+                            Required field
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row" [class.has-danger]="showError('img')">
                     <label for="img" class="col-xs-2 col-form-label">Image</label>
                     <div class="col-xs-10">
                         <input class="form-control" type="text" formControlName="img" id="img">
+                        <div class="form-control-feedback" *ngIf="showError('img', 'required')">
+                            Required field
+                        </div>
                         <br>
                         <img [src]="course.img">
                     </div>

@@ -11,6 +11,7 @@ import {CourseItemComponent} from './course-item/course-item.component';
 import {VideoPopupComponent} from './video-popup/video-popup.component';
 import {coursesRouting} from './courses.routing';
 import {SearchPipe} from './search.pipe';
+import {TimePipe} from './time.pipe';
 
 @NgModule({
     imports: [
@@ -21,6 +22,7 @@ import {SearchPipe} from './search.pipe';
     ],
     declarations: [
         SearchPipe,
+        TimePipe,
         CoursesComponent,
         CourseItemComponent,
         EditCourseComponent,

@@ -1,6 +1,5 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {CoursesService} from '../../../services/courses.service';
 import {VideoService} from '../../../services/video.service';
@@ -23,10 +22,10 @@ export class EditCourseComponent implements OnInit, OnDestroy {
     routeSub: Subscription;
     mode: string = 'Edit';
 
-    constructor(private route: ActivatedRoute,
+    constructor(private router: Router,
+                private route: ActivatedRoute,
                 private coursesService: CoursesService,
                 private videoService: VideoService,
-                private location: Location,
                 private fb: FormBuilder) {
     }
 
@@ -36,7 +35,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
             videoId: ['', [Validators.required]],
             title: ['', [Validators.required]],
             description: [''],
-            publishedAt: [''],
+            publishedAt: ['', [Validators.pattern('\\d{4}\-\\d{2}\-\\d{2}'), Validators.required]],
             duration: ['', [Validators.required]],
             img: ['', [Validators.required]]
         });
@@ -58,6 +57,11 @@ export class EditCourseComponent implements OnInit, OnDestroy {
                 });
             }
         });
+    }
+
+    showError(fieldName, validator) {
+        const field = this.courseForm.controls[fieldName];
+        return field.touched && (validator ? field.hasError(validator) : !field.valid);
     }
 
     ngOnDestroy() {
@@ -85,7 +89,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
                 videoId: data.id,
                 title: data.snippet.title,
                 description: data.snippet.description,
-                publishedAt: Date.parse(data.snippet.publishedAt),
+                publishedAt: data.snippet.publishedAt.split('T')[0],
                 duration: this.videoService.convertDuration(data.contentDetails.duration),
                 img: data.snippet.thumbnails.high.url
             });
@@ -111,7 +115,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
     }
 
     goBack() {
-        this.location.back();
+        this.router.navigate(['/courses']);
     }
 
     parseYouTubeId(url: string) {

@@ -3,17 +3,25 @@
         <div class="card-play-btn" (click)="playVideo()">
             <i class="material-icons">play_circle_outline</i>
         </div>
+        <div class="card-duration">
+            {{course.duration | time}}
+        </div>
     </div>
     <div class="card-block">
         <h4 class="card-title">{{course.title}}</h4>
         <p class="card-text">{{course.description}}</p>
-        <div class="text-xs-right">
-            <button class="btn btn-sm btn-outline-danger" (click)="deleteItem()">
-                <i class="material-icons">delete</i>
-            </button>
-            <a class="btn btn-sm btn-outline-primary" [routerLink]="['/courses', course._id.$oid]">
-                <i class="material-icons">edit</i>
-            </a>
+        <div>
+            <em class="float-xs-left text-muted">
+                {{course.publishedAt}}
+            </em>
+            <div class="float-xs-right">
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteItem()">
+                    <i class="material-icons">delete</i>
+                </button>
+                <a class="btn btn-sm btn-outline-primary" [routerLink]="['/courses', course._id.$oid]">
+                    <i class="material-icons">edit</i>
+                </a>
+            </div>
         </div>
     </div>
 </div>

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, URLSearchParams} from '@angular/http';
 import {Observable} from 'rxjs';
 import {MLab} from './mlab';
-import {Store} from '@ngrx/store';
+import {Store, Action} from '@ngrx/store';
 import * as coursesActions from '../store/courses/courses.actions';
 
 @Injectable()
@@ -34,19 +34,19 @@ export class CoursesService extends MLab {
         return this.http.post(this.getQueryUrl(), course)
             .map(result => result.json())
             .map(payload => ({type: coursesActions.COURSE_CREATE, payload}))
-            .do(action => this.store.dispatch(action));
+            .do((action: Action) => this.store.dispatch(action));
     }
 
     updateCourse(course): Observable<any> {
         return this.http.put(this.getQueryUrl(course._id.$oid), {'$set': course})
             .map(result => result.json())
             .map(payload => ({type: coursesActions.COURSE_UPDATE, payload}))
-            .do(action => this.store.dispatch(action));
+            .do((action: Action) => this.store.dispatch(action));
     }
 
     deleteCourse(course): Observable<any> {
         return this.http.delete(this.getQueryUrl(course._id.$oid))
             .map(() => ({type: coursesActions.COURSE_DELETE, payload: course}))
-            .do(action => this.store.dispatch(action));
+            .do((action: Action) => this.store.dispatch(action));
     }
 }
